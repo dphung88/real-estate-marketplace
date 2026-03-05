@@ -25,7 +25,7 @@ export default async function RealEstatePage() {
       <section className="page-header">
         <div className="container">
           <h1><i className="fa-solid fa-building"></i> Real Estate Listings</h1>
-          <p>Browse properties available for sale and rent across Vietnam.</p>
+          <p>Browse properties available for sale and rent across the United States.</p>
         </div>
       </section>
 
@@ -46,22 +46,21 @@ export default async function RealEstatePage() {
                       <i className="fa-solid fa-location-dot"></i> {listing.location}
                     </p>
                     {listing.area && (
-                      <p><i className="fa-solid fa-ruler-combined"></i> {listing.area} m²
+                      <p>
+                        <i className="fa-solid fa-ruler-combined"></i> {listing.area} sqft
                         {listing.bedrooms && <> &bull; {listing.bedrooms} beds</>}
                         {listing.bathrooms && <> &bull; {listing.bathrooms} baths</>}
                       </p>
                     )}
                     <p className="listing-price">
                       {listing.property_type === 'rent'
-                        ? `${listing.price?.toLocaleString('vi-VN')} ₫/tháng`
-                        : `${listing.price?.toLocaleString('vi-VN')} ₫`
+                        ? `$${listing.price?.toLocaleString('en-US')}/month`
+                        : `$${listing.price?.toLocaleString('en-US')}`
                       }
                     </p>
-                    {listing.contact_phone && (
-                      <a href={`tel:${listing.contact_phone}`} className="btn btn-primary">
-                        <i className="fa-solid fa-phone"></i> {listing.contact_phone}
-                      </a>
-                    )}
+                    <a href="tel:+13129997988" className="btn btn-primary">
+                      <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
+                    </a>
                   </div>
                 </div>
               ))}
