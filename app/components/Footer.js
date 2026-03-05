@@ -6,7 +6,7 @@ export default function Footer() {
     <footer style={{
       backgroundColor: '#0d1b2a',
       borderTop: '1px solid rgba(255,255,255,0.1)',
-      padding: '20px 0',
+      padding: '16px 0',
     }}>
       <div style={{
         maxWidth: '1200px',
@@ -16,36 +16,49 @@ export default function Footer() {
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '16px',
+        gap: '12px',
       }}>
-        {/* LOGO */}
+
+        {/* LOGO + BRAND */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
           <Image
             src="/AXIOM LLC Logo.png"
             alt="Axiom Realty"
-            width={50}
-            height={50}
-            style={{ objectFit: 'contain', width: '50px', height: '50px' }}
+            width={45}
+            height={45}
+            style={{ objectFit: 'contain', width: '45px', height: '45px' }}
           />
         </Link>
 
-        {/* TAGLINE */}
-        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', margin: 0 }}>
-          Your trusted platform for real estate &amp; used items across the US.
-        </p>
-
-        {/* NAV LINKS */}
-        <nav style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-          <Link href="/" style={{ color: '#C9A84C', fontSize: '14px', textDecoration: 'none' }}>Home</Link>
-          <Link href="/real-estate" style={{ color: '#C9A84C', fontSize: '14px', textDecoration: 'none' }}>Real Estate</Link>
-          <Link href="/used-items" style={{ color: '#C9A84C', fontSize: '14px', textDecoration: 'none' }}>Used Items</Link>
-          <Link href="/contact" style={{ color: '#C9A84C', fontSize: '14px', textDecoration: 'none' }}>Contact</Link>
-        </nav>
+        {/* CONTACT ICONS */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <a href="https://www.facebook.com/share/1AbdHWCaqN/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer"
+            style={{ color: '#C9A84C', fontSize: '20px' }}>
+            <i className="fab fa-facebook"></i>
+          </a>
+          <a href="https://wa.me/13129997988" target="_blank" rel="noopener noreferrer"
+            style={{ color: '#C9A84C', fontSize: '20px' }}>
+            <i className="fab fa-whatsapp"></i>
+          </a>
+          <a href="https://www.tiktok.com/@mceagle.mentor" target="_blank" rel="noopener noreferrer"
+            style={{ color: '#C9A84C', fontSize: '20px' }}>
+            <i className="fab fa-tiktok"></i>
+          </a>
+          <a href="https://youtube.com/@mceagle.essentials" target="_blank" rel="noopener noreferrer"
+            style={{ color: '#C9A84C', fontSize: '20px' }}>
+            <i className="fab fa-youtube"></i>
+          </a>
+          <a href="tel:+13129997988"
+            style={{ color: '#C9A84C', fontSize: '20px' }}>
+            <i className="fas fa-phone"></i>
+          </a>
+        </div>
 
         {/* COPYRIGHT */}
         <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', margin: 0 }}>
           &copy; {new Date().getFullYear()} Axiom Realty LLC
         </p>
+
       </div>
     </footer>
   );
