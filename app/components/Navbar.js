@@ -12,13 +12,13 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="container nav-inner">
-        <Link href="/" className="logo">
+        <Link href="/" className="logo" style={{ display: 'flex', alignItems: 'center' }}>
           <Image
             src="/AXIOM LLC Logo White.png"
             alt="Axiom Realty"
-            width={120}
-            height={40}
-            style={{ objectFit: 'contain' }}
+            width={45}
+            height={45}
+            style={{ objectFit: 'contain', width: '45px', height: '45px' }}
           />
         </Link>
         <ul className="nav-links">
