@@ -1,10 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Image from 'next/image';
+
+const BANNER_IMAGES = [
+  'https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1600&q=80',
+  'https://images.unsplash.com/photo-1556742111-a301076d9d18?w=1600&q=80',
+  'https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=1600&q=80',
+];
 
 const ALL_ITEMS = [
   {
@@ -16,6 +22,7 @@ const ALL_ITEMS = [
     condition: 'excellent',
     description: '45,000 miles, excellent condition, 1 owner, full service history.',
     image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&q=80',
+        phone: '+1 (312) 999 7988',
   },
   {
     id: 2,
@@ -26,6 +33,7 @@ const ALL_ITEMS = [
     condition: 'good',
     description: '2019 model, 200 hours of use, good condition, clean and serviced.',
     image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+        phone: '+1 (312) 555 0198',
   },
   {
     id: 3,
@@ -36,6 +44,7 @@ const ALL_ITEMS = [
     condition: 'excellent',
     description: '3 bedrooms, 2 baths, 1,200 sqft, well-maintained, move-in ready.',
     image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=600&q=80',
+        phone: '+1 (312) 555 0167',
   },
 ];
 
@@ -43,30 +52,23 @@ export default function UsedItemsPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [selectedCondition, setSelectedCondition] = useState('');
+  const [currentBanner, setCurrentBanner] = useState(0);
+
+  // Auto-rotate banner every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBanner((prev) => (prev + 1) % BANNER_IMAGES.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   const filterItems = () => {
     return ALL_ITEMS.filter((item) => {
-      // Category filter
-      if (selectedCategory && item.category !== selectedCategory) {
-        return false;
-      }
-
-      // Price filter
-      if (selectedPriceRange === 'low' && item.price >= 5000) {
-        return false;
-      }
-      if (selectedPriceRange === 'mid' && (item.price < 5000 || item.price > 20000)) {
-        return false;
-      }
-      if (selectedPriceRange === 'high' && item.price <= 20000) {
-        return false;
-      }
-
-      // Condition filter
-      if (selectedCondition && item.condition !== selectedCondition) {
-        return false;
-      }
-
+      if (selectedCategory && item.category !== selectedCategory) return false;
+      if (selectedPriceRange === 'low' && item.price >= 5000) return false;
+      if (selectedPriceRange === 'mid' && (item.price < 5000 || item.price > 20000)) return false;
+      if (selectedPriceRange === 'high' && item.price <= 20000) return false;
+      if (selectedCondition && item.condition !== selectedCondition) return false;
       return true;
     });
   };
@@ -84,20 +86,35 @@ export default function UsedItemsPage() {
     <>
       <Navbar />
 
-      {/* HERO BANNER */}
-      <section className="page-hero">
-        <div className="page-hero-bg">
-          <Image
-            src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1600&q=80"
-            alt="Used Items Banner"
-            fill
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
-            priority
-            unoptimized
-          />
-          <div className="page-hero-overlay"></div>
-        </div>
-        <div className="page-hero-content">
+      {/* HERO BANNER CAROUSEL */}
+      <section className="page-hero" style={{position: 'relative', overflow: 'hidden'}}>
+        {BANNER_IMAGES.map((img, index) => (
+          <div
+            key={index}
+            className="page-hero-bg"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              opacity: currentBanner === index ? 1 : 0,
+              transition: 'opacity 1s ease-in-out',
+              zIndex: currentBanner === index ? 1 : 0,
+            }}
+          >
+            <Image
+              src={img}
+              alt="Banner"
+              fill
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
+              priority={index === 0}
+              unoptimized
+            />
+            <div className="page-hero-overlay"></div>
+          </div>
+        ))}
+        <div className="page-hero-content" style={{position: 'relative', zIndex: 2}}>
           <h1><i className="fa-solid fa-tags"></i> Used Items for Sale</h1>
           <p>Find quality second-hand cars, lawn mowers, mobile homes, and more.</p>
         </div>
@@ -157,7 +174,7 @@ export default function UsedItemsPage() {
               No items found matching your filters. Try adjusting your search criteria.
             </p>
           ) : (
-            <div className="listings-grid">
+            <div className="listings-grid" style={{maxWidth: '1100px', margin: '0 auto'}}>
               {filteredItems.map((item) => (
                 <div className="listing-card" key={item.id}>
                   <div className="listing-image">
@@ -169,7 +186,6 @@ export default function UsedItemsPage() {
                       style={{ objectFit: 'cover', width: '100%', height: '220px' }}
                       unoptimized
                     />
-                    <span className="listing-badge badge-used">Used Item</span>
                   </div>
                   <div className="listing-info">
                     <span className="listing-type badge-type">
@@ -179,7 +195,7 @@ export default function UsedItemsPage() {
                     <p className="listing-loc">{item.location}</p>
                     <p className="listing-price">${item.price.toLocaleString('en-US')}</p>
                     <p className="listing-desc">{item.description}</p>
-                    <a href="tel:+13129997988" className="btn btn-primary">+1 (312) 999 7988</a>
+                    <a href="{`tel:${item.phone.replace(/[^0-9+]/g, '')}`}" className="btn btn-primary">{item.phone}</a>
                   </div>
                 </div>
               ))}
