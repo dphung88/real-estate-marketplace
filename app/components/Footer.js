@@ -30,7 +30,7 @@ export default function Footer() {
           />
         </Link>
 
-        {/* CONTACT ICONS */}
+        {/* SLOGAN */}         <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '13px', margin: 0, flexGrow: 1, textAlign: 'center' }}>           Your trusted platform for real estate &amp; quality used items across the United States.         </p>          {/* CONTACT ICONS */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           <a href="https://www.facebook.com/share/1AbdHWCaqN/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer"
             style={{ color: '#C9A84C', fontSize: '20px' }}>
