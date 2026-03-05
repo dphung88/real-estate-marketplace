@@ -1,7 +1,7 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Prime Listings - Real Estate & Used Items',
+  title: 'Axiom Realty - Real Estate & Used Items',
   description: 'Website for rent/sale of real estate and used items.',
 };
 
