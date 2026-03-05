@@ -16,8 +16,8 @@ export default function Navbar() {
           <Image
             src="/AXIOM LLC Logo White.png"
             alt="Axiom Realty"
-            width={140}
-            height={50}
+            width={120}
+            height={40}
             style={{ objectFit: 'contain' }}
           />
         </Link>
