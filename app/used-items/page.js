@@ -1,19 +1,61 @@
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import Image from 'next/image';
 
 export const metadata = {
   title: 'Used Items - Axiom Realty',
 };
+
+const USED_ITEMS = [
+  {
+    id: 1,
+    title: 'Toyota Camry 2020',
+    category: 'Car',
+    location: 'Chicago, IL',
+    price: 22500,
+    description: '45,000 miles, excellent condition, 1 owner, full service history.',
+    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&q=80',
+  },
+  {
+    id: 2,
+    title: 'John Deere Riding Mower',
+    category: 'Lawn Mower',
+    location: 'Chicago, IL',
+    price: 1800,
+    description: '2019 model, 200 hours of use, good condition, clean and serviced.',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+  },
+  {
+    id: 3,
+    title: '2018 Clayton Mobile Home',
+    category: 'Mobile Home',
+    location: 'Chicago, IL',
+    price: 45000,
+    description: '3 bedrooms, 2 baths, 1,200 sqft, well-maintained, move-in ready.',
+    image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=600&q=80',
+  },
+];
 
 export default function UsedItemsPage() {
   return (
     <>
       <Navbar />
 
-      {/* PAGE HEADER */}
-      <section className="page-header">
-        <div className="container">
+      {/* HERO BANNER */}
+      <section className="page-hero">
+        <div className="page-hero-bg">
+          <Image
+            src="https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1600&q=80"
+            alt="Used Items Banner"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            priority
+            unoptimized
+          />
+          <div className="page-hero-overlay"></div>
+        </div>
+        <div className="page-hero-content">
           <h1><i className="fa-solid fa-tags"></i> Used Items for Sale</h1>
           <p>Find quality second-hand cars, lawn mowers, mobile homes, and more.</p>
         </div>
@@ -43,54 +85,36 @@ export default function UsedItemsPage() {
                 <option value="good">Good</option>
                 <option value="fair">Fair</option>
               </select>
-              <button className="btn btn-primary">Search</button>
+              <button className="btn btn-sm">Search</button>
             </div>
           </div>
 
           <div className="listings-grid">
-
-            <div className="listing-card">
-              <div className="listing-badge">Used Item</div>
-              <div className="listing-content">
-                <span className="tag">Car</span>
-                <h3>Toyota Camry 2020</h3>
-                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Chicago, IL</p>
-                <p className="listing-price">$22,500</p>
-                <p>45,000 miles, excellent condition, 1 owner, full service history.</p>
-                <a href="tel:+13129997988" className="btn btn-primary">
-                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
-                </a>
+            {USED_ITEMS.map((item) => (
+              <div className="listing-card" key={item.id}>
+                <div className="listing-image">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={600}
+                    height={400}
+                    style={{ objectFit: 'cover', width: '100%', height: '220px' }}
+                    unoptimized
+                  />
+                  <span className="listing-badge badge-used">Used Item</span>
+                </div>
+                <div className="listing-info">
+                  <span className="listing-type badge-type">
+                    <i className="fa-solid fa-tag"></i> {item.category}
+                  </span>
+                  <h3>{item.title}</h3>
+                  <p className="listing-loc">{item.location}</p>
+                  <p className="listing-price">${item.price.toLocaleString('en-US')}</p>
+                  <p className="listing-desc">{item.description}</p>
+                  <a href="tel:+13129997988" className="btn btn-primary">+1 (312) 999 7988</a>
+                </div>
               </div>
-            </div>
-
-            <div className="listing-card">
-              <div className="listing-badge">Used Item</div>
-              <div className="listing-content">
-                <span className="tag">Lawn Mower</span>
-                <h3>John Deere Riding Mower</h3>
-                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Chicago, IL</p>
-                <p className="listing-price">$1,800</p>
-                <p>2019 model, 200 hours of use, good condition, clean and serviced.</p>
-                <a href="tel:+13129997988" className="btn btn-primary">
-                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
-                </a>
-              </div>
-            </div>
-
-            <div className="listing-card">
-              <div className="listing-badge">Used Item</div>
-              <div className="listing-content">
-                <span className="tag">Mobile Home</span>
-                <h3>2018 Clayton Mobile Home</h3>
-                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Chicago, IL</p>
-                <p className="listing-price">$45,000</p>
-                <p>3 bedrooms, 2 baths, 1,200 sqft, well-maintained, move-in ready.</p>
-                <a href="tel:+13129997988" className="btn btn-primary">
-                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
-                </a>
-              </div>
-            </div>
-
+            ))}
           </div>
         </div>
       </section>
