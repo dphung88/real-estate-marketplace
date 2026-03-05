@@ -33,7 +33,7 @@ const ALL_ITEMS = [
     condition: 'good',
     description: '2019 model, 200 hours of use, good condition, clean and serviced.',
     image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
-        phone: '+1 (312) 555 0198',
+        phone: +1 (312) 999 7988',
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ const ALL_ITEMS = [
     condition: 'excellent',
     description: '3 bedrooms, 2 baths, 1,200 sqft, well-maintained, move-in ready.',
     image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=600&q=80',
-        phone: '+1 (312) 555 0167',
+        phone: +1 (312) 999 7988',
   },
 ];
 
@@ -174,7 +174,7 @@ export default function UsedItemsPage() {
               No items found matching your filters. Try adjusting your search criteria.
             </p>
           ) : (
-            <div className="listings-grid" style={{maxWidth: '1100px', margin: '0 auto'}}>
+            <div className="listings-grid" style={{maxWidth: '1100px', margin: '0 auto, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px''}}>
               {filteredItems.map((item) => (
                 <div className="listing-card" key={item.id}>
                   <div className="listing-image">
@@ -188,9 +188,6 @@ export default function UsedItemsPage() {
                     />
                   </div>
                   <div className="listing-info">
-                    <span className="listing-type badge-type">
-                      <i className="fa-solid fa-tag"></i> {getCategoryLabel(item.category)}
-                    </span>
                     <h3>{item.title}</h3>
                     <p className="listing-loc">{item.location}</p>
                     <p className="listing-price">${item.price.toLocaleString('en-US')}</p>
