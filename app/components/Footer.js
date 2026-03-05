@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -7,7 +8,15 @@ export default function Footer() {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-col">
-              <h4><i className="fa-solid fa-house"></i> Prime Listings</h4>
+              <Link href="/" className="footer-logo">
+                <Image
+                  src="/AXIOM LLC Logo.png"
+                  alt="Axiom Realty"
+                  width={140}
+                  height={50}
+                  style={{ objectFit: 'contain' }}
+                />
+              </Link>
               <p>Your trusted platform for real estate and quality used items across the United States.</p>
             </div>
             <div className="footer-col">
@@ -21,20 +30,17 @@ export default function Footer() {
             </div>
             <div className="footer-col">
               <h4>Contact</h4>
+              <p><i className="fa-solid fa-location-dot"></i> Chicago, Illinois, United States</p>
               <p><i className="fa-solid fa-phone"></i> <a href="tel:+13129997988">+1 (312) 999 7988</a></p>
-              <p><i className="fa-solid fa-envelope"></i> info@primelistings.com</p>
-              <p><i className="fa-solid fa-location-dot"></i> Chicago, Illinois, USA</p>
+              <p><i className="fa-solid fa-envelope"></i> info@axiomrealty.com</p>
             </div>
           </div>
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2026 Prime Listings. All rights reserved.</p>
-        <p>
-          <Link href="/contact">Contact Us</Link>
-          {' | '}
-          <a href="#">Privacy Policy</a>
-        </p>
+        <div className="container">
+          <p>&copy; {new Date().getFullYear()} Axiom Realty LLC. All rights reserved.</p>
+        </div>
       </div>
     </footer>
   );
