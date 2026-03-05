@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Image from 'next/image';
 
 export default function HomePage() {
   return (
@@ -9,6 +10,17 @@ export default function HomePage() {
 
       {/* HERO */}
       <section className="hero">
+        <div className="hero-bg">
+          <Image
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80"
+            alt="Axiom Realty Banner"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            priority
+            unoptimized
+          />
+          <div className="hero-overlay"></div>
+        </div>
         <div className="hero-content">
           <h1>Find Your Next Home or Great Deal</h1>
           <p>Browse properties for rent &amp; sale, plus quality used items: cars, lawn mowers, mobile homes &amp; more.</p>
@@ -45,62 +57,65 @@ export default function HomePage() {
               Lawn Mowers
             </Link>
             <Link href="/used-items" className="cat-card">
-              <i className="fa-solid fa-caravan"></i>
+              <i className="fa-solid fa-house-chimney"></i>
               Mobile Homes
             </Link>
             <Link href="/used-items" className="cat-card">
-              <i className="fa-solid fa-tags"></i>
+              <i className="fa-solid fa-tag"></i>
               Other Used Items
             </Link>
           </div>
         </div>
       </section>
 
-      {/* FEATURED LISTINGS */}
-      <section className="section featured">
+      {/* FEATURED */}
+      <section className="featured section">
         <div className="container">
           <h2 className="section-title">Featured Listings</h2>
           <div className="listings-grid">
 
             <div className="listing-card">
-              <div className="listing-badge">For Sale</div>
+              <div className="listing-img">
+                <Image src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80" alt="Modern Family Home" fill style={{objectFit:'cover'}} unoptimized />
+                <span className="listing-badge badge-sale">For Sale</span>
+              </div>
               <div className="listing-content">
-                <span className="tag">House</span>
+                <span className="badge badge-type">House</span>
                 <h3>Modern Family Home</h3>
-                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
+                <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
                 <p className="listing-price">$350,000</p>
-                <p>4 bedrooms, 3 bathrooms, 2,500 sqft, modern design, near school &amp; market.</p>
-                <a href="tel:+13129997988" className="btn btn-primary">
-                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
-                </a>
+                <p className="listing-desc">4 bedrooms, 3 bathrooms, 2,500 sqft, modern design, near school &amp; market.</p>
+                <a href="tel:+13129997988" className="btn btn-sm"><i className="fa-solid fa-phone"></i> +1 (312) 999 7988</a>
               </div>
             </div>
 
             <div className="listing-card">
-              <div className="listing-badge">For Rent</div>
+              <div className="listing-img">
+                <Image src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="City Center Apartment" fill style={{objectFit:'cover'}} unoptimized />
+                <span className="listing-badge badge-rent">For Rent</span>
+              </div>
               <div className="listing-content">
-                <span className="tag">Apartment</span>
+                <span className="badge badge-type">Apartment</span>
                 <h3>City Center Apartment</h3>
-                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Downtown Chicago, IL</p>
+                <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Downtown Chicago, IL</p>
                 <p className="listing-price">$2,400 / month</p>
-                <p>2 bedrooms, fully furnished, high-rise view, pool &amp; gym access.</p>
-                <a href="tel:+13129997988" className="btn btn-primary">
-                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
-                </a>
+                <p className="listing-desc">2 bedrooms, fully furnished, high-rise view, pool &amp; gym access.</p>
+                <a href="tel:+13129997988" className="btn btn-sm"><i className="fa-solid fa-phone"></i> +1 (312) 999 7988</a>
               </div>
             </div>
 
             <div className="listing-card">
-              <div className="listing-badge">Used Item</div>
+              <div className="listing-img">
+                <Image src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80" alt="Toyota Camry 2020" fill style={{objectFit:'cover'}} unoptimized />
+                <span className="listing-badge badge-used">Used Item</span>
+              </div>
               <div className="listing-content">
-                <span className="tag">Car</span>
+                <span className="badge badge-type">Car</span>
                 <h3>Toyota Camry 2020</h3>
-                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
+                <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
                 <p className="listing-price">$22,500</p>
-                <p>45,000 miles, excellent condition, 1 owner, full service history.</p>
-                <a href="tel:+13129997988" className="btn btn-primary">
-                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
-                </a>
+                <p className="listing-desc">45,000 miles, excellent condition, 1 owner, full service history.</p>
+                <a href="tel:+13129997988" className="btn btn-sm"><i className="fa-solid fa-phone"></i> +1 (312) 999 7988</a>
               </div>
             </div>
 
@@ -109,7 +124,7 @@ export default function HomePage() {
       </section>
 
       {/* WHY US */}
-      <section className="section why-us">
+      <section className="why-us section">
         <div className="container">
           <h2 className="section-title">Why Choose Axiom Realty?</h2>
           <div className="why-grid">
@@ -126,7 +141,7 @@ export default function HomePage() {
             <div className="why-card">
               <i className="fa-solid fa-headset"></i>
               <h4>24/7 Support</h4>
-              <p>Call us anytime: <a href="tel:+13129997988">+1 (312) 999 7988</a></p>
+              <p>Call us anytime: <a href="tel:+13129997988" style={{color:'#f0c040'}}>+1 (312) 999 7988</a></p>
             </div>
           </div>
         </div>
