@@ -16,6 +16,10 @@ export default function HomePage() {
             <Link href="/real-estate" className="btn btn-primary">View Properties</Link>
             <Link href="/used-items" className="btn btn-secondary">View Used Items</Link>
           </div>
+          <div className="hero-hotline">
+            <i className="fa-solid fa-phone"></i>
+            <span>Call us now: <a href="tel:+13129997988">+1 (312) 999 7988</a></span>
+          </div>
         </div>
       </section>
 
@@ -53,47 +57,59 @@ export default function HomePage() {
       </section>
 
       {/* FEATURED LISTINGS */}
-      <section className="featured section">
+      <section className="section featured">
         <div className="container">
           <h2 className="section-title">Featured Listings</h2>
           <div className="listings-grid">
 
-            <article className="listing-card">
-              <span className="badge badge-sale">For Sale</span>
-              <span className="badge badge-type">House</span>
-              <h3>Modern Family Home</h3>
-              <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Ho Chi Minh City, Vietnam</p>
-              <p className="listing-price">$350,000</p>
-              <p className="listing-desc">4 bedrooms, 3 bathrooms, 250m², modern design, near school &amp; market.</p>
-              <Link href="/contact" className="btn-sm">Inquire Now</Link>
-            </article>
+            <div className="listing-card">
+              <div className="listing-badge">For Sale</div>
+              <div className="listing-content">
+                <span className="tag">House</span>
+                <h3>Modern Family Home</h3>
+                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
+                <p className="listing-price">$350,000</p>
+                <p>4 bedrooms, 3 bathrooms, 2,500 sqft, modern design, near school &amp; market.</p>
+                <a href="tel:+13129997988" className="btn btn-primary">
+                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
+                </a>
+              </div>
+            </div>
 
-            <article className="listing-card">
-              <span className="badge badge-rent">For Rent</span>
-              <span className="badge badge-type">Apartment</span>
-              <h3>City Center Apartment</h3>
-              <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> District 1, Ho Chi Minh City</p>
-              <p className="listing-price">$800 / month</p>
-              <p className="listing-desc">2 bedrooms, fully furnished, high-rise view, pool &amp; gym access.</p>
-              <Link href="/contact" className="btn-sm">Inquire Now</Link>
-            </article>
+            <div className="listing-card">
+              <div className="listing-badge">For Rent</div>
+              <div className="listing-content">
+                <span className="tag">Apartment</span>
+                <h3>City Center Apartment</h3>
+                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Downtown Chicago, IL</p>
+                <p className="listing-price">$2,400 / month</p>
+                <p>2 bedrooms, fully furnished, high-rise view, pool &amp; gym access.</p>
+                <a href="tel:+13129997988" className="btn btn-primary">
+                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
+                </a>
+              </div>
+            </div>
 
-            <article className="listing-card">
-              <span className="badge badge-used">Used Item</span>
-              <span className="badge badge-type">Car</span>
-              <h3>Toyota Camry 2020</h3>
-              <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Ho Chi Minh City, Vietnam</p>
-              <p className="listing-price">$22,500</p>
-              <p className="listing-desc">45,000 km, excellent condition, 1 owner, full service history.</p>
-              <Link href="/contact" className="btn-sm">Inquire Now</Link>
-            </article>
+            <div className="listing-card">
+              <div className="listing-badge">Used Item</div>
+              <div className="listing-content">
+                <span className="tag">Car</span>
+                <h3>Toyota Camry 2020</h3>
+                <p className="listing-location"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
+                <p className="listing-price">$22,500</p>
+                <p>45,000 miles, excellent condition, 1 owner, full service history.</p>
+                <a href="tel:+13129997988" className="btn btn-primary">
+                  <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
+                </a>
+              </div>
+            </div>
 
           </div>
         </div>
       </section>
 
       {/* WHY US */}
-      <section className="why-us section">
+      <section className="section why-us">
         <div className="container">
           <h2 className="section-title">Why Choose Prime Listings?</h2>
           <div className="why-grid">
@@ -110,7 +126,7 @@ export default function HomePage() {
             <div className="why-card">
               <i className="fa-solid fa-headset"></i>
               <h4>24/7 Support</h4>
-              <p>We are here to help you anytime.</p>
+              <p>Call us anytime: <a href="tel:+13129997988">+1 (312) 999 7988</a></p>
             </div>
           </div>
         </div>
