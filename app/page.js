@@ -111,7 +111,7 @@ export default function HomePage() {
       {/* WHY US */}
       <section className="section why-us">
         <div className="container">
-          <h2 className="section-title">Why Choose Prime Listings?</h2>
+          <h2 className="section-title">Why Choose Axiom Realty?</h2>
           <div className="why-grid">
             <div className="why-card">
               <i className="fa-solid fa-shield-halved"></i>
