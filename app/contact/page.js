@@ -37,7 +37,7 @@ export default function ContactPage() {
                 </div>
                 <div className="form-group">
                   <label htmlFor="phone">Phone Number</label>
-                  <input type="tel" id="phone" name="phone" placeholder="+84 xxx xxx xxx" />
+                  <input type="tel" id="phone" name="phone" placeholder="+1 (xxx) xxx xxxx" />
                 </div>
                 <div className="form-group">
                   <label htmlFor="subject">Subject</label>
@@ -51,7 +51,7 @@ export default function ContactPage() {
                 </div>
                 <div className="form-group">
                   <label htmlFor="message">Message</label>
-                  <textarea id="message" name="message" placeholder="Write your message here..." />
+                  <textarea id="message" name="message" placeholder="Write your message here..."></textarea>
                 </div>
                 <button type="submit" className="btn-submit">Send Message</button>
               </form>
@@ -65,28 +65,28 @@ export default function ContactPage() {
                   <i className="fa-solid fa-location-dot"></i>
                   <div>
                     <strong>Address</strong>
-                    <p>123 Nguyen Van Linh, District 7<br />Ho Chi Minh City, Vietnam</p>
+                    <p>Chicago, Illinois<br />United States</p>
                   </div>
                 </div>
                 <div className="contact-info-item">
                   <i className="fa-solid fa-phone"></i>
                   <div>
-                    <strong>Phone</strong>
-                    <p>+84 28 1234 5678</p>
+                    <strong>Hotline</strong>
+                    <p><a href="tel:+13129997988">+1 (312) 999 7988</a></p>
                   </div>
                 </div>
                 <div className="contact-info-item">
                   <i className="fa-solid fa-envelope"></i>
                   <div>
                     <strong>Email</strong>
-                    <p>info@primelistings.vn</p>
+                    <p>info@primelistings.com</p>
                   </div>
                 </div>
                 <div className="contact-info-item">
                   <i className="fa-solid fa-clock"></i>
                   <div>
                     <strong>Working Hours</strong>
-                    <p>Monday - Friday: 8:00 AM - 6:00 PM<br />Saturday: 9:00 AM - 4:00 PM</p>
+                    <p>Monday - Friday: 8:00 AM - 6:00 PM CT<br />Saturday: 9:00 AM - 4:00 PM CT</p>
                   </div>
                 </div>
               </div>
