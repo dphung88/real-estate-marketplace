@@ -5,7 +5,7 @@ import Footer from '../components/Footer';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Real Estate Listings - Prime Listings',
+  title: 'Real Estate Listings - Axiom Realty',
 };
 
 async function getListings() {
