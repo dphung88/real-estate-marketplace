@@ -30,12 +30,27 @@ export default async function RealEstatePage() {
   return (
     <>
       <Navbar />
-      <section className="page-header">
-        <div className="container">
+
+      {/* HERO BANNER */}
+      <section className="page-hero">
+        <div className="page-hero-bg">
+          <Image
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80"
+            alt="Real Estate Banner"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            priority
+            unoptimized
+          />
+          <div className="page-hero-overlay"></div>
+        </div>
+        <div className="page-hero-content">
           <h1><i className="fa-solid fa-building"></i> Real Estate Listings</h1>
           <p>Browse properties available for sale and rent across the United States.</p>
         </div>
       </section>
+
+      {/* LISTINGS */}
       <section className="listings-section">
         <div className="container">
           {listings.length === 0 ? (
@@ -46,27 +61,29 @@ export default async function RealEstatePage() {
                 const imgSrc = listing.image_url ||
                   (listing.property_type === 'rent' ? DEFAULT_IMAGES.rent : DEFAULT_IMAGES.sale);
                 return (
-                  <div key={listing.id} className="listing-card">
-                    <div className="listing-img">
+                  <div className="listing-card" key={listing.id}>
+                    <div className="listing-image">
                       <Image
                         src={imgSrc}
                         alt={listing.title}
-                        fill
-                        style={{ objectFit: 'cover' }}
+                        width={600}
+                        height={400}
+                        style={{ objectFit: 'cover', width: '100%', height: '220px' }}
                         unoptimized
                       />
-                      <span className={`listing-badge ${listing.property_type === 'rent' ? 'badge-rent' : 'badge-sale'}`}>
+                      <span className="listing-badge">
                         {listing.property_type === 'rent' ? 'For Rent' : 'For Sale'}
                       </span>
                     </div>
-                    <div className="listing-content">
+                    <div className="listing-info">
+                      <span className="listing-type">
+                        <i className="fa-solid fa-house"></i> House
+                      </span>
                       <h3>{listing.title}</h3>
-                      <p className="listing-loc">
-                        <i className="fa-solid fa-location-dot"></i> {listing.location}
-                      </p>
+                      <p className="listing-location">{listing.location}</p>
                       {listing.area && (
-                        <p className="listing-meta">
-                          <i className="fa-solid fa-ruler-combined"></i> {listing.area?.toLocaleString('en-US')} sqft
+                        <p className="listing-details">
+                          {listing.area?.toLocaleString('en-US')} sqft
                           {listing.bedrooms && <> &bull; {listing.bedrooms} beds</>}
                           {listing.bathrooms && <> &bull; {listing.bathrooms} baths</>}
                         </p>
@@ -80,9 +97,7 @@ export default async function RealEstatePage() {
                       {listing.description && (
                         <p className="listing-desc">{listing.description}</p>
                       )}
-                      <a href="tel:+13129997988" className="btn btn-sm">
-                        <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
-                      </a>
+                      <a href="tel:+13129997988" className="btn btn-primary">+1 (312) 999 7988</a>
                     </div>
                   </div>
                 );
@@ -91,6 +106,7 @@ export default async function RealEstatePage() {
           )}
         </div>
       </section>
+
       <Footer />
     </>
   );
