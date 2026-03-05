@@ -92,9 +92,9 @@ export default function ContactPage() {
               </div>
               <div className="social-links">
                 <a href="#" className="social-btn" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
-                <a href="#" className="social-btn" aria-label="Twitter"><i className="fab fa-twitter"></i></a>
-                <a href="#" className="social-btn" aria-label="Instagram"><i className="fab fa-instagram"></i></a>
-                <a href="#" className="social-btn" aria-label="LinkedIn"><i className="fab fa-linkedin-in"></i></a>
+                <a href="https://wa.me/13129997988" className="social-btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i className="fab fa-whatsapp"></i></a>
+                <a href="#" className="social-btn" aria-label="TikTok"><i className="fab fa-tiktok"></i></a>
+                <a href="#" className="social-btn" aria-label="YouTube"><i className="fab fa-youtube"></i></a>
               </div>
             </div>
 
