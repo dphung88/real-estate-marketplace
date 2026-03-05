@@ -12,7 +12,7 @@ export default function ContactPage() {
     subject: '',
     message: '',
   });
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleChange = (e) => {
@@ -47,7 +47,6 @@ export default function ContactPage() {
     <>
       <Navbar />
 
-      {/* PAGE HEADER */}
       <section className="page-header">
         <div className="container">
           <h1><i className="fa-solid fa-envelope"></i> Contact Us</h1>
@@ -55,7 +54,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* CONTACT SECTION */}
       <section className="section">
         <div className="container">
           <div className="contact-wrapper">
@@ -158,7 +156,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <strong>Email</strong>
-                  <p><a href="mailto:info@axiomrealty.com">info@axiomrealty.com</a></p>
+                  <p><a href="mailto:dphung@my.ggu.edu">dphung@my.ggu.edu</a></p>
                 </div>
               </div>
 
@@ -174,16 +172,20 @@ export default function ContactPage() {
 
               <div className="contact-social">
                 <a href="https://www.facebook.com/share/1AbdHWCaqN/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="social-link">
-                  <i className="fa-brands fa-facebook"></i> Facebook
+                  <i className="fa-brands fa-facebook"></i>
+                  <span>Facebook</span>
                 </a>
                 <a href="https://wa.me/13129997988" target="_blank" rel="noopener noreferrer" className="social-link">
-                  <i className="fa-brands fa-whatsapp"></i> WhatsApp
+                  <i className="fa-brands fa-whatsapp"></i>
+                  <span>WhatsApp</span>
                 </a>
                 <a href="https://www.tiktok.com/@mceagle.mentor" target="_blank" rel="noopener noreferrer" className="social-link">
-                  <i className="fa-brands fa-tiktok"></i> TikTok
+                  <i className="fa-brands fa-tiktok"></i>
+                  <span>TikTok</span>
                 </a>
                 <a href="https://youtube.com/@mceagle.essentials" target="_blank" rel="noopener noreferrer" className="social-link">
-                  <i className="fa-brands fa-youtube"></i> YouTube
+                  <i className="fa-brands fa-youtube"></i>
+                  <span>YouTube</span>
                 </a>
               </div>
             </div>
