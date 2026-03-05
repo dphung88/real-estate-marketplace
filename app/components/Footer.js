@@ -3,44 +3,49 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-top">
-        <div className="container">
-          <div className="footer-grid">
-            <div className="footer-col">
-              <Link href="/" className="footer-logo">
-                <Image
-                  src="/AXIOM LLC Logo.png"
-                  alt="Axiom Realty"
-                  width={140}
-                  height={50}
-                  style={{ objectFit: 'contain' }}
-                />
-              </Link>
-              <p>Your trusted platform for real estate and quality used items across the United States.</p>
-            </div>
-            <div className="footer-col">
-              <h4>Quick Links</h4>
-              <ul>
-                <li><Link href="/">Home</Link></li>
-                <li><Link href="/real-estate">Real Estate</Link></li>
-                <li><Link href="/used-items">Used Items</Link></li>
-                <li><Link href="/contact">Contact Us</Link></li>
-              </ul>
-            </div>
-            <div className="footer-col">
-              <h4>Contact</h4>
-              <p><i className="fa-solid fa-location-dot"></i> Chicago, Illinois, United States</p>
-              <p><i className="fa-solid fa-phone"></i> <a href="tel:+13129997988">+1 (312) 999 7988</a></p>
-              <p><i className="fa-solid fa-envelope"></i> info@axiomrealty.com</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="footer-bottom">
-        <div className="container">
-          <p>&copy; {new Date().getFullYear()} Axiom Realty LLC. All rights reserved.</p>
-        </div>
+    <footer style={{
+      backgroundColor: '#0d1b2a',
+      borderTop: '1px solid rgba(255,255,255,0.1)',
+      padding: '20px 0',
+    }}>
+      <div style={{
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '0 24px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '16px',
+      }}>
+        {/* LOGO */}
+        <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
+          <Image
+            src="/AXIOM LLC Logo.png"
+            alt="Axiom Realty"
+            width={50}
+            height={50}
+            style={{ objectFit: 'contain', width: '50px', height: '50px' }}
+          />
+        </Link>
+
+        {/* TAGLINE */}
+        <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', margin: 0 }}>
+          Your trusted platform for real estate &amp; used items across the US.
+        </p>
+
+        {/* NAV LINKS */}
+        <nav style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
+          <Link href="/" style={{ color: '#C9A84C', fontSize: '14px', textDecoration: 'none' }}>Home</Link>
+          <Link href="/real-estate" style={{ color: '#C9A84C', fontSize: '14px', textDecoration: 'none' }}>Real Estate</Link>
+          <Link href="/used-items" style={{ color: '#C9A84C', fontSize: '14px', textDecoration: 'none' }}>Used Items</Link>
+          <Link href="/contact" style={{ color: '#C9A84C', fontSize: '14px', textDecoration: 'none' }}>Contact</Link>
+        </nav>
+
+        {/* COPYRIGHT */}
+        <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px', margin: 0 }}>
+          &copy; {new Date().getFullYear()} Axiom Realty LLC
+        </p>
       </div>
     </footer>
   );
