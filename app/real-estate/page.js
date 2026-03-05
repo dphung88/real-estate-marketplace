@@ -2,6 +2,8 @@ import { supabase } from '../../lib/supabase';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: 'Real Estate Listings - Prime Listings',
 };
@@ -47,7 +49,7 @@ export default async function RealEstatePage() {
                     </p>
                     {listing.area && (
                       <p>
-                        <i className="fa-solid fa-ruler-combined"></i> {listing.area} sqft
+                        <i className="fa-solid fa-ruler-combined"></i> {listing.area?.toLocaleString('en-US')} sqft
                         {listing.bedrooms && <> &bull; {listing.bedrooms} beds</>}
                         {listing.bathrooms && <> &bull; {listing.bathrooms} baths</>}
                       </p>
@@ -58,6 +60,9 @@ export default async function RealEstatePage() {
                         : `$${listing.price?.toLocaleString('en-US')}`
                       }
                     </p>
+                    {listing.description && (
+                      <p className="listing-desc">{listing.description}</p>
+                    )}
                     <a href="tel:+13129997988" className="btn btn-primary">
                       <i className="fa-solid fa-phone"></i> +1 (312) 999 7988
                     </a>
