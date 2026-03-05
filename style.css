@@ -127,3 +127,35 @@ img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .nav-links { gap: 16px; }
   .nav-links a { font-size: 0.85rem; }
 }
+
+
+/* ===== ACTIVE NAV LINK ===== */
+.nav-links a.active { color: #f0c040; }
+
+/* ===== FILTER SELECT ===== */
+.filter-select { padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 8px; font-size: 0.9rem; font-family: inherit; background: #fff; color: #333; cursor: pointer; transition: border-color 0.2s; }
+.filter-select:focus { outline: none; border-color: #0f3460; }
+.filter-group { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* ===== CONTACT PAGE ===== */
+.contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: start; }
+.contact-form-box, .contact-info-box { background: #fff; border-radius: 16px; padding: 40px; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+.contact-form-box h2, .contact-info-box h2 { font-size: 1.5rem; font-weight: 700; color: #1a1a2e; margin-bottom: 28px; }
+.contact-info-list { display: flex; flex-direction: column; gap: 24px; margin-bottom: 32px; }
+.contact-info-item { display: flex; gap: 16px; align-items: flex-start; }
+.contact-info-item i { font-size: 1.3rem; color: #f0c040; background: #1a1a2e; padding: 12px; border-radius: 50%; min-width: 44px; text-align: center; margin-top: 2px; }
+.contact-info-item strong { display: block; font-size: 0.9rem; color: #1a1a2e; margin-bottom: 4px; }
+.contact-info-item p { font-size: 0.88rem; color: #666; line-height: 1.6; }
+.social-links { display: flex; gap: 12px; margin-top: 8px; }
+.social-btn { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: #1a1a2e; color: #f0c040; font-size: 1rem; transition: all 0.2s; }
+.social-btn:hover { background: #f0c040; color: #1a1a2e; transform: translateY(-3px); }
+.btn-full { width: 100%; text-align: center; border: none; font-size: 1rem; padding: 14px; }
+
+/* ===== RESPONSIVE UPDATES ===== */
+@media (max-width: 768px) {
+  .contact-wrapper { grid-template-columns: 1fr; gap: 24px; }
+  .contact-form-box, .contact-info-box { padding: 24px; }
+  .filter-group { flex-direction: column; }
+  .filter-select { width: 100%; }
+  .page-header h1 { font-size: 1.6rem; }
+}
