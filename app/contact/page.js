@@ -91,7 +91,7 @@ export default function ContactPage() {
                 </div>
               </div>
               <div className="social-links">
-                <a href="#" className="social-btn" aria-label="Facebook"><i className="fab fa-facebook-f"></i></a>
+                <a href="https://www.facebook.com/share/1AbdHWCaqN/?mibextid=wwXIfr" className="social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a>
                 <a href="https://wa.me/13129997988" className="social-btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i className="fab fa-whatsapp"></i></a>
                 <a href="https://www.tiktok.com/@mceagle.mentor" className="social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer"><i className="fab fa-tiktok"></i></a>
                 <a href="https://youtube.com/@mceagle.essentials" className="social-btn" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i className="fab fa-youtube"></i></a>
