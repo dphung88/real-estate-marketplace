@@ -51,50 +51,71 @@ export default function ContactPage() {
                 </div>
                 <div className="form-group">
                   <label htmlFor="message">Message</label>
-                  <textarea id="message" name="message" placeholder="Write your message here..."></textarea>
+                  <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
                 </div>
-                <button type="submit" className="btn-submit">Send Message</button>
+                <button type="submit" className="btn btn-primary">
+                  <i className="fa-solid fa-paper-plane"></i> Send Message
+                </button>
               </form>
             </div>
 
             {/* CONTACT INFO */}
             <div className="contact-info-box">
               <h2>Our Contact Information</h2>
-              <div className="contact-info-list">
-                <div className="contact-info-item">
+
+              <div className="contact-info-item">
+                <div className="contact-info-icon">
                   <i className="fa-solid fa-location-dot"></i>
-                  <div>
-                    <strong>Address</strong>
-                    <p>Chicago, Illinois<br />United States</p>
-                  </div>
                 </div>
-                <div className="contact-info-item">
-                  <i className="fa-solid fa-phone"></i>
-                  <div>
-                    <strong>Hotline</strong>
-                    <p><a href="tel:+13129997988">+1 (312) 999 7988</a></p>
-                  </div>
-                </div>
-                <div className="contact-info-item">
-                  <i className="fa-solid fa-envelope"></i>
-                  <div>
-                    <strong>Email</strong>
-                    <p>info@primelistings.com</p>
-                  </div>
-                </div>
-                <div className="contact-info-item">
-                  <i className="fa-solid fa-clock"></i>
-                  <div>
-                    <strong>Working Hours</strong>
-                    <p>Monday - Friday: 8:00 AM - 6:00 PM CT<br />Saturday: 9:00 AM - 4:00 PM CT</p>
-                  </div>
+                <div>
+                  <strong>Address</strong>
+                  <p>Chicago, Illinois<br />United States</p>
                 </div>
               </div>
-              <div className="social-links">
-                <a href="https://www.facebook.com/share/1AbdHWCaqN/?mibextid=wwXIfr" className="social-btn" aria-label="Facebook" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook-f"></i></a>
-                <a href="https://wa.me/13129997988" className="social-btn" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer"><i className="fab fa-whatsapp"></i></a>
-                <a href="https://www.tiktok.com/@mceagle.mentor" className="social-btn" aria-label="TikTok" target="_blank" rel="noopener noreferrer" target="_blank" rel="noopener noreferrer"><i className="fab fa-tiktok"></i></a>
-                <a href="https://youtube.com/@mceagle.essentials" className="social-btn" aria-label="YouTube" target="_blank" rel="noopener noreferrer"><i className="fab fa-youtube"></i></a>
+
+              <div className="contact-info-item">
+                <div className="contact-info-icon">
+                  <i className="fa-solid fa-phone"></i>
+                </div>
+                <div>
+                  <strong>Hotline</strong>
+                  <p><a href="tel:+13129997988">+1 (312) 999 7988</a></p>
+                </div>
+              </div>
+
+              <div className="contact-info-item">
+                <div className="contact-info-icon">
+                  <i className="fa-solid fa-envelope"></i>
+                </div>
+                <div>
+                  <strong>Email</strong>
+                  <p><a href="mailto:info@axiomrealty.com">info@axiomrealty.com</a></p>
+                </div>
+              </div>
+
+              <div className="contact-info-item">
+                <div className="contact-info-icon">
+                  <i className="fa-solid fa-clock"></i>
+                </div>
+                <div>
+                  <strong>Working Hours</strong>
+                  <p>Monday - Friday: 8:00 AM - 6:00 PM CT<br />Saturday: 9:00 AM - 4:00 PM CT</p>
+                </div>
+              </div>
+
+              <div className="contact-social">
+                <a href="https://www.facebook.com/share/1AbdHWCaqN/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <i className="fa-brands fa-facebook"></i> Facebook
+                </a>
+                <a href="https://wa.me/13129997988" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <i className="fa-brands fa-whatsapp"></i> WhatsApp
+                </a>
+                <a href="https://www.tiktok.com/@mceagle.mentor" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <i className="fa-brands fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://youtube.com/@mceagle.essentials" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <i className="fa-brands fa-youtube"></i> YouTube
+                </a>
               </div>
             </div>
 
