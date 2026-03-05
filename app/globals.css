@@ -75,6 +75,54 @@ img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .page-header h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
 .page-header p { color: #ccc; font-size: 1rem; }
 
+/* ===== PAGE HERO (with background image) ===== */
+.page-hero {
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+.page-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.page-hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+.page-hero-content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  padding: 60px 20px;
+  max-width: 800px;
+}
+.page-hero-content h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.page-hero-content h1 i {
+  margin-right: 12px;
+  color: #f0c040;
+}
+.page-hero-content p {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+}
+
 /* ===== FILTER BAR ===== */
 .filter-bar { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 36px; display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-end; }
 .filter-group { flex: 1; min-width: 150px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
