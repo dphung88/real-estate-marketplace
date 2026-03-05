@@ -2,7 +2,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 export const metadata = {
-  title: 'Contact Us - Prime Listings',
+  title: 'Contact Us - Axiom Realty',
 };
 
 export default function ContactPage() {
