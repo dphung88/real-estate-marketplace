@@ -234,7 +234,7 @@ export default function UsedItemsPage() {
                     <p className="listing-loc">{item.location}</p>
                     <p className="listing-price">${item.price.toLocaleString('en-US')}</p>
                     <p className="listing-desc">{item.description}</p>
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <div className="listing-actions">
                       <button
                         className="btn btn-primary"
                         onClick={() => handleCheckout(item)}
