@@ -109,7 +109,7 @@ export default function ContactPage() {
                     placeholder="Write your message here..."
                     value={formData.message} onChange={handleChange} required></textarea>
                 </div>
-                <button type="submit" className="btn btn-primary" disabled={status === 'loading'}>
+                <button type="submit" className="btn btn-primary btn-contact-submit" disabled={status === 'loading'}>
                   {status === 'loading' ? (
                     <><i className="fa-solid fa-spinner fa-spin"></i> Sending...</>
                   ) : (

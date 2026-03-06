@@ -236,6 +236,10 @@ img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .contact-form textarea { height: 120px; resize: vertical; }
 .btn-submit { width: 100%; background: var(--color-dark); color: var(--color-light); padding: 14px; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
 .btn-submit:hover { background: #12132a; }
+/* Nút Send Message trên trang Contact - màu xanh */
+.btn-contact-submit { background: #2563eb; color: #fff; border-color: transparent; }
+.btn-contact-submit:hover { background: #1d4ed8; border-color: transparent; transform: translateY(-2px); }
+.btn-contact-submit:disabled { background: #93c5fd; cursor: not-allowed; transform: none; }
 .contact-social { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
 .social-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: var(--color-dark); color: var(--color-accent); border-radius: 8px; font-size: 0.9rem; font-weight: 600; transition: all 0.2s; }
 .social-link:hover { background: var(--color-accent); color: var(--color-dark); transform: translateY(-2px); }
