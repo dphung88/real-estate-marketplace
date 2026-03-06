@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Image from 'next/image';
@@ -69,6 +68,43 @@ export default function UsedItemsPage() {
   };
 
   const filteredItems = filterItems();
+  const [checkingOut, setCheckingOut] = useState(null);
+  const [successMsg, setSuccessMsg] = useState('');
+  const [cancelMsg, setCancelMsg] = useState('');
+
+  useEffect(() => {
+    const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    if (params.get('success') === 'true') {
+      setSuccessMsg(params.get('item') ? `Thank you! Payment received for ${decodeURIComponent(params.get('item'))}.` : 'Payment successful!');
+      window.history.replaceState({}, '', '/used-items');
+    }
+    if (params.get('canceled') === 'true') {
+      setCancelMsg('Checkout was canceled.');
+      window.history.replaceState({}, '', '/used-items');
+    }
+  }, []);
+
+  const handleCheckout = async (item) => {
+    if (checkingOut) return;
+    setCheckingOut(item.id);
+    try {
+      const res = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ item }),
+      });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert(data.error || 'Could not start checkout.');
+        setCheckingOut(null);
+      }
+    } catch (e) {
+      alert('Error: ' + (e.message || 'Checkout failed'));
+      setCheckingOut(null);
+    }
+  };
 
   const getCategoryLabel = (cat) => {
     if (cat === 'cars') return 'Car';
@@ -118,6 +154,16 @@ export default function UsedItemsPage() {
       {/* FILTER + LISTINGS */}
       <section className="section">
         <div className="container">
+          {successMsg && (
+            <div className="alert alert-success" style={{ marginBottom: '16px', padding: '12px 16px', background: '#d4edda', color: '#155724', borderRadius: '8px' }}>
+              <i className="fa-solid fa-circle-check"></i> {successMsg}
+            </div>
+          )}
+          {cancelMsg && (
+            <div className="alert alert-info" style={{ marginBottom: '16px', padding: '12px 16px', background: '#d1ecf1', color: '#0c5460', borderRadius: '8px' }}>
+              <i className="fa-solid fa-info-circle"></i> {cancelMsg}
+            </div>
+          )}
           <div className="filter-bar">
             <div className="filter-group">
               <select 
@@ -188,7 +234,20 @@ export default function UsedItemsPage() {
                     <p className="listing-loc">{item.location}</p>
                     <p className="listing-price">${item.price.toLocaleString('en-US')}</p>
                     <p className="listing-desc">{item.description}</p>
-                    <a href="tel:+13129997988" className="btn btn-primary">+1 (312) 999 7988</a>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleCheckout(item)}
+                        disabled={checkingOut === item.id}
+                      >
+                        {checkingOut === item.id ? (
+                          <><i className="fa-solid fa-spinner fa-spin"></i> Loading...</>
+                        ) : (
+                          <><i className="fa-solid fa-credit-card"></i> Checkout ${item.price.toLocaleString('en-US')}</>
+                        )}
+                      </button>
+                      <a href="tel:+13129997988" className="btn" style={{ background: 'var(--color-neutral)', color: 'var(--color-dark)' }}>+1 (312) 999 7988</a>
+                    </div>
                   </div>
                 </div>
               ))}
