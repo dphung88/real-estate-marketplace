@@ -78,7 +78,6 @@ export default function HomePage() {
             <div className="listing-card">
               <div className="listing-img">
                 <Image src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80" alt="Modern Family Home" fill style={{objectFit:'cover'}} unoptimized />
-                <span className="listing-badge badge-sale">For Sale</span>
               </div>
               <div className="listing-content">
                 <span className="badge badge-type">House</span>
@@ -93,7 +92,6 @@ export default function HomePage() {
             <div className="listing-card">
               <div className="listing-img">
                 <Image src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="City Center Apartment" fill style={{objectFit:'cover'}} unoptimized />
-                <span className="listing-badge badge-rent">For Rent</span>
               </div>
               <div className="listing-content">
                 <span className="badge badge-type">Apartment</span>
@@ -108,7 +106,6 @@ export default function HomePage() {
             <div className="listing-card">
               <div className="listing-img">
                 <Image src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80" alt="Toyota Camry 2020" fill style={{objectFit:'cover'}} unoptimized />
-                <span className="listing-badge badge-used">Used Item</span>
               </div>
               <div className="listing-content">
                 <span className="badge badge-type">Car</span>

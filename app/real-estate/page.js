@@ -72,9 +72,6 @@ export default async function RealEstatePage() {
                         style={{ objectFit: 'cover', width: '100%', height: '220px' }}
                         unoptimized
                       />
-                      <span className="listing-badge">
-                        {listing.property_type === 'rent' ? 'For Rent' : 'For Sale'}
-                      </span>
                     </div>
                     <div className="listing-info">
                       <span className="listing-type">
