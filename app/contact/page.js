@@ -64,22 +64,14 @@ export default function ContactPage() {
               <h2>Send Us a Message</h2>
 
               {status === 'success' && (
-                <div style={{
-                  background: '#e8f5e9', border: '1px solid #a5d6a7',
-                  borderRadius: '8px', padding: '16px', marginBottom: '20px',
-                  color: '#2e7d32', textAlign: 'center'
-                }}>
+                <div className="contact-alert contact-alert-success">
                   <i className="fa-solid fa-circle-check" style={{ marginRight: '8px' }}></i>
                   <strong>Message sent!</strong> We&apos;ll get back to you soon.
                 </div>
               )}
 
               {status === 'error' && (
-                <div style={{
-                  background: '#ffebee', border: '1px solid #ef9a9a',
-                  borderRadius: '8px', padding: '16px', marginBottom: '20px',
-                  color: '#c62828'
-                }}>
+                <div className="contact-alert contact-alert-error">
                   <i className="fa-solid fa-circle-xmark" style={{ marginRight: '8px' }}></i>
                   {errorMsg}
                 </div>

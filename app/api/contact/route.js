@@ -21,8 +21,8 @@ export async function POST(request) {
       subject: `[Axiom Realty] New Contact: ${subject || 'General Inquiry'} - from ${name}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
-          <div style="background: #0d1b2a; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
-            <h1 style="color: #C9A84C; margin: 0; font-size: 22px;">Axiom Realty</h1>
+          <div style="background: #1B1C36; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
+            <h1 style="color: #B5945B; margin: 0; font-size: 22px;">Axiom Realty</h1>
             <p style="color: #fff; margin: 5px 0 0;">New Contact Form Submission</p>
           </div>
           <div style="padding: 24px; background: #fff;">
@@ -34,7 +34,7 @@ export async function POST(request) {
               <tr>
                 <td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; font-weight: bold; color: #333;">Email</td>
                 <td style="padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #555;">
-                  <a href="mailto:${email}" style="color: #C9A84C;">${email}</a>
+                  <a href="mailto:${email}" style="color: #B5945B;">${email}</a>
                 </td>
               </tr>
               <tr>

@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { LOGO } from '../../lib/theme';
 import { usePathname } from 'next/navigation';
 
 export default function Navbar() {
@@ -14,7 +15,7 @@ export default function Navbar() {
       <div className="container nav-inner">
         <Link href="/" className="logo" style={{ display: 'flex', alignItems: 'center' }}>
           <Image
-            src="/AXIOM LLC Logo White.png"
+            src={LOGO.white}
             alt="Axiom Realty"
             width={45}
             height={45}

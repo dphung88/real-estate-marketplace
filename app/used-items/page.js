@@ -7,9 +7,9 @@ import Footer from '../components/Footer';
 import Image from 'next/image';
 
 const BANNER_IMAGES = [
-  'https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1600&q=80',
-  'https://images.unsplash.com/photo-1556742111-a301076d9d18?w=1600&q=80',
-  'https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=1600&q=80',
+  'https://images.unsplash.com/photo-1449844908441-8829872d2607?w=1200&q=75',
+  'https://images.unsplash.com/photo-1556742111-a301076d9d18?w=1200&q=75',
+  'https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=1200&q=75',
 ];
 
 const ALL_ITEMS = [
@@ -21,7 +21,7 @@ const ALL_ITEMS = [
     price: 22500,
     condition: 'excellent',
     description: '45,000 miles, excellent condition, 1 owner, full service history.',
-    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&q=75',
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const ALL_ITEMS = [
     price: 1800,
     condition: 'good',
     description: '2019 model, 200 hours of use, good condition, clean and serviced.',
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75',
   },
   {
     id: 3,
@@ -41,7 +41,7 @@ const ALL_ITEMS = [
     price: 45000,
     condition: 'excellent',
     description: '3 bedrooms, 2 baths, 1,200 sqft, well-maintained, move-in ready.',
-    image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=600&q=80',
+    image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=600&q=75',
   },
 ];
 
@@ -106,7 +106,7 @@ export default function UsedItemsPage() {
               fill
               style={{ objectFit: 'cover', objectPosition: 'center' }}
               priority={index === 0}
-              unoptimized
+              sizes="100vw"
             />
             <div className="page-hero-overlay"></div>
           </div>
@@ -167,7 +167,7 @@ export default function UsedItemsPage() {
           </div>
 
           {filteredItems.length === 0 ? (
-            <p style={{textAlign: 'center', padding: '40px', fontSize: '1.1rem', color: '#666'}}>
+            <p className="empty-filter-message">
               No items found matching your filters. Try adjusting your search criteria.
             </p>
           ) : (
@@ -181,7 +181,7 @@ export default function UsedItemsPage() {
                       width={600}
                       height={400}
                       style={{ objectFit: 'cover', width: '100%', height: '220px' }}
-                      unoptimized
+                      loading="lazy"
                     />
                   </div>
                   <div className="listing-info">

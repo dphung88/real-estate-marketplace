@@ -13,12 +13,12 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-bg">
           <Image
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80"
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=75"
             alt="Axiom Realty Banner"
             fill
             style={{ objectFit: 'cover', objectPosition: 'center' }}
             priority
-            unoptimized
+            sizes="100vw"
           />
           <div className="hero-overlay"></div>
         </div>
@@ -77,7 +77,7 @@ export default function HomePage() {
 
             <div className="listing-card">
               <div className="listing-img">
-                <Image src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80" alt="Modern Family Home" fill style={{objectFit:'cover'}} unoptimized />
+                <Image src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=75" alt="Modern Family Home" fill style={{objectFit:'cover'}} sizes="(max-width: 768px) 100vw, 400px" loading="lazy" />
               </div>
               <div className="listing-content">
                 <span className="badge badge-type">House</span>
@@ -91,7 +91,7 @@ export default function HomePage() {
 
             <div className="listing-card">
               <div className="listing-img">
-                <Image src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="City Center Apartment" fill style={{objectFit:'cover'}} unoptimized />
+                <Image src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=75" alt="City Center Apartment" fill style={{objectFit:'cover'}} sizes="(max-width: 768px) 100vw, 400px" loading="lazy" />
               </div>
               <div className="listing-content">
                 <span className="badge badge-type">Apartment</span>
@@ -105,7 +105,7 @@ export default function HomePage() {
 
             <div className="listing-card">
               <div className="listing-img">
-                <Image src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=80" alt="Toyota Camry 2020" fill style={{objectFit:'cover'}} unoptimized />
+                <Image src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=75" alt="Toyota Camry 2020" fill style={{objectFit:'cover'}} sizes="(max-width: 768px) 100vw, 400px" loading="lazy" />
               </div>
               <div className="listing-content">
                 <span className="badge badge-type">Car</span>
@@ -139,7 +139,7 @@ export default function HomePage() {
             <div className="why-card">
               <i className="fa-solid fa-headset"></i>
               <h4>24/7 Support</h4>
-              <p>Call us anytime: <a href={COMPANY_HOTLINE_TEL} style={{color:'#f0c040'}}>{COMPANY_HOTLINE}</a></p>
+              <p>Call us anytime: <a href={COMPANY_HOTLINE_TEL} className="why-us-link">{COMPANY_HOTLINE}</a></p>
             </div>
           </div>
         </div>

@@ -36,12 +36,12 @@ export default async function RealEstatePage() {
       <section className="page-hero">
         <div className="page-hero-bg">
           <Image
-            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80"
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=75"
             alt="Real Estate Banner"
             fill
             style={{ objectFit: 'cover', objectPosition: 'center' }}
             priority
-            unoptimized
+            sizes="100vw"
           />
           <div className="page-hero-overlay"></div>
         </div>
@@ -70,7 +70,8 @@ export default async function RealEstatePage() {
                         width={600}
                         height={400}
                         style={{ objectFit: 'cover', width: '100%', height: '220px' }}
-                        unoptimized
+                        sizes="(max-width: 768px) 100vw, 400px"
+                        loading="lazy"
                       />
                     </div>
                     <div className="listing-info">
