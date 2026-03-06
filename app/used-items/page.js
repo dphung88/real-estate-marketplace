@@ -20,13 +20,13 @@ const ALL_ITEMS = [
   { id: 4, title: 'Chevrolet Malibu 2021', category: 'cars', location: 'Chicago, IL', price: 19500, condition: 'excellent', description: '32,000 miles, one owner, Apple CarPlay, backup camera.', image: 'https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=600&q=75' },
   { id: 5, title: 'Nissan Altima 2020', category: 'cars', location: 'Evanston, IL', price: 17200, condition: 'good', description: '48,000 miles, fuel efficient, keyless entry, well maintained.', image: 'https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=75' },
   { id: 6, title: 'Hyundai Sonata 2022', category: 'cars', location: 'Chicago, IL', price: 21500, condition: 'excellent', description: '22,000 miles, pristine condition, remaining warranty transferable.', image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=75' },
-  // LAWN MOWERS (6 items)
+  // LAWN MOWERS (6 items) - verified lawn/garden equipment images
   { id: 7, title: 'John Deere Riding Mower', category: 'lawnmowers', location: 'Chicago, IL', price: 1800, condition: 'good', description: '2019 model, 200 hours of use, good condition, clean and serviced.', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75' },
-  { id: 8, title: 'Husqvarna Zero Turn Mower', category: 'lawnmowers', location: 'Oak Park, IL', price: 3200, condition: 'excellent', description: '2021 model, 42" deck, hydrostatic drive, low hours.', image: 'https://images.unsplash.com/photo-1598986646512-9330bcc4c0dc?w=600&q=75' },
-  { id: 9, title: 'Toro Push Mower 22"', category: 'lawnmowers', location: 'Chicago, IL', price: 220, condition: 'good', description: 'Self-propelled, electric start, mulching capability.', image: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=600&q=75' },
-  { id: 10, title: 'Cub Cadet XT1', category: 'lawnmowers', location: 'Wheaton, IL', price: 1450, condition: 'excellent', description: '2018 model, 42" cut, bagger included, garage kept.', image: 'https://images.unsplash.com/photo-1616473345685-df32ead6bb4e?w=600&q=75' },
-  { id: 11, title: 'Snapper Riding Mower', category: 'lawnmowers', location: 'Chicago, IL', price: 950, condition: 'good', description: '30" deck, 12.5 HP, reliable for small yards.', image: 'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=600&q=75' },
-  { id: 12, title: 'Greenworks 40V Cordless Mower', category: 'lawnmowers', location: 'Evanston, IL', price: 380, condition: 'excellent', description: 'Battery-powered, quiet, includes 2 batteries and charger.', image: 'https://images.unsplash.com/photo-1626624346088-393dec4fd776?w=600&q=75' },
+  { id: 8, title: 'Husqvarna Zero Turn Mower', category: 'lawnmowers', location: 'Oak Park, IL', price: 3200, condition: 'excellent', description: '2021 model, 42" deck, hydrostatic drive, low hours.', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75' },
+  { id: 9, title: 'Toro Push Mower 22"', category: 'lawnmowers', location: 'Chicago, IL', price: 220, condition: 'good', description: 'Self-propelled, electric start, mulching capability.', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75' },
+  { id: 10, title: 'Cub Cadet XT1', category: 'lawnmowers', location: 'Wheaton, IL', price: 1450, condition: 'excellent', description: '2018 model, 42" cut, bagger included, garage kept.', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75' },
+  { id: 11, title: 'Snapper Riding Mower', category: 'lawnmowers', location: 'Chicago, IL', price: 950, condition: 'good', description: '30" deck, 12.5 HP, reliable for small yards.', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75' },
+  { id: 12, title: 'Greenworks 40V Cordless Mower', category: 'lawnmowers', location: 'Evanston, IL', price: 380, condition: 'excellent', description: 'Battery-powered, quiet, includes 2 batteries and charger.', image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=75' },
   // MOBILE HOMES (6 items)
   { id: 13, title: '2018 Clayton Mobile Home', category: 'mobile-homes', location: 'Chicago, IL', price: 45000, condition: 'excellent', description: '3 bedrooms, 2 baths, 1,200 sqft, well-maintained, move-in ready.', image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=600&q=75' },
   { id: 14, title: 'Fleetwood Single Wide 2020', category: 'mobile-homes', location: 'Joliet, IL', price: 52000, condition: 'excellent', description: '2 beds, 2 baths, 1,000 sqft, new HVAC, skirting included.', image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600&q=75' },
@@ -181,6 +181,7 @@ export default function UsedItemsPage() {
                       style={{ objectFit: 'cover', width: '100%', height: '220px' }}
                       loading="lazy"
                     />
+                    <span className="listing-category-badge">{getCategoryLabel(item.category)}</span>
                   </div>
                   <div className="listing-info">
                     <h3>{item.title}</h3>
