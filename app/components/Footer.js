@@ -23,7 +23,7 @@ export default function Footer() {
         {/* LOGO + BRAND */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center' }}>
           <Image
-            src={LOGO.default}
+            src={LOGO.white}
             alt="Axiom Realty"
             width={45}
             height={45}
