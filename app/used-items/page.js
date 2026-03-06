@@ -215,7 +215,7 @@ export default function UsedItemsPage() {
               No items found matching your filters. Try adjusting your search criteria.
             </p>
           ) : (
-            <div className="listings-grid" style={{maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px'}}>
+            <div className="listings-grid listings-grid-used">
               {filteredItems.map((item) => (
                 <div className="listing-card" key={item.id}>
                   <div className="listing-image">
