@@ -10,6 +10,14 @@ export const metadata = {
   title: 'Real Estate Listings - Axiom Realty',
 };
 
+function getCategoryLabel(listing) {
+  const cat = (listing.category || listing.listing_type || '').toLowerCase();
+  const title = (listing.title || '').toLowerCase();
+  if (cat === 'apartment' || cat === 'apt' || title.includes('apartment')) return { label: 'Apartment', icon: 'fa-solid fa-building' };
+  if (cat === 'land' || title.includes('vacant') || title.includes('land')) return { label: 'Land', icon: 'fa-solid fa-mountain-sun' };
+  return { label: 'House', icon: 'fa-solid fa-house' };
+}
+
 const DEFAULT_IMAGES = {
   sale: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80',
   rent: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80',
@@ -61,6 +69,7 @@ export default async function RealEstatePage() {
               {listings.map((listing) => {
                 const imgSrc = listing.image_url ||
                   (listing.property_type === 'rent' ? DEFAULT_IMAGES.rent : DEFAULT_IMAGES.sale);
+                const cat = getCategoryLabel(listing);
                 return (
                   <div className="listing-card" key={listing.id}>
                     <div className="listing-image">
@@ -76,7 +85,7 @@ export default async function RealEstatePage() {
                     </div>
                     <div className="listing-info">
                       <span className="listing-type">
-                        <i className="fa-solid fa-house"></i> House
+                        <i className={cat.icon}></i> {cat.label}
                       </span>
                       <h3>{listing.title}</h3>
                       <p className="listing-location">{listing.location}</p>
@@ -96,7 +105,9 @@ export default async function RealEstatePage() {
                       {listing.description && (
                         <p className="listing-desc">{listing.description}</p>
                       )}
-                      <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
+                      <div className="listing-actions">
+                        <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
+                      </div>
                     </div>
                   </div>
                 );
