@@ -2,7 +2,9 @@ import Link from 'next/link';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Image from 'next/image';
+import FeaturedCard from './components/FeaturedCard';
 import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL } from '../lib/constants';
+import { FEATURED_ITEMS } from '../lib/featuredData';
 
 export default function HomePage() {
   return (
@@ -75,47 +77,18 @@ export default function HomePage() {
           <h2 className="section-title">Featured Listings</h2>
           <div className="listings-grid">
 
-            <div className="listing-card">
-              <div className="listing-img">
-                <Image src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=75" alt="Modern Family Home" fill style={{objectFit:'cover'}} sizes="(max-width: 768px) 100vw, 400px" loading="lazy" />
-              </div>
-              <div className="listing-content">
-                <span className="badge badge-type">House</span>
-                <h3>Modern Family Home</h3>
-                <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
-                <p className="listing-price">$350,000</p>
-                <p className="listing-desc">4 bedrooms, 3 bathrooms, 2,500 sqft, modern design, near school &amp; market.</p>
-                <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
-              </div>
-            </div>
-
-            <div className="listing-card">
-              <div className="listing-img">
-                <Image src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=75" alt="City Center Apartment" fill style={{objectFit:'cover'}} sizes="(max-width: 768px) 100vw, 400px" loading="lazy" />
-              </div>
-              <div className="listing-content">
-                <span className="badge badge-type">Apartment</span>
-                <h3>City Center Apartment</h3>
-                <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Downtown Chicago, IL</p>
-                <p className="listing-price">$2,400 / month</p>
-                <p className="listing-desc">2 bedrooms, fully furnished, high-rise view, pool &amp; gym access.</p>
-                <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
-              </div>
-            </div>
-
-            <div className="listing-card">
-              <div className="listing-img">
-                <Image src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=75" alt="Toyota Camry 2020" fill style={{objectFit:'cover'}} sizes="(max-width: 768px) 100vw, 400px" loading="lazy" />
-              </div>
-              <div className="listing-content">
-                <span className="badge badge-type">Car</span>
-                <h3>Toyota Camry 2020</h3>
-                <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
-                <p className="listing-price">$22,500</p>
-                <p className="listing-desc">45,000 miles, excellent condition, 1 owner, full service history.</p>
-                <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
-              </div>
-            </div>
+            {FEATURED_ITEMS.map((item) => (
+              <FeaturedCard
+                key={item.id}
+                id={item.id}
+                title={item.title}
+                image={item.images[0]}
+                location={item.location}
+                price={item.price}
+                description={item.description}
+                badge={item.badge}
+              />
+            ))}
 
           </div>
         </div>

@@ -4,6 +4,18 @@ Khi bạn **push code lên GitHub**, Vercel sẽ tự động build và cập nh
 
 ---
 
+## Deploy nhanh những gì đã chỉnh (đã có project trên Vercel)
+
+Nếu **đã kết nối repo** với Vercel rồi:
+
+1. **Commit** thay đổi: `git add .` rồi `git commit -m "Mô tả thay đổi"`
+2. **Push** lên branch chính (thường là `main`): `git push origin main`
+3. Vào **Vercel Dashboard** → **Deployments** → đợi deploy xong.
+
+**Lần đầu chưa có project?** Làm từ Bước 1 bên dưới.
+
+---
+
 ## Bước 1: Đăng ký / đăng nhập Vercel bằng GitHub
 
 1. Mở trình duyệt, vào **https://vercel.com**
