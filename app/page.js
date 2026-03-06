@@ -85,7 +85,7 @@ export default function HomePage() {
                 <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
                 <p className="listing-price">$350,000</p>
                 <p className="listing-desc">4 bedrooms, 3 bathrooms, 2,500 sqft, modern design, near school &amp; market.</p>
-                <a href={COMPANY_HOTLINE_TEL} className="btn btn-sm"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
+                <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
               </div>
             </div>
 
@@ -99,7 +99,7 @@ export default function HomePage() {
                 <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Downtown Chicago, IL</p>
                 <p className="listing-price">$2,400 / month</p>
                 <p className="listing-desc">2 bedrooms, fully furnished, high-rise view, pool &amp; gym access.</p>
-                <a href={COMPANY_HOTLINE_TEL} className="btn btn-sm"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
+                <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
               </div>
             </div>
 
@@ -113,7 +113,7 @@ export default function HomePage() {
                 <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
                 <p className="listing-price">$22,500</p>
                 <p className="listing-desc">45,000 miles, excellent condition, 1 owner, full service history.</p>
-                <a href={COMPANY_HOTLINE_TEL} className="btn btn-sm"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
+                <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
               </div>
             </div>
 

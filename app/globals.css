@@ -43,6 +43,8 @@ img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .btn { display: inline-block; padding: 12px 28px; border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
 .btn-primary { background: var(--color-accent); color: var(--color-dark); }
 .btn-primary:hover { background: #9a7d4a; transform: translateY(-2px); }
+.btn-call { background: var(--color-dark); color: var(--color-light); }
+.btn-call:hover { background: #12132a; transform: translateY(-2px); }
 .btn-secondary { background: transparent; color: var(--color-light); border: 2px solid var(--color-light); }
 .btn-secondary:hover { background: var(--color-light); color: var(--color-dark); transform: translateY(-2px); }
 .btn-sm { display: inline-block; padding: 8px 18px; background: var(--color-dark); color: var(--color-light); border-radius: 6px; font-size: 0.85rem; font-weight: 600; margin-top: 12px; transition: background 0.2s; }

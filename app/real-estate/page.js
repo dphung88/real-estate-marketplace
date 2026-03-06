@@ -96,7 +96,7 @@ export default async function RealEstatePage() {
                       {listing.description && (
                         <p className="listing-desc">{listing.description}</p>
                       )}
-                      <a href={COMPANY_HOTLINE_TEL} className="btn btn-primary">{COMPANY_HOTLINE}</a>
+                      <a href={COMPANY_HOTLINE_TEL} className="btn btn-call"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
                     </div>
                   </div>
                 );

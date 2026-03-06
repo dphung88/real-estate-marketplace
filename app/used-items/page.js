@@ -246,7 +246,7 @@ export default function UsedItemsPage() {
                           <><i className="fa-solid fa-credit-card"></i> Checkout ${item.price.toLocaleString('en-US')}</>
                         )}
                       </button>
-                      <a href="tel:+13129997988" className="btn" style={{ background: 'var(--color-neutral)', color: 'var(--color-dark)' }}>+1 (312) 999 7988</a>
+                      <a href="tel:+13129997988" className="btn btn-call"><i className="fa-solid fa-phone"></i> +1 (312) 999 7988</a>
                     </div>
                   </div>
                 </div>
