@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL, COMPANY_WHATSAPP } from '../../lib/constants';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -146,7 +147,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <strong>Hotline</strong>
-                  <p><a href="tel:+13129997988">+1 (312) 999 7988</a></p>
+                  <p><a href={COMPANY_HOTLINE_TEL}>{COMPANY_HOTLINE}</a></p>
                 </div>
               </div>
 
@@ -175,7 +176,7 @@ export default function ContactPage() {
                   <i className="fa-brands fa-facebook"></i>
                   <span>Facebook</span>
                 </a>
-                <a href="https://wa.me/13129997988" target="_blank" rel="noopener noreferrer" className="social-link">
+                <a href={COMPANY_WHATSAPP} target="_blank" rel="noopener noreferrer" className="social-link">
                   <i className="fa-brands fa-whatsapp"></i>
                   <span>WhatsApp</span>
                 </a>

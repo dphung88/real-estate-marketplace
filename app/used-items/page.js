@@ -1,5 +1,4 @@
 'use client';
-// Updated: All phone numbers corrected to +1 (312) 999 7988
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -23,7 +22,6 @@ const ALL_ITEMS = [
     condition: 'excellent',
     description: '45,000 miles, excellent condition, 1 owner, full service history.',
     image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&q=80',
-        phone: '+1 (312) 999 7988',
   },
   {
     id: 2,
@@ -34,7 +32,6 @@ const ALL_ITEMS = [
     condition: 'good',
     description: '2019 model, 200 hours of use, good condition, clean and serviced.',
     image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
-        phone: '+1 (312) 999 7988',
   },
   {
     id: 3,
@@ -45,7 +42,6 @@ const ALL_ITEMS = [
     condition: 'excellent',
     description: '3 bedrooms, 2 baths, 1,200 sqft, well-maintained, move-in ready.',
     image: 'https://images.unsplash.com/photo-1605146769289-440113cc3d00?w=600&q=80',
-        phone: '+1 (312) 999 7988',
   },
 ];
 
@@ -175,7 +171,7 @@ export default function UsedItemsPage() {
               No items found matching your filters. Try adjusting your search criteria.
             </p>
           ) : (
-            <div className="listings-grid" style={{maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px''}}>
+            <div className="listings-grid" style={{maxWidth: '1100px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px'}}>
               {filteredItems.map((item) => (
                 <div className="listing-card" key={item.id}>
                   <div className="listing-image">
@@ -193,7 +189,7 @@ export default function UsedItemsPage() {
                     <p className="listing-loc">{item.location}</p>
                     <p className="listing-price">${item.price.toLocaleString('en-US')}</p>
                     <p className="listing-desc">{item.description}</p>
-                    <a href="{`tel:${item.phone.replace(/[^0-9+]/g, '')}`}" className="btn btn-primary">{item.phone}</a>
+                    <a href="tel:+13129997988" className="btn btn-primary">+1 (312) 999 7988</a>
                   </div>
                 </div>
               ))}

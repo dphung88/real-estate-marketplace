@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { COMPANY_HOTLINE_TEL, COMPANY_WHATSAPP } from '../../lib/constants';
 
 export default function Footer() {
   return (
@@ -36,7 +37,7 @@ export default function Footer() {
             style={{ color: '#C9A84C', fontSize: '20px' }}>
             <i className="fab fa-facebook"></i>
           </a>
-          <a href="https://wa.me/13129997988" target="_blank" rel="noopener noreferrer"
+          <a href={COMPANY_WHATSAPP} target="_blank" rel="noopener noreferrer"
             style={{ color: '#C9A84C', fontSize: '20px' }}>
             <i className="fab fa-whatsapp"></i>
           </a>
@@ -48,7 +49,7 @@ export default function Footer() {
             style={{ color: '#C9A84C', fontSize: '20px' }}>
             <i className="fab fa-youtube"></i>
           </a>
-          <a href="tel:+13129997988"
+          <a href={COMPANY_HOTLINE_TEL}
             style={{ color: '#C9A84C', fontSize: '20px' }}>
             <i className="fas fa-phone"></i>
           </a>

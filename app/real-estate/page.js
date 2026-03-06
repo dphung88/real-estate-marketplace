@@ -1,4 +1,5 @@
 import { supabase } from '../../lib/supabase';
+import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL } from '../../lib/constants';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import Image from 'next/image';
@@ -97,7 +98,7 @@ export default async function RealEstatePage() {
                       {listing.description && (
                         <p className="listing-desc">{listing.description}</p>
                       )}
-                      <a href="tel:+13129997988" className="btn btn-primary">+1 (312) 999 7988</a>
+                      <a href={COMPANY_HOTLINE_TEL} className="btn btn-primary">{COMPANY_HOTLINE}</a>
                     </div>
                   </div>
                 );

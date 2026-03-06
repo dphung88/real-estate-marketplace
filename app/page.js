@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Image from 'next/image';
+import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL } from '../lib/constants';
 
 export default function HomePage() {
   return (
@@ -30,7 +31,7 @@ export default function HomePage() {
           </div>
           <div className="hero-hotline">
             <i className="fa-solid fa-phone"></i>
-            <span>Call us now: <a href="tel:+13129997988">+1 (312) 999 7988</a></span>
+            <span>Call us now: <a href={COMPANY_HOTLINE_TEL}>{COMPANY_HOTLINE}</a></span>
           </div>
         </div>
       </section>
@@ -85,7 +86,7 @@ export default function HomePage() {
                 <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
                 <p className="listing-price">$350,000</p>
                 <p className="listing-desc">4 bedrooms, 3 bathrooms, 2,500 sqft, modern design, near school &amp; market.</p>
-                <a href="tel:+13129997988" className="btn btn-sm"><i className="fa-solid fa-phone"></i> +1 (312) 999 7988</a>
+                <a href={COMPANY_HOTLINE_TEL} className="btn btn-sm"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
               </div>
             </div>
 
@@ -100,7 +101,7 @@ export default function HomePage() {
                 <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Downtown Chicago, IL</p>
                 <p className="listing-price">$2,400 / month</p>
                 <p className="listing-desc">2 bedrooms, fully furnished, high-rise view, pool &amp; gym access.</p>
-                <a href="tel:+13129997988" className="btn btn-sm"><i className="fa-solid fa-phone"></i> +1 (312) 999 7988</a>
+                <a href={COMPANY_HOTLINE_TEL} className="btn btn-sm"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
               </div>
             </div>
 
@@ -115,7 +116,7 @@ export default function HomePage() {
                 <p className="listing-loc"><i className="fa-solid fa-location-dot"></i> Chicago, Illinois</p>
                 <p className="listing-price">$22,500</p>
                 <p className="listing-desc">45,000 miles, excellent condition, 1 owner, full service history.</p>
-                <a href="tel:+13129997988" className="btn btn-sm"><i className="fa-solid fa-phone"></i> +1 (312) 999 7988</a>
+                <a href={COMPANY_HOTLINE_TEL} className="btn btn-sm"><i className="fa-solid fa-phone"></i> {COMPANY_HOTLINE}</a>
               </div>
             </div>
 
@@ -141,7 +142,7 @@ export default function HomePage() {
             <div className="why-card">
               <i className="fa-solid fa-headset"></i>
               <h4>24/7 Support</h4>
-              <p>Call us anytime: <a href="tel:+13129997988" style={{color:'#f0c040'}}>+1 (312) 999 7988</a></p>
+              <p>Call us anytime: <a href={COMPANY_HOTLINE_TEL} style={{color:'#f0c040'}}>{COMPANY_HOTLINE}</a></p>
             </div>
           </div>
         </div>
