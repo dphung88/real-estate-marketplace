@@ -11,6 +11,8 @@ const BANNER_IMAGES = [
   'https://images.unsplash.com/photo-1591160690555-5debfba289f0?w=1200&q=75',
 ];
 
+const ITEMS_PER_PAGE = 8;
+
 const ALL_ITEMS = [
   // CARS (6 items)
   { id: 1, title: 'Toyota Camry 2020', category: 'cars', location: 'Chicago, IL', price: 22500, condition: 'excellent', description: '45,000 miles, excellent condition, 1 owner, full service history.', image: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=600&q=75' },
@@ -47,6 +49,7 @@ export default function UsedItemsPage() {
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [selectedCondition, setSelectedCondition] = useState('');
   const [currentBanner, setCurrentBanner] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   // Auto-rotate banner every 5 seconds
   useEffect(() => {
@@ -68,6 +71,16 @@ export default function UsedItemsPage() {
   };
 
   const filteredItems = filterItems();
+
+  // Reset visible count when filters change
+  useEffect(() => {
+    setVisibleCount(ITEMS_PER_PAGE);
+  }, [selectedCategory, selectedPriceRange, selectedCondition]);
+
+  const itemsToShow = filteredItems.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredItems.length;
+  const showLoadMore = filteredItems.length > ITEMS_PER_PAGE && hasMore;
+
   const [checkingOut, setCheckingOut] = useState(null);
   const [successMsg, setSuccessMsg] = useState('');
   const [cancelMsg, setCancelMsg] = useState('');
@@ -215,8 +228,9 @@ export default function UsedItemsPage() {
               No items found matching your filters. Try adjusting your search criteria.
             </p>
           ) : (
+            <>
             <div className="listings-grid listings-grid-used">
-              {filteredItems.map((item) => (
+              {itemsToShow.map((item) => (
                 <div className="listing-card" key={item.id}>
                   <div className="listing-image">
                     <Image
@@ -252,6 +266,19 @@ export default function UsedItemsPage() {
                 </div>
               ))}
             </div>
+            {showLoadMore && (
+              <div className="load-more-wrap" style={{ textAlign: 'center', marginTop: '28px' }}>
+                <button
+                  type="button"
+                  className="btn btn-outline"
+                  onClick={() => setVisibleCount((c) => c + ITEMS_PER_PAGE)}
+                >
+                  <i className="fa-solid fa-chevron-down" style={{ marginRight: '8px' }}></i>
+                  Load more ({filteredItems.length - visibleCount} remaining)
+                </button>
+              </div>
+            )}
+            </>
           )}
         </div>
       </section>
