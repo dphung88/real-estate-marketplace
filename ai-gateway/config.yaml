@@ -1,0 +1,5 @@
+model_list:
+  - model_name: gpt-4o
+    litellm_params:
+      model: gemini/gemini-2.5-flash
+      api_key: AIzaSyAdlxTq6bdUn8kl9syInjf5RhY4QgIvOnM

@@ -129,7 +129,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <strong>Address</strong>
-                  <p>Chicago, Illinois<br />United States</p>
+                  <p>Chicago, Illinois, United States</p>
                 </div>
               </div>
 
@@ -168,17 +168,17 @@ export default function ContactPage() {
                   <i className="fa-brands fa-facebook"></i>
                   <span>Facebook</span>
                 </a>
-                <a href={COMPANY_WHATSAPP} target="_blank" rel="noopener noreferrer" className="social-link">
-                  <i className="fa-brands fa-whatsapp"></i>
-                  <span>WhatsApp</span>
+                <a href="https://youtube.com/@mceagle.essentials" target="_blank" rel="noopener noreferrer" className="social-link">
+                  <i className="fa-brands fa-youtube"></i>
+                  <span>YouTube</span>
                 </a>
                 <a href="https://www.tiktok.com/@mceagle.mentor" target="_blank" rel="noopener noreferrer" className="social-link">
                   <i className="fa-brands fa-tiktok"></i>
                   <span>TikTok</span>
                 </a>
-                <a href="https://youtube.com/@mceagle.essentials" target="_blank" rel="noopener noreferrer" className="social-link">
-                  <i className="fa-brands fa-youtube"></i>
-                  <span>YouTube</span>
+                <a href={COMPANY_WHATSAPP} target="_blank" rel="noopener noreferrer" className="social-link">
+                  <i className="fa-brands fa-whatsapp"></i>
+                  <span>WhatsApp</span>
                 </a>
               </div>
             </div>

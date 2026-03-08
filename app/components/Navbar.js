@@ -15,7 +15,7 @@ export default function Navbar() {
       <div className="container nav-inner">
         <Link href="/" className="logo" style={{ display: 'flex', alignItems: 'center' }}>
           <Image
-            src={LOGO.white}
+            src={LOGO.dark}
             alt="Axiom Realty"
             width={45}
             height={45}
