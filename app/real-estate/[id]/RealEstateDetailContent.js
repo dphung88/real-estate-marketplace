@@ -156,6 +156,35 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
         </div>
       </div>
 
+      {/* Mobile Thumbnails - 4 small images below the big one */}
+      <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
+        {[0, 1, 2, 3].map((idx) => (
+          <div 
+            key={idx} 
+            style={{ 
+              position: 'relative', 
+              aspectRatio: '4/3', 
+              borderRadius: '8px', 
+              overflow: 'hidden', 
+              cursor: 'pointer', 
+              border: modalInitialIndex === idx ? '2px solid var(--color-accent)' : 'none' 
+            }}
+            onClick={() => {
+              setModalInitialIndex(idx % safeImages.length);
+              setIsModalOpen(true);
+            }}
+          >
+            <Image 
+              src={safeImages[idx] || safeImages[0]} 
+              alt={`${listing.title} ${idx}`}
+              fill
+              style={{ objectFit: 'cover' }}
+              sizes="25vw"
+            />
+          </div>
+        ))}
+      </div>
+
       <ImageModal 
         images={safeImages} 
         isOpen={isModalOpen} 
