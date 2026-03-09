@@ -431,6 +431,18 @@ a.listing-card { text-decoration: none; color: inherit; }
     padding-bottom: 5px;
   }
 
+  /* Used Item Detail Gallery Mobile */
+  .detail-gallery-main {
+    height: auto !important;
+    aspect-ratio: 16/10 !important;
+  }
+  .detail-gallery-thumbs {
+    gap: 8px !important;
+  }
+  .image-gallery-thumb {
+    border-width: 2px !important;
+  }
+
   /* Gallery Mobile - 1 big image, 4 small ones below */
   .z-gallery {
     display: flex !important;

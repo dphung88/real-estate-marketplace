@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL } from '../../../lib/constants';
+import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL, COMPANY_EMAIL } from '../../../lib/constants';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75';
 
@@ -313,7 +313,7 @@ export default function FeaturedDetailContent({ item, images }) {
             <h4 style={{ marginBottom: '24px', fontSize: '1.4rem', fontWeight: '700', color: 'var(--color-dark)', textAlign: 'center' }}>Contact for more info</h4>
             <div className="detail-actions" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <a 
-                href={`mailto:agent@axiomllc.com?subject=Inquiry about ${encodeURIComponent(item.title)}`} 
+                href={`mailto:${COMPANY_EMAIL}?subject=Inquiry about ${encodeURIComponent(item.title)}`} 
                 className="btn btn-primary" 
                 style={{ width: '100%', padding: '20px', fontSize: '1.05rem', borderRadius: '12px' }}
               >

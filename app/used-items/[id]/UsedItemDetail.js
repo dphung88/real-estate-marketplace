@@ -49,8 +49,8 @@ export default function UsedItemDetail({ item }) {
   return (
     <div className="detail-layout" style={{ maxWidth: '1200px' }}>
       <div className="detail-main-content">
-        <div style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div className="detail-gallery-main" style={{ borderRadius: '20px', overflow: 'hidden', height: '500px', marginBottom: '16px', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', position: 'relative' }}>
+        <div className="detail-gallery-wrapper" style={{ maxWidth: '800px', margin: '0 auto', width: '100%' }}>
+          <div className="detail-gallery-main" style={{ borderRadius: '20px', overflow: 'hidden', marginBottom: '16px', border: '1px solid rgba(0,0,0,0.08)', boxShadow: '0 4px 20px rgba(0,0,0,0.05)', position: 'relative', aspectRatio: '16/10' }}>
             {mainSrc && (
               <Image
                 key={selectedIndex}
@@ -64,7 +64,7 @@ export default function UsedItemDetail({ item }) {
             )}
           </div>
           
-          <div className="detail-gallery-thumbs" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
+          <div className="detail-gallery-thumbs" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
             {thumbs.map((src, i) => (
               <button
                 key={i}
