@@ -362,54 +362,39 @@ a.listing-card { text-decoration: none; color: inherit; }
   /* Listing grid: 1 cột trên mobile, card full width */
   .listings-grid,
   .listings-grid-used {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
     gap: 24px;
     padding: 0 10px;
     width: 100%;
     margin: 0;
   }
   .listing-card { min-width: 0; width: 100%; margin: 0; display: flex; flex-direction: column; }
-  .listing-image { height: auto; aspect-ratio: 16/10; overflow: hidden; border-radius: 10px; }
-  .listing-image img { height: 100% !important; width: 100% !important; object-fit: cover; }
+  .listing-image { height: auto !important; aspect-ratio: 16/10 !important; overflow: hidden; border-radius: 10px; width: 100% !important; }
+  .listing-image img { height: 100% !important; width: 100% !important; object-fit: cover !important; position: static !important; }
   .listing-img { height: 220px; }
   .listing-actions .btn { min-width: 0; white-space: normal; word-break: break-word; }
 
   .detail-container { padding: 0 10px; width: 100%; }
 
-  /* Navbar Mobile */
-  .mobile-menu-btn { display: block; color: var(--color-light); }
-  .nav-inner { height: 64px; flex-wrap: nowrap; width: 100%; max-width: 100%; display: flex; align-items: center; justify-content: space-between; }
+  /* Navbar Mobile - Hủy Hamburger Menu */
+  .mobile-menu-btn { display: none !important; }
+  .nav-inner { height: auto; flex-direction: column; padding: 10px 0; }
+  .logo { margin-bottom: 10px; }
   .nav-links {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 280px;
-    height: 100vh;
-    background: var(--color-dark);
-    flex-direction: column;
-    padding: 100px 40px;
-    gap: 24px;
-    transition: right 0.3s ease-in-out;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-    z-index: 1000;
-  }
-  .nav-links li { width: 100%; }
-  .nav-links.open {
-    right: 0;
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    background: transparent !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    gap: 15px !important;
     display: flex !important;
+    box-shadow: none !important;
   }
-  .nav-links-a {
-    color: var(--color-light);
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: color 0.2s;
-    display: block;
-    width: 100%;
-  }
-  .nav-links-a.active {
-    color: var(--color-accent);
-  }
-  .nav-links a { font-size: 1.1rem; }
+  .nav-links li { width: auto !important; }
+  .nav-links a { font-size: 0.9rem !important; }
 
   /* Hero Mobile */
   .hero { min-height: 480px; padding: 60px 20px; }
@@ -446,14 +431,15 @@ a.listing-card { text-decoration: none; color: inherit; }
 
   /* Gallery Mobile */
   .z-gallery {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-    height: 250px;
-    aspect-ratio: auto;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+    height: auto !important;
+    aspect-ratio: 16/10 !important;
     margin-bottom: 20px;
   }
-  .z-gallery-item:not(:first-child) { display: none; }
-  .z-gallery-item:first-child { grid-row: auto; border-radius: 12px; }
+  .z-gallery-item:not(:first-child) { display: none !important; }
+  .z-gallery-item:first-child { grid-row: auto !important; border-radius: 12px; height: 100% !important; }
+  .z-gallery-item img { position: static !important; }
 
   .footer-inner { flex-direction: column; justify-content: center; align-items: center; text-align: center; }
   .footer-inner > a { justify-content: center; }
@@ -463,10 +449,10 @@ a.listing-card { text-decoration: none; color: inherit; }
 
 @media (max-width: 480px) {
   .container { padding: 0 10px; }
-  .listing-image { height: auto; aspect-ratio: 16/10; }
-  .listing-image img { min-height: 0; }
+  .listing-image { height: auto !important; aspect-ratio: 16/10 !important; }
+  .listing-image img { min-height: 0 !important; }
   .listing-img { height: 200px; }
-  .nav-links a { font-size: 1rem; width: 100%; text-align: left; display: block; }
+  .nav-links a { font-size: 0.85rem !important; }
   .hero-content h1 { font-size: 1.5rem; }
   .section-title { font-size: 1.4rem; }
   .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
