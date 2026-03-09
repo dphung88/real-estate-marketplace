@@ -12,14 +12,14 @@ export default function FeaturedDetailContent({ item, images = [] }) {
   const [isSaved, setIsSaved] = useState(false);
   const [shareStatus, setShareStatus] = useState('Share');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalInitialIndex, setModalInitialIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (!item) return null;
 
   // Use a fallback if images are missing or empty
   const safeImages = images && images.length > 0 ? images : [FALLBACK_IMAGE];
   
-  // Logic for display in the 3-image grid
+  // Logic for display in the 3-image grid (desktop)
   const displayImages = [
     safeImages[0],
     safeImages[1] || safeImages[0],
@@ -116,80 +116,91 @@ export default function FeaturedDetailContent({ item, images = [] }) {
         </div>
       </div>
 
-      {/* Zillow-style Gallery */}
-      <div className="z-gallery">
-        <div className="z-gallery-item" onClick={() => { setModalInitialIndex(0); setIsModalOpen(true); }}>
-          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-            <Image 
-              src={displayImages[0]} 
-              alt={item.title} 
-              fill 
-              style={{ objectFit: 'cover' }}
-              sizes="(max-width: 768px) 100vw, 66vw"
-              priority
-            />
+      {/* Zillow-style Gallery (Desktop) & Mobile Swipe-like Gallery */}
+      <div className="z-gallery-wrapper">
+        <div className="z-gallery">
+          <div className="z-gallery-item" onClick={() => { 
+            setSelectedIndex(0); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
+          }}>
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image 
+                src={safeImages[selectedIndex] || displayImages[0]} 
+                alt={item.title} 
+                fill 
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 768px) 100vw, 66vw"
+                priority
+              />
+            </div>
+          </div>
+          <div className="z-gallery-item" onClick={() => { 
+            setSelectedIndex(1 % safeImages.length); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
+          }}>
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image 
+                src={displayImages[1]} 
+                alt={item.title} 
+                fill 
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+            </div>
+          </div>
+          <div className="z-gallery-item" onClick={() => { 
+            setSelectedIndex(2 % safeImages.length); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
+          }}>
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image 
+                src={displayImages[2]} 
+                alt={item.title} 
+                fill 
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+              {hasMorePhotos && (
+                <div className="z-gallery-more">+{safeImages.length - 2} photos</div>
+              )}
+            </div>
           </div>
         </div>
-        <div className="z-gallery-item" onClick={() => { setModalInitialIndex(1 % safeImages.length); setIsModalOpen(true); }}>
-          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-            <Image 
-              src={displayImages[1]} 
-              alt={item.title} 
-              fill 
-              style={{ objectFit: 'cover' }}
-              sizes="(max-width: 768px) 50vw, 33vw"
-            />
-          </div>
-        </div>
-        <div className="z-gallery-item" onClick={() => { setModalInitialIndex(2 % safeImages.length); setIsModalOpen(true); }}>
-          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-            <Image 
-              src={displayImages[2]} 
-              alt={item.title} 
-              fill 
-              style={{ objectFit: 'cover' }}
-              sizes="(max-width: 768px) 50vw, 33vw"
-            />
-            {hasMorePhotos && (
-              <div className="z-gallery-more">+{safeImages.length - 2} photos</div>
-            )}
-          </div>
+
+        {/* Mobile Thumbnails - Interaction only changes main image, no modal */}
+        <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
+          {[0, 1, 2, 3].map((idx) => (
+            <div 
+              key={idx} 
+              style={{ 
+                position: 'relative', 
+                aspectRatio: '4/3', 
+                borderRadius: '8px', 
+                overflow: 'hidden', 
+                cursor: 'pointer', 
+                border: selectedIndex === idx ? '2px solid var(--color-accent)' : 'none' 
+              }}
+              onClick={() => {
+                setSelectedIndex(idx % safeImages.length);
+              }}
+            >
+              <Image 
+                src={safeImages[idx] || safeImages[0]} 
+                alt={`${item.title} ${idx}`}
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="25vw"
+              />
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Mobile Thumbnails - 4 small images below the big one */}
-      <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
-        {[0, 1, 2, 3].map((idx) => (
-          <div 
-            key={idx} 
-            style={{ 
-              position: 'relative', 
-              aspectRatio: '4/3', 
-              borderRadius: '8px', 
-              overflow: 'hidden', 
-              cursor: 'pointer', 
-              border: modalInitialIndex === idx ? '2px solid var(--color-accent)' : 'none' 
-            }}
-            onClick={() => {
-              setModalInitialIndex(idx % safeImages.length);
-              setIsModalOpen(true);
-            }}
-          >
-            <Image 
-              src={safeImages[idx] || safeImages[0]} 
-              alt={`${item.title} ${idx}`}
-              fill
-              style={{ objectFit: 'cover' }}
-              sizes="25vw"
-            />
-          </div>
-        ))}
-      </div>
-
+      {/* Desktop Modal still available if needed, but not triggered by mobile thumbs anymore */}
       <ImageModal 
         images={safeImages} 
         isOpen={isModalOpen} 
-        initialIndex={modalInitialIndex} 
+        initialIndex={selectedIndex} 
         onClose={() => setIsModalOpen(false)} 
       />
 
