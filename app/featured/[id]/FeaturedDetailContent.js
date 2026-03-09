@@ -8,6 +8,7 @@ const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1512917774080-9991f1c4
 
 export default function FeaturedDetailContent({ item, images }) {
   const [activeTab, setActiveTab] = useState('overview');
+  const [mainImageIndex, setMainImageIndex] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   const [shareStatus, setShareStatus] = useState('Share');
 
@@ -109,7 +110,7 @@ export default function FeaturedDetailContent({ item, images }) {
         <div className="z-gallery-item">
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
-              src={displayImages[0] || FALLBACK_IMAGE} 
+              src={images[mainImageIndex] || displayImages[0] || FALLBACK_IMAGE} 
               alt={item.title} 
               fill 
               style={{ objectFit: 'cover' }}
@@ -118,7 +119,7 @@ export default function FeaturedDetailContent({ item, images }) {
             />
           </div>
         </div>
-        <div className="z-gallery-item">
+        <div className="z-gallery-item" onClick={() => setMainImageIndex(1 % images.length)}>
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
               src={displayImages[1] || displayImages[0] || FALLBACK_IMAGE} 
@@ -129,7 +130,7 @@ export default function FeaturedDetailContent({ item, images }) {
             />
           </div>
         </div>
-        <div className="z-gallery-item">
+        <div className="z-gallery-item" onClick={() => setMainImageIndex(2 % images.length)}>
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
               src={displayImages[2] || displayImages[0] || FALLBACK_IMAGE} 
@@ -145,10 +146,14 @@ export default function FeaturedDetailContent({ item, images }) {
         </div>
       </div>
 
-      {/* Mobile Thumbnails (only visible on mobile via CSS or hidden on desktop) */}
+      {/* Mobile Thumbnails */}
       <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
-        {[1, 2, 3, 4].map((idx) => (
-          <div key={idx} style={{ position: 'relative', aspectRatio: '4/3', borderRadius: '8px', overflow: 'hidden' }}>
+        {[0, 1, 2, 3].map((idx) => (
+          <div 
+            key={idx} 
+            style={{ position: 'relative', aspectRatio: '4/3', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', border: mainImageIndex === idx ? '2px solid var(--color-accent)' : 'none' }}
+            onClick={() => setMainImageIndex(idx % images.length)}
+          >
             <Image 
               src={images[idx] || images[0] || FALLBACK_IMAGE} 
               alt={`${item.title} ${idx}`}
