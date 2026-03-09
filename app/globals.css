@@ -80,7 +80,7 @@ a.listing-card { text-decoration: none; color: inherit; }
 .listing-card .listing-card-link { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .listing-card .listing-card-link .listing-info { flex: 1; min-height: 0; }
 .listing-card > .listing-actions { margin-top: auto; padding-top: 12px; }
-.listing-img { display: block; position: relative; height: 200px; overflow: hidden; }
+.listing-img { display: block; position: relative; height: 200px; overflow: hidden; border-radius: 12px; }
 .listing-img img { transition: transform 0.4s ease; }
 .listing-card:hover .listing-img img { transform: scale(1.05); }
 .listing-card:hover .listing-image img { transform: scale(1.05); }
@@ -91,7 +91,7 @@ a.listing-card { text-decoration: none; color: inherit; }
   width: 100%;
   height: 220px;
   overflow: hidden;
-  border-radius: 10px 10px 0 0;
+  border-radius: 12px;
 }
 .listing-badge {
   position: absolute;
@@ -271,7 +271,7 @@ a.listing-card { text-decoration: none; color: inherit; }
 
 /* Zillow-style Gallery Grid */
 .z-gallery { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: repeat(2, 220px); gap: 10px; margin-bottom: 32px; border-radius: 12px; overflow: hidden; }
-.z-gallery-item { position: relative; cursor: pointer; overflow: hidden; height: 100%; }
+.z-gallery-item { position: relative; cursor: pointer; overflow: hidden; height: 100%; border-radius: 12px; }
 .z-gallery-item img { transition: transform 0.3s ease; width: 100%; height: 100%; object-fit: cover; }
 .z-gallery-item:hover img { transform: scale(1.03); }
 .z-gallery-item:first-child { grid-row: span 2; }
