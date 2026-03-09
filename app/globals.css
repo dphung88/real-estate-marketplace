@@ -374,6 +374,8 @@ a.listing-card { text-decoration: none; color: inherit; }
   .listing-img { height: 220px; }
   .listing-actions .btn { min-width: 0; white-space: normal; word-break: break-word; }
 
+  .detail-container { padding: 0 10px; width: 100%; }
+
   /* Navbar Mobile */
   .mobile-menu-btn { display: block; }
   .nav-inner { height: 64px; flex-wrap: nowrap; width: 100%; max-width: 100%; }
@@ -394,6 +396,7 @@ a.listing-card { text-decoration: none; color: inherit; }
   .nav-links li { width: 100%; }
   .nav-links.open {
     right: 0;
+    display: flex !important;
   }
   .nav-links a { font-size: 1.1rem; }
 
@@ -463,6 +466,8 @@ a.listing-card { text-decoration: none; color: inherit; }
   .detail-main-content span[style*="font-size: 2.5rem"] { font-size: 1.8rem !important; }
   .detail-main-content span[style*="font-size: 1.25rem"] { font-size: 1rem !important; }
   .facts-subgrid { grid-template-columns: 1fr; gap: 20px; }
-  .detail-sidebar div[style*="padding: 32px"] { padding: 20px !important; }
+  .detail-sidebar div[style*="padding: 32px"] { padding: 20px !important; width: 100% !important; margin: 0 !important; }
   .detail-sidebar h4 { font-size: 1.2rem !important; }
+  .detail-sidebar .btn { width: 100% !important; }
+  .detail-sidebar aside { width: 100% !important; }
 }
