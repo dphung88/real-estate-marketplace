@@ -368,9 +368,9 @@ a.listing-card { text-decoration: none; color: inherit; }
     width: 100%;
     margin: 0;
   }
-  .listing-card { min-width: 0; width: 100%; margin: 0; }
-  .listing-image { height: 200px; }
-  .listing-image img { height: 100% !important; min-height: 200px; object-fit: cover; }
+  .listing-card { min-width: 0; width: 100%; margin: 0; display: flex; flex-direction: column; }
+  .listing-image { height: auto; aspect-ratio: 16/10; }
+  .listing-image img { height: 100% !important; width: 100% !important; object-fit: cover; }
   .listing-img { height: 220px; }
   .listing-actions .btn { min-width: 0; white-space: normal; word-break: break-word; }
 
