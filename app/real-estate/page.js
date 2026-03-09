@@ -119,26 +119,7 @@ async function getListings() {
     }
   ];
 
-  if (!supabase || !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('xxxxx')) {
-    console.log('Using mock data for real estate listings');
-    return mockListings;
-  }
-
-  try {
-    const { data, error } = await supabase
-      .from('listings')
-      .select('*')
-      .eq('status', 'active')
-      .order('created_at', { ascending: false });
-    if (error) {
-      console.error('Supabase error:', error);
-      return mockListings;
-    }
-    return data && data.length > 0 ? data : mockListings;
-  } catch (e) {
-    console.error('Fetch error:', e);
-    return mockListings;
-  }
+  return mockListings;
 }
 
 export default async function RealEstatePage() {
