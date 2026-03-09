@@ -71,9 +71,9 @@ Dùng cách này nếu bạn muốn cài qua lệnh và không muốn tải file
    - Cursor: **File** → **New File**
    - Gõ nội dung:
    ```env
-   STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxx
+   STRIPE_SECRET_KEY=sk_test_...
    ```
-   - Thay `sk_test_xxxxxxxxxxxxx` bằng Secret key từ [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys)
+   - Thay `sk_test_...` bằng Secret key từ [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys)
    - Lưu vào thư mục gốc project với tên: `.env.local`
 
 2. Lấy Secret key:

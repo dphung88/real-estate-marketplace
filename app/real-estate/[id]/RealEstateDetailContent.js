@@ -4,16 +4,25 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL } from '../../../lib/constants';
 
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75';
+
 /**
  * Renders detail layout with 2x2 grid so button aligns with thumbs row.
  */
 export default function RealEstateDetailContent({ listing, images }) {
-  const list = images?.length >= 4 ? images.slice(0, 4) : images?.length > 0 ? Array(4).fill(images[0]) : [];
+  const initialList = images?.length >= 4 ? images.slice(0, 4) : images?.length > 0 ? Array(4).fill(images[0]) : [];
+  const [list, setList] = useState(initialList);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   if (!listing) return null;
 
-  const mainSrc = list[selectedIndex] || list[0];
+  const handleImageError = (index) => {
+    const newList = [...list];
+    newList[index] = FALLBACK_IMAGE;
+    setList(newList);
+  };
+
+  const mainSrc = list[selectedIndex] || list[0] || FALLBACK_IMAGE;
   const thumbs = list.slice(0, 4);
 
   return (
@@ -21,13 +30,14 @@ export default function RealEstateDetailContent({ listing, images }) {
       <div className="detail-gallery-main">
         {mainSrc && (
           <Image
-            key={selectedIndex}
+            key={`${selectedIndex}-${mainSrc}`}
             src={mainSrc}
             alt={listing.title}
             width={800}
             height={500}
             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             sizes="(max-width: 768px) 100vw, 50vw"
+            onError={() => handleImageError(selectedIndex)}
           />
         )}
       </div>
@@ -66,12 +76,13 @@ export default function RealEstateDetailContent({ listing, images }) {
               aria-label={`View image ${i + 1}`}
             >
               <Image
-                src={src}
+                src={src || FALLBACK_IMAGE}
                 alt={`${listing.title} ${i + 1}`}
                 width={120}
                 height={90}
                 style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px' }}
                 sizes="120px"
+                onError={() => handleImageError(i)}
               />
             </button>
           ))}
