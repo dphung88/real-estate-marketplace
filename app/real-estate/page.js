@@ -119,7 +119,7 @@ async function getListings() {
     }
   ];
 
-  if (!supabase || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('xxxxx')) {
+  if (!supabase || !process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('xxxxx')) {
     console.log('Using mock data for real estate listings');
     return mockListings;
   }
