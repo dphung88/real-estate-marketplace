@@ -3,9 +3,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { LOGO } from '../../lib/theme';
 import { usePathname } from 'next/navigation';
+import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Close menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   const navClass = (path) =>
     pathname === path ? 'nav-links-a active' : 'nav-links-a';
@@ -22,7 +29,16 @@ export default function Navbar() {
             style={{ objectFit: 'contain', width: '45px', height: '45px' }}
           />
         </Link>
-        <ul className="nav-links">
+
+        <button 
+          className="mobile-menu-btn" 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
+        </button>
+
+        <ul className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
           <li>
             <Link href="/" className={navClass('/')}>Home</Link>
           </li>

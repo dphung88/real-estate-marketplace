@@ -105,37 +105,37 @@ export default function FeaturedDetailContent({ item, images }) {
       </div>
 
       {/* Zillow-style Gallery */}
-      <div className="z-gallery" style={{ borderRadius: '16px', overflow: 'hidden' }}>
-        <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+      <div className="z-gallery">
+        <div className="z-gallery-item">
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
               src={displayImages[0] || FALLBACK_IMAGE} 
               alt={item.title} 
               fill 
-              style={{ objectFit: 'cover', borderRadius: '16px' }}
+              style={{ objectFit: 'cover' }}
               sizes="(max-width: 768px) 100vw, 66vw"
               priority
             />
           </div>
         </div>
-        <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+        <div className="z-gallery-item">
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
               src={displayImages[1] || displayImages[0] || FALLBACK_IMAGE} 
               alt={item.title} 
               fill 
-              style={{ objectFit: 'cover', borderRadius: '16px' }}
+              style={{ objectFit: 'cover' }}
               sizes="(max-width: 768px) 50vw, 33vw"
             />
           </div>
         </div>
-        <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+        <div className="z-gallery-item">
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
               src={displayImages[2] || displayImages[0] || FALLBACK_IMAGE} 
               alt={item.title} 
               fill 
-              style={{ objectFit: 'cover', borderRadius: '16px' }}
+              style={{ objectFit: 'cover' }}
               sizes="(max-width: 768px) 50vw, 33vw"
             />
             {hasMorePhotos && (
