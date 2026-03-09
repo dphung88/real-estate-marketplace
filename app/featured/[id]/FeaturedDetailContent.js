@@ -3,19 +3,30 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL, COMPANY_EMAIL } from '../../../lib/constants';
+import ImageModal from '../../components/ImageModal';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75';
 
-export default function FeaturedDetailContent({ item, images }) {
+export default function FeaturedDetailContent({ item, images = [] }) {
   const [activeTab, setActiveTab] = useState('overview');
-  const [mainImageIndex, setMainImageIndex] = useState(0);
   const [isSaved, setIsSaved] = useState(false);
   const [shareStatus, setShareStatus] = useState('Share');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalInitialIndex, setModalInitialIndex] = useState(0);
 
   if (!item) return null;
 
-  const displayImages = images?.length >= 3 ? images : [images[0], images[0], images[0]];
-  const hasMorePhotos = images?.length > 3;
+  // Use a fallback if images are missing or empty
+  const safeImages = images && images.length > 0 ? images : [FALLBACK_IMAGE];
+  
+  // Logic for display in the 3-image grid
+  const displayImages = [
+    safeImages[0],
+    safeImages[1] || safeImages[0],
+    safeImages[2] || safeImages[0]
+  ];
+  
+  const hasMorePhotos = safeImages.length > 3;
 
   const scrollToSection = (id) => {
     setActiveTab(id);
@@ -107,10 +118,10 @@ export default function FeaturedDetailContent({ item, images }) {
 
       {/* Zillow-style Gallery */}
       <div className="z-gallery">
-        <div className="z-gallery-item">
+        <div className="z-gallery-item" onClick={() => { setModalInitialIndex(0); setIsModalOpen(true); }}>
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
-              src={images[mainImageIndex] || displayImages[0] || FALLBACK_IMAGE} 
+              src={displayImages[0]} 
               alt={item.title} 
               fill 
               style={{ objectFit: 'cover' }}
@@ -119,10 +130,10 @@ export default function FeaturedDetailContent({ item, images }) {
             />
           </div>
         </div>
-        <div className="z-gallery-item" onClick={() => setMainImageIndex(1 % images.length)}>
+        <div className="z-gallery-item" onClick={() => { setModalInitialIndex(1 % safeImages.length); setIsModalOpen(true); }}>
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
-              src={displayImages[1] || displayImages[0] || FALLBACK_IMAGE} 
+              src={displayImages[1]} 
               alt={item.title} 
               fill 
               style={{ objectFit: 'cover' }}
@@ -130,40 +141,28 @@ export default function FeaturedDetailContent({ item, images }) {
             />
           </div>
         </div>
-        <div className="z-gallery-item" onClick={() => setMainImageIndex(2 % images.length)}>
+        <div className="z-gallery-item" onClick={() => { setModalInitialIndex(2 % safeImages.length); setIsModalOpen(true); }}>
           <div style={{ position: 'relative', width: '100%', height: '100%' }}>
             <Image 
-              src={displayImages[2] || displayImages[0] || FALLBACK_IMAGE} 
+              src={displayImages[2]} 
               alt={item.title} 
               fill 
               style={{ objectFit: 'cover' }}
               sizes="(max-width: 768px) 50vw, 33vw"
             />
             {hasMorePhotos && (
-              <div className="z-gallery-more">+{images.length - 2} photos</div>
+              <div className="z-gallery-more">+{safeImages.length - 2} photos</div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Mobile Thumbnails */}
-      <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
-        {[0, 1, 2, 3].map((idx) => (
-          <div 
-            key={idx} 
-            style={{ position: 'relative', aspectRatio: '4/3', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', border: mainImageIndex === idx ? '2px solid var(--color-accent)' : 'none' }}
-            onClick={() => setMainImageIndex(idx % images.length)}
-          >
-            <Image 
-              src={images[idx] || images[0] || FALLBACK_IMAGE} 
-              alt={`${item.title} ${idx}`}
-              fill
-              style={{ objectFit: 'cover' }}
-              sizes="25vw"
-            />
-          </div>
-        ))}
-      </div>
+      <ImageModal 
+        images={safeImages} 
+        isOpen={isModalOpen} 
+        initialIndex={modalInitialIndex} 
+        onClose={() => setIsModalOpen(false)} 
+      />
 
       <div className="detail-layout">
         <div className="detail-main-content">
