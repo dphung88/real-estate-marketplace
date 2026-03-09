@@ -6,6 +6,7 @@ import { COMPANY_HOTLINE, COMPANY_HOTLINE_TEL } from '../../../lib/constants';
 
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75';
 
+// Cache-busting comment: v1.0.1 - Ensuring latest build is live
 /**
  * Renders detail layout with 2x2 grid so button aligns with thumbs row.
  */
