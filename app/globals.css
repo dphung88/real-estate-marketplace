@@ -377,8 +377,8 @@ a.listing-card { text-decoration: none; color: inherit; }
   .detail-container { padding: 0 10px; width: 100%; }
 
   /* Navbar Mobile */
-  .mobile-menu-btn { display: block; }
-  .nav-inner { height: 64px; flex-wrap: nowrap; width: 100%; max-width: 100%; }
+  .mobile-menu-btn { display: block; color: var(--color-light); }
+  .nav-inner { height: 64px; flex-wrap: nowrap; width: 100%; max-width: 100%; display: flex; align-items: center; justify-content: space-between; }
   .nav-links {
     position: fixed;
     top: 0;
@@ -392,11 +392,23 @@ a.listing-card { text-decoration: none; color: inherit; }
     transition: right 0.3s ease-in-out;
     box-shadow: -5px 0 15px rgba(0,0,0,0.3);
     z-index: 1000;
+    display: none; /* Ẩn mặc định trên mobile */
   }
   .nav-links li { width: 100%; }
   .nav-links.open {
     right: 0;
     display: flex !important;
+  }
+  .nav-links-a {
+    color: var(--color-light);
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    display: block;
+    width: 100%;
+  }
+  .nav-links-a.active {
+    color: var(--color-accent);
   }
   .nav-links a { font-size: 1.1rem; }
 

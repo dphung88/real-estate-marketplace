@@ -34,6 +34,7 @@ export default function Navbar() {
           className="mobile-menu-btn" 
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
+          type="button"
         >
           <i className={`fa-solid ${isMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
         </button>
@@ -53,6 +54,22 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
+      {/* Overlay for closing menu */}
+      {isMenuOpen && (
+        <div 
+          className="mobile-overlay" 
+          onClick={() => setIsMenuOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100vh',
+            background: 'rgba(0,0,0,0.5)',
+            zIndex: 999
+          }}
+        ></div>
+      )}
     </nav>
   );
 }
