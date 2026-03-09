@@ -187,7 +187,7 @@ export default async function RealEstateDetailPage({ params }) {
           <p>{cat.label} • {listing.location}</p>
         </div>
       </section>
-      <section className="section">
+      <section className="section" style={{ paddingTop: '0' }}>
         <div className="container">
           <RealEstateDetailContent listing={listing} images={images} />
         </div>

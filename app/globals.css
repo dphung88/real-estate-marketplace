@@ -238,80 +238,63 @@ a.listing-card { text-decoration: none; color: inherit; }
 .empty-filter-message { text-align: center; padding: 40px; font-size: 1.1rem; color: var(--color-dark); opacity: 0.8; }
 
 /* ===== DETAIL PAGE (Used Item / Real Estate) ===== */
-.detail-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; max-width: 1000px; margin: 0 auto; }
-/* Used Item detail: 2 nút canh theo cạnh dưới ảnh lớn; 3 ảnh nhỏ dưới ảnh lớn bên trái */
-.detail-layout--used {
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "detail-main detail-content"
-    "detail-thumbs .";
-  row-gap: 12px;
-  column-gap: 32px;
-  align-items: stretch;
-}
-.detail-layout--used .detail-gallery-main { grid-area: detail-main; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(27, 28, 54, 0.12); position: relative; background: var(--color-dark); }
-.detail-layout--used .detail-gallery-main > * { position: absolute; inset: 0; }
-.detail-layout--used .detail-gallery-main img { display: block; position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; border-radius: 0; }
-.detail-layout--used .detail-content-wrap { grid-area: detail-content; display: flex; flex-direction: column; min-height: 0; }
-.detail-layout--used .detail-content-wrap .detail-actions { margin-top: auto; padding-top: 16px; display: flex; flex-wrap: wrap; flex-direction: column; gap: 12px; }
-.detail-layout--used .detail-content-wrap .detail-actions .btn { width: 100%; max-width: 100%; justify-content: center; box-sizing: border-box; }
-.detail-layout--used .detail-gallery-thumbs { grid-area: detail-thumbs; }
-.detail-layout--used .detail-gallery-thumbs .image-gallery-thumbs { gap: 10px; grid-template-columns: repeat(4, 1fr); }
-/* Trang detail real estate: nút phone canh cạnh dưới ảnh lớn; 3 ảnh nhỏ dưới ảnh lớn bên trái (giống Used Items) */
-.detail-layout--aligned {
-  grid-template-rows: auto auto;
-  grid-template-areas:
-    "detail-main detail-content"
-    "detail-thumbs .";
-  row-gap: 12px;
-  column-gap: 32px;
-  align-items: stretch;
-}
-.detail-layout--aligned .detail-gallery-main { grid-area: detail-main; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(27, 28, 54, 0.12); position: relative; background: var(--color-dark); aspect-ratio: 16/10; }
-.detail-layout--aligned .detail-gallery-main > * { position: absolute; inset: 0; }
-.detail-layout--aligned .detail-gallery-main img { display: block; position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; border-radius: 0; }
-.detail-layout--aligned .detail-content-wrap { grid-area: detail-content; display: flex; flex-direction: column; min-height: 0; }
-.detail-layout--aligned .detail-content-wrap .detail-actions { margin-top: auto; padding-top: 16px; }
-.detail-layout--aligned .detail-content-wrap .detail-actions .btn { width: 100%; max-width: 100%; justify-content: center; box-sizing: border-box; }
-.detail-layout--aligned .detail-gallery-thumbs { grid-area: detail-thumbs; }
-.detail-layout--aligned .detail-gallery-thumbs .image-gallery-thumbs { gap: 10px; grid-template-columns: repeat(4, 1fr); }
+.detail-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: start; max-width: 1200px; margin: 0 auto; }
+
+/* Detail Sidebar */
+.detail-sidebar { position: sticky; top: 100px; }
+
+/* Zillow-style Detail Header & Sub-nav */
+.detail-header-actions { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(27, 28, 54, 0.1); padding: 12px 20px; margin-bottom: 24px; background: var(--color-light); position: sticky; top: 64px; z-index: 10; margin-left: -20px; margin-right: -20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.detail-subnav { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+.detail-subnav::-webkit-scrollbar { display: none; }
+.detail-subnav-btn { background: none; border: none; padding: 12px 0; font-size: 0.95rem; font-weight: 600; color: var(--color-dark); opacity: 0.7; cursor: pointer; position: relative; white-space: nowrap; transition: opacity 0.2s; }
+.detail-subnav-btn:hover { opacity: 1; }
+.detail-subnav-btn.active { opacity: 1; color: var(--color-dark); }
+.detail-subnav-btn.active::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: #006AFF; border-radius: 3px; }
+.save-btn { background: none; border: none; display: flex; align-items: center; gap: 8px; font-size: 0.95rem; font-weight: 500; color: var(--color-dark); cursor: pointer; padding: 8px 12px; border-radius: 6px; transition: background 0.2s; }
+.save-btn:hover { background: rgba(27, 28, 54, 0.05); }
+.save-btn i { font-size: 1.2rem; }
+.save-btn.saved i { color: #E74C3C; }
+
+/* Zillow-style Gallery Grid */
+.z-gallery { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: repeat(2, 220px); gap: 10px; margin-bottom: 32px; border-radius: 12px; overflow: hidden; }
+.z-gallery-item { position: relative; cursor: pointer; overflow: hidden; height: 100%; }
+.z-gallery-item img { transition: transform 0.3s ease; width: 100%; height: 100%; object-fit: cover; }
+.z-gallery-item:hover img { transform: scale(1.03); }
+.z-gallery-item:first-child { grid-row: span 2; }
+.z-gallery-more { position: absolute; bottom: 12px; right: 12px; background: white; color: var(--color-dark); padding: 8px 16px; border-radius: 6px; font-weight: 600; font-size: 0.85rem; box-shadow: 0 2px 8px rgba(0,0,0,0.15); z-index: 2; }
+
+/* Detail Sections */
+.detail-section { padding: 40px 0; border-bottom: 1px solid rgba(27, 28, 54, 0.1); }
+.detail-section:last-child { border-bottom: none; }
+.detail-section h3 { font-size: 1.6rem; font-weight: 700; margin-bottom: 24px; color: var(--color-dark); }
+.facts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; }
+.fact-item { display: flex; gap: 16px; align-items: flex-start; }
+.fact-icon { font-size: 1.2rem; color: var(--color-accent); width: 24px; text-align: center; }
+.fact-info strong { display: block; font-size: 0.9rem; color: var(--color-dark); margin-bottom: 2px; }
+.fact-info p { font-size: 0.95rem; opacity: 0.8; color: var(--color-dark); }
+
+.cost-calculator { background: rgba(181, 148, 91, 0.08); padding: 24px; border-radius: 12px; border: 1px solid rgba(181, 148, 91, 0.2); }
+.calc-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.95rem; color: var(--color-dark); }
+.calc-row.total { margin-top: 16px; padding-top: 16px; border-top: 1px dashed rgba(27, 28, 54, 0.2); font-weight: 700; font-size: 1.15rem; }
+
+/* Detailed Facts Section */
+.facts-group-title { background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(8px); padding: 6px 16px; font-size: 0.95rem; font-weight: 700; margin: 32px 0 20px; border-radius: 20px; color: var(--color-dark); border: 1px solid rgba(255, 255, 255, 0.5); display: inline-block; box-shadow: 0 2px 10px rgba(0,0,0,0.02); letter-spacing: 0.01em; }
+.facts-subgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; margin-bottom: 24px; }
+.facts-subgroup h4 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: #333; }
+.facts-list { list-style: disc; padding-left: 20px; color: #555; }
+.facts-list li { margin-bottom: 8px; font-size: 0.95rem; line-height: 1.5; }
+
+/* Old layout support (Used Items) */
+.detail-layout--used { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.detail-gallery-main { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(27, 28, 54, 0.12); position: relative; background: var(--color-dark); aspect-ratio: 16/10; }
+.detail-gallery-main img { width: 100%; height: 100%; object-fit: cover; }
 .detail-image-wrap { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(27, 28, 54, 0.12); }
 /* Trang Featured detail: giới hạn chiều cao ảnh lớn, không để ảnh cao/dài quá */
 .detail-image-wrap .image-gallery-main { height: 380px; max-height: 380px; overflow: hidden; }
 .detail-image-wrap .image-gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .detail-info { padding: 0; display: flex; flex-direction: column; min-height: 0; }
 .detail-info .listing-actions { margin-top: auto; padding-top: 16px; }
-
-/* Image gallery: 1 main + thumbnails */
-.image-gallery { margin-bottom: 0; }
-.image-gallery-main { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(27, 28, 54, 0.12); margin-bottom: 12px; }
-.image-gallery-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.image-gallery-thumb { padding: 0; border: 3px solid transparent; border-radius: 10px; overflow: hidden; cursor: pointer; background: none; transition: border-color 0.2s, opacity 0.2s; aspect-ratio: 4/3; }
-.image-gallery-thumb:hover { opacity: 0.9; }
-.image-gallery-thumb.active { border-color: var(--color-accent); }
-.image-gallery-thumb img { display: block; }
-@media (max-width: 768px) {
-  .detail-layout { grid-template-columns: 1fr; gap: 24px; }
-  .detail-layout--aligned {
-    grid-template-areas:
-      "detail-main"
-      "detail-content"
-      "detail-thumbs";
-  }
-  .detail-layout--used {
-    grid-template-areas:
-      "detail-main"
-      "detail-content"
-      "detail-thumbs";
-  }
-  /* Ô ảnh lớn trên mobile cần chiều cao cố định (con absolute không tạo height) */
-  .detail-layout--used .detail-gallery-main,
-  .detail-layout--aligned .detail-gallery-main {
-    aspect-ratio: 16/10;
-    min-height: 200px;
-  }
-  .image-gallery-thumbs { grid-template-columns: repeat(3, 1fr); }
-}
 
 /* ===== CONTACT ===== */
 .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
