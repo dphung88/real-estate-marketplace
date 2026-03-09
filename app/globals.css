@@ -406,7 +406,8 @@ a.listing-card { text-decoration: none; color: inherit; }
 
   /* Detail Layout Mobile */
   .detail-layout { display: flex; flex-direction: column; gap: 30px; }
-  .detail-sidebar { order: -1; position: static; width: 100% !important; }
+  .detail-main-content { order: 1; width: 100%; }
+  .detail-sidebar { order: 2; position: static; width: 100% !important; }
   .detail-sidebar > div { padding: 24px !important; width: 100% !important; }
   
   .detail-header-actions {
