@@ -144,6 +144,21 @@ export default function RealEstateDetailContent({ listing, images }) {
         </div>
       </div>
 
+      {/* Mobile Thumbnails */}
+      <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
+        {[1, 2, 3, 4].map((idx) => (
+          <div key={idx} style={{ position: 'relative', aspectRatio: '4/3', borderRadius: '8px', overflow: 'hidden' }}>
+            <Image 
+              src={images[idx] || images[0] || FALLBACK_IMAGE} 
+              alt={`${listing.title} ${idx}`}
+              fill
+              style={{ objectFit: 'cover' }}
+              sizes="25vw"
+            />
+          </div>
+        ))}
+      </div>
+
       <div className="detail-layout">
         <div className="detail-main-content">
           {/* Overview Section */}

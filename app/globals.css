@@ -376,26 +376,22 @@ a.listing-card { text-decoration: none; color: inherit; }
 
   .detail-container { padding: 0 10px; width: 100%; }
 
-  /* Navbar Mobile */
-  .mobile-menu-btn { display: block !important; }
-  .nav-inner { height: 64px; flex-direction: row; padding: 0; }
-  .logo { margin-bottom: 0; }
+  /* Navbar Mobile - No Hamburger Menu, 4 items horizontal */
+  .mobile-menu-btn { display: none !important; }
+  .nav-inner { height: auto; flex-direction: column; padding: 10px 0; }
+  .logo { margin-bottom: 10px; }
   .nav-links {
-    display: none !important;
-  }
-  .nav-links.open {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    background: transparent !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    padding: 0 !important;
+    gap: 15px !important;
     display: flex !important;
-    position: fixed !important;
-    top: 0;
-    right: 0;
-    width: 250px !important;
-    height: 100vh !important;
-    background: var(--color-dark) !important;
-    flex-direction: column !important;
-    padding: 80px 30px !important;
-    gap: 20px !important;
-    z-index: 1000;
-    box-shadow: -5px 0 15px rgba(0,0,0,0.3) !important;
+    box-shadow: none !important;
   }
   .nav-links li { width: auto !important; }
   .nav-links a { font-size: 0.9rem !important; }
@@ -435,17 +431,25 @@ a.listing-card { text-decoration: none; color: inherit; }
     padding-bottom: 5px;
   }
 
-  /* Gallery Mobile */
+  /* Gallery Mobile - 1 big image, 4 small ones below */
   .z-gallery {
-    grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
     height: auto !important;
-    aspect-ratio: 16/10 !important;
-    margin-bottom: 20px;
   }
-  .z-gallery-item:not(:first-child) { display: none !important; }
-  .z-gallery-item:first-child { grid-row: auto !important; border-radius: 12px; height: 100% !important; }
-  .z-gallery-item img { position: static !important; }
+  .z-gallery-item:first-child {
+    width: 100% !important;
+    height: 300px !important;
+    border-radius: 12px !important;
+  }
+  .z-gallery-item:not(:first-child) {
+    display: none !important;
+  }
+
+  .mobile-only-thumbs {
+    display: grid !important;
+  }
 
   .footer-inner { flex-direction: column; justify-content: center; align-items: center; text-align: center; }
   .footer-inner > a { justify-content: center; }
