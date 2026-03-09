@@ -57,7 +57,7 @@ export default function RealEstateDetailContent({ listing, images }) {
   return (
     <div className="detail-container">
       {/* Zillow-style Header Actions */}
-      <div className="detail-header-actions" style={{ background: 'transparent' }}>
+      <div className="detail-header-actions">
         <div className="detail-subnav">
           <button 
             className={`detail-subnav-btn ${activeTab === 'overview' ? 'active' : ''}`}
