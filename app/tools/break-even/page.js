@@ -79,16 +79,16 @@ export default function BreakEvenPage() {
               </div>
 
               {activeTab === 'breakeven' ? (
-                <div style={{ marginBottom: '20px' }}>
-                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4 text-center">Break-Even Analysis</h2>
+                <div style={{ marginBottom: '48px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4 text-center w-full">Break-Even Analysis</h2>
                   <p className="text-center" style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
                     Analyze your core financial metrics, monitor operational efficiency, 
                     and determine your exact break-even point.
                   </p>
                 </div>
               ) : (
-                <div style={{ marginBottom: '20px' }}>
-                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4 text-center">Comprehensive Financial</h2>
+                <div style={{ marginBottom: '48px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4 text-center w-full">Comprehensive Financial</h2>
                   <p className="text-center" style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
                     A professional-grade financial modeling tool complete with Income Statement, Balance Sheet, Cash Flow and Personal Net Worth tracking.
                   </p>
