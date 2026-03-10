@@ -23,11 +23,11 @@ export default function BreakEvenPage() {
         <div className="page-hero-content container">
           <h1>
             <Calculator size={42} style={{ color: 'var(--color-accent)', marginRight: '15px', verticalAlign: 'middle', display: 'inline-block' }} />
-            Điểm Hòa Vốn
+            Financial Analysis Hub
           </h1>
           <p>
-            Công cụ phân tích điểm hòa vốn chuyên sâu giúp bạn xác định mục tiêu doanh số 
-            và tối ưu hóa cấu trúc chi phí cho doanh nghiệp.
+            Professional-grade break-even analysis and performance tracking tools 
+            designed for strategic business optimization.
           </p>
         </div>
       </section>
@@ -35,25 +35,30 @@ export default function BreakEvenPage() {
       {/* Main Content */}
       <section className="section">
         <div className="container">
-          <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <div className="mb-10 text-center">
-              <span className="badge badge-used" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>Quản Trị Tài Chính</span>
-              <h2 className="section-title" style={{ marginTop: '15px' }}>Phân Tích Lợi Nhuận Axiom</h2>
+              <span className="badge badge-used" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>Business Intelligence</span>
+              <h2 className="section-title" style={{ marginTop: '15px' }}>Profitability & Performance</h2>
               <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto' }}>
-                Nhập các thông số tài chính bên dưới để tính toán chính xác số lượng sản phẩm hoặc doanh thu 
-                cần thiết để bù đắp toàn bộ chi phí hoạt động.
+                Analyze your core financial metrics, monitor operational efficiency, 
+                and determine your exact break-even point with our integrated management dashboard.
               </p>
             </div>
 
             <AxiomBreakEven />
 
-            <div className="why-card mt-12" style={{ textAlign: 'left', padding: '30px' }}>
-              <h4 style={{ color: 'var(--color-accent)', marginBottom: '15px' }}>Hướng dẫn sử dụng:</h4>
-              <ul className="facts-list" style={{ color: 'var(--color-light)' }}>
-                <li><strong>Chi phí cố định:</strong> Là những khoản phí bạn phải trả hàng tháng dù có bán được hàng hay không (Mặt bằng, lương cơ bản, internet...).</li>
-                <li><strong>Chi phí biến đổi:</strong> Là chi phí phát sinh trên mỗi sản phẩm bán ra (Giá vốn hàng bán, hoa hồng môi giới, phí vận chuyển...).</li>
-                <li><strong>Giá bán:</strong> Doanh thu thu về trên mỗi đơn vị sản phẩm hoặc hợp đồng thành công.</li>
-              </ul>
+            <div className="why-card mt-12" style={{ textAlign: 'left', padding: '40px' }}>
+              <h4 style={{ color: 'var(--color-accent)', marginBottom: '20px', fontSize: '1.25rem' }}>Strategic Definitions:</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <ul className="facts-list" style={{ color: 'var(--color-light)' }}>
+                  <li style={{ marginBottom: '15px' }}><strong style={{ color: '#B5945B' }}>Fixed Costs:</strong> Monthly recurring expenses independent of sales volume (Rent, Salaries, Insurance).</li>
+                  <li style={{ marginBottom: '15px' }}><strong style={{ color: '#B5945B' }}>Variable Costs (COGS):</strong> Direct costs that fluctuate with production or sales (Material, Commission, Shipping).</li>
+                </ul>
+                <ul className="facts-list" style={{ color: 'var(--color-light)' }}>
+                  <li style={{ marginBottom: '15px' }}><strong style={{ color: '#B5945B' }}>CLV (Customer Lifetime Value):</strong> Predicted total revenue a business can expect from a single customer account.</li>
+                  <li style={{ marginBottom: '15px' }}><strong style={{ color: '#B5945B' }}>CAC (Customer Acquisition Cost):</strong> The total cost of winning a customer to purchase a product or service.</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
