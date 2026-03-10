@@ -170,9 +170,25 @@ export default async function RealEstateDetailPage({ params }) {
 
   const imgSrc = listing.image_url ||
     (listing.property_type === 'rent' ? DEFAULT_IMAGES.rent : DEFAULT_IMAGES.sale);
-  const images = listing.images && listing.images.length > 0
-    ? listing.images
-    : [imgSrc, imgSrc, imgSrc, imgSrc];
+  
+  // Ensure we have at least 4 images for the gallery
+  let images = listing.images && listing.images.length > 0
+    ? [...listing.images]
+    : [imgSrc];
+  
+  // If we have fewer than 4 images, fill with meaningful defaults
+  if (images.length < 4) {
+    const defaultPool = 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=75';
+    const defaultInterior = 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=75';
+    const defaultKitchen = 'https://images.unsplash.com/photo-1556912177-c54030639a8c?w=800&q=75';
+    const fillImages = [defaultInterior, defaultPool, defaultKitchen, imgSrc];
+    
+    while (images.length < 4) {
+      const nextImg = fillImages[images.length % fillImages.length];
+      images.push(nextImg);
+    }
+  }
+  
   const cat = getCategoryLabel(listing);
 
   return (

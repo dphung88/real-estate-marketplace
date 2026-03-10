@@ -27,6 +27,7 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
   ];
   
   const hasMorePhotos = safeImages.length > 3;
+  const moreCount = safeImages.length - 2; // Grid shows 2 standalone, 3rd one has overlay
 
   const scrollToSection = (id) => {
     setActiveTab(id);
@@ -160,15 +161,15 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
                 sizes="(max-width: 768px) 50vw, 33vw"
               />
               {hasMorePhotos && (
-                <div className="z-gallery-more">+{safeImages.length - 2} photos</div>
+                <div className="z-gallery-more">+{moreCount} photos</div>
               )}
             </div>
           </div>
         </div>
 
         {/* Mobile Thumbnails - Interaction only changes main image, no modal */}
-        <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
-          {[0, 1, 2, 3].map((idx) => (
+        <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: `repeat(${Math.min(safeImages.length, 4)}, 1fr)`, gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
+          {safeImages.slice(0, 4).map((img, idx) => (
             <div 
               key={idx} 
               style={{ 
@@ -180,11 +181,11 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
                 border: selectedIndex === idx ? '2px solid var(--color-accent)' : 'none' 
               }}
               onClick={() => {
-                setSelectedIndex(idx % safeImages.length);
+                setSelectedIndex(idx);
               }}
             >
               <Image 
-                src={safeImages[idx] || safeImages[0]} 
+                src={img} 
                 alt={`${listing.title} ${idx}`}
                 fill
                 style={{ objectFit: 'cover' }}
