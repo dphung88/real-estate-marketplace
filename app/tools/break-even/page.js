@@ -86,19 +86,6 @@ export default function BreakEvenPage() {
 
             {activeTab === 'breakeven' ? <AxiomBreakEven /> : <ProFinancialDashboard />}
 
-            <div className="why-card mt-12" style={{ textAlign: 'left', padding: '40px' }}>
-              <h4 style={{ color: 'var(--color-accent)', marginBottom: '20px', fontSize: '1.25rem' }}>Strategic Definitions:</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <ul className="facts-list" style={{ color: 'var(--color-light)' }}>
-                  <li style={{ marginBottom: '15px' }}><strong style={{ color: '#B5945B' }}>Fixed Costs:</strong> Monthly recurring expenses independent of sales volume (Rent, Salaries, Insurance).</li>
-                  <li style={{ marginBottom: '15px' }}><strong style={{ color: '#B5945B' }}>Variable Costs (COGS):</strong> Direct costs that fluctuate with production or sales (Material, Commission, Shipping).</li>
-                </ul>
-                <ul className="facts-list" style={{ color: 'var(--color-light)' }}>
-                  <li style={{ marginBottom: '15px' }}><strong style={{ color: '#B5945B' }}>CLV (Customer Lifetime Value):</strong> Predicted total revenue a business can expect from a single customer account.</li>
-                  <li style={{ marginBottom: '15px' }}><strong style={{ color: '#B5945B' }}>CAC (Customer Acquisition Cost):</strong> The total cost of winning a customer to purchase a product or service.</li>
-                </ul>
-              </div>
-            </div>
           </div>
         </div>
       </section>

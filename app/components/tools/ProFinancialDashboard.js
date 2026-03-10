@@ -263,31 +263,26 @@ const ProFinancialDashboard = () => {
   );
 
   const renderTableData = (category, title, yearsList, sectionKey) => {
-    // Determine exact column widths to guarantee alignment across all tables
-    // First col is 25%, remaining cols split the rest equally
     const colCount = yearsList.length;
     const dataColWidth = `${75 / colCount}%`;
 
     return (
       <div className="mb-10">
-        <div className="flex items-center gap-3 mb-4 pb-2 border-b-2 border-slate-100">
-          <h3 className="font-bold text-slate-800 text-lg tracking-wide">{title}</h3>
-        </div>
-
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-          <div className="overflow-x-auto custom-scrollbar">
-            <table className="w-full text-left text-sm border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
-              <thead>
-                <tr className="bg-slate-50">
-                  <th className="p-4 font-bold text-slate-600 border-b border-slate-200 uppercase tracking-wider text-xs" style={{ width: '25%' }}></th>
-                  {yearsList.map(y => (
-                    <th key={y} className="p-4 font-bold text-slate-800 text-right border-b border-slate-200 uppercase tracking-wider text-sm" style={{ width: dataColWidth }}>
-                      {y}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
+        <div className="overflow-x-auto custom-scrollbar bg-white rounded-2xl border border-slate-200 shadow-sm">
+          <table className="w-full text-left text-sm border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+            <thead>
+              <tr className="bg-slate-50 border-b-2 border-slate-200">
+                <th className="p-5 font-black text-slate-900 text-2xl" style={{ width: '25%' }}>
+                  {title}
+                </th>
+                {yearsList.map(y => (
+                  <th key={y} className="p-5 font-black text-slate-900 text-xl text-right" style={{ width: dataColWidth }}>
+                    {y}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
                 {Object.entries(data[category]).map(([name, vals], rowIndex) => (
                   <tr key={name} className="group hover:bg-blue-50/50 transition-colors border-b border-slate-100 last:border-0">
                     <td className="p-4 font-semibold text-slate-700 truncate" style={{ width: '25%' }}>
@@ -316,9 +311,8 @@ const ProFinancialDashboard = () => {
                     ))}
                   </tr>
                 ))}
-              </tbody>
-            </table>
-          </div>
+            </tbody>
+          </table>
         </div>
       </div>
     );
