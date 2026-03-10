@@ -89,7 +89,7 @@ const INITIAL_DATA = {
     'Retained Earnings': [38200, 3100, 45200]
   },
   personal: {
-    name: "Duong Tri Thien Phung",
+    name: "Abraham Lincoln",
     salary: 500000,
     assets: {
       'Cash': 6000,
@@ -332,121 +332,127 @@ const ProFinancialDashboard = () => {
 
   const renderPersonal = () => (
     <div className="max-w-7xl mx-auto">
-      <div className="contact-form-box mb-8" style={{ padding: '30px', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)', background: '#FFF' }}>
+      <div className="mb-10">
+        <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
         
-        {/* Table-style Layout for Personal Status */}
+        {/* Table-style Layout for Personal Status with Full Width Distribution */}
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
             <thead>
               <tr>
-                <th style={{ width: '25%', paddingBottom: '12px' }}></th>
-                <th style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Director Info</th>
-                <th style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Personal Assets</th>
-                <th style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Personal Liabilities</th>
-                <th style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Summary</th>
+                <th style={{ width: '25%', paddingBottom: '12px' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
+                    Personal Status
+                  </span>
+                </th>
+                <th style={{ width: '18.75%', paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Director Info</th>
+                <th style={{ width: '18.75%', paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Personal Assets</th>
+                <th style={{ width: '18.75%', paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Personal Liabilities</th>
+                <th style={{ width: '18.75%', paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Summary</th>
               </tr>
             </thead>
             <tbody>
               
-              {/* Row: Name / Cash / Bank Loans / Total Assets */}
+              {/* Row 1: Liquid Assets */}
               <tr className="group transition-colors hover:bg-black/[0.02]">
-                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
+                <td style={{ padding: '16px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
                   Liquid Assets & Short-term
                 </td>
-                <td className="p-3 text-center">
-                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-1">Name</div>
-                  <div className="text-[0.95rem] font-bold text-[#1B1C36]">{data.personal.name}</div>
+                <td className="px-4 py-3 align-top text-center border-l border-black/5">
+                  <div className="text-[0.65rem] uppercase text-[#666] font-bold mb-1">Name</div>
+                  <div className="text-[1rem] font-medium text-[#1B1C36]">{data.personal.name}</div>
                 </td>
-                <td className="p-3">
-                  <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                    <span className="text-[0.8rem] text-[#666] font-medium">Cash</span>
-                    <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets.Cash)}</span>
+                <td className="px-4 py-3 align-top border-l border-black/5">
+                  <div className="flex justify-between items-center w-full">
+                    <span className="text-[0.95rem] text-[#666] font-medium">Cash</span>
+                    <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets.Cash)}</span>
                   </div>
                 </td>
-                <td className="p-3">
-                  <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                    <span className="text-[0.8rem] text-[#666] font-medium">Credit Cards</span>
-                    <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.liabilities['Credit Cards'])}</span>
+                <td className="px-4 py-3 align-top border-l border-black/5">
+                  <div className="flex justify-between items-center w-full">
+                    <span className="text-[0.95rem] text-[#666] font-medium">Credit Cards</span>
+                    <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.liabilities['Credit Cards'])}</span>
                   </div>
                 </td>
-                <td className="p-3 text-center border-l border-black/5">
-                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-1">Total Assets</div>
-                  <div className="text-[1.1rem] font-bold text-[#B5945B]">{formatCurrency(calc.personalAssets)}</div>
+                <td className="px-4 py-3 text-center border-l border-black/5 bg-[#F9F9F9]/50">
+                  <div className="text-[0.65rem] uppercase text-[#666] font-bold mb-1">Total Assets</div>
+                  <div className="text-[1.1rem] font-bold text-[#1B1C36]">{formatCurrency(calc.personalAssets)}</div>
                 </td>
               </tr>
 
-              {/* Row: Salary / RRSP & Stocks / Bank Loans / Total Liab */}
+              {/* Row 2: Investments & Loans */}
               <tr className="group transition-colors hover:bg-black/[0.02]">
-                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
+                <td style={{ padding: '16px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
                   Investments & Loans
                 </td>
-                <td className="p-3 text-center">
-                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-1">Annual Salary</div>
-                  <div className="text-[0.95rem] font-bold text-[#1B1C36]">{formatCurrency(data.personal.salary)}</div>
+                <td className="px-4 py-3 align-top text-center border-l border-black/5">
+                  <div className="text-[0.65rem] uppercase text-[#666] font-bold mb-1">Annual Salary</div>
+                  <div className="text-[1rem] font-medium text-[#1B1C36]">{formatCurrency(data.personal.salary)}</div>
                 </td>
-                <td className="p-3">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                      <span className="text-[0.8rem] text-[#666] font-medium">RRSP</span>
-                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets.RRSP)}</span>
+                <td className="px-4 py-3 align-top border-l border-black/5">
+                  <div className="flex flex-col gap-4 w-full">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[0.95rem] text-[#666] font-medium">RRSP</span>
+                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets.RRSP)}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                      <span className="text-[0.8rem] text-[#666] font-medium">Stocks/Bonds</span>
-                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets['Stocks/Bonds'])}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[0.95rem] text-[#666] font-medium">Stocks/Bonds</span>
+                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets['Stocks/Bonds'])}</span>
                     </div>
                   </div>
                 </td>
-                <td className="p-3 align-top">
-                  <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                    <span className="text-[0.8rem] text-[#666] font-medium">Bank Loans</span>
-                    <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.liabilities['Bank Loans'])}</span>
+                <td className="px-4 py-3 align-top border-l border-black/5">
+                  <div className="flex justify-between items-center w-full">
+                    <span className="text-[0.95rem] text-[#666] font-medium">Bank Loans</span>
+                    <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.liabilities['Bank Loans'])}</span>
                   </div>
                 </td>
-                <td className="p-3 text-center border-l border-black/5 align-top">
-                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-1">Total Liabilities</div>
+                <td className="px-4 py-3 text-center border-l border-black/5 bg-[#F9F9F9]/50 align-top">
+                  <div className="text-[0.65rem] uppercase text-[#666] font-bold mb-1">Total Liabilities</div>
                   <div className="text-[1.1rem] font-bold text-[#ef4444]">{formatCurrency(calc.personalLiab)}</div>
                 </td>
               </tr>
 
-              {/* Row: Empty / Fixed Assets / Mortgages / Net Worth */}
+              {/* Row 3: Fixed Assets */}
               <tr className="group transition-colors hover:bg-black/[0.02]">
-                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
+                <td style={{ padding: '16px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px', borderBottom: 'none' }}>
                   Fixed Assets & Mortgages
                 </td>
-                <td className="p-3"></td>
-                <td className="p-3">
-                  <div className="flex flex-col gap-2">
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                      <span className="text-[0.8rem] text-[#666] font-medium">Real Estate</span>
-                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets['Real Estate'])}</span>
+                <td className="px-4 py-3 border-l border-black/5"></td>
+                <td className="px-4 py-3 border-l border-black/5">
+                  <div className="flex flex-col gap-4 w-full">
+                    <div className="flex justify-between items-center">
+                      <span className="text-[0.95rem] text-[#666] font-medium">Real Estate</span>
+                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets['Real Estate'])}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                      <span className="text-[0.8rem] text-[#666] font-medium">Automobiles</span>
-                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets.Automobiles)}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[0.95rem] text-[#666] font-medium">Automobiles</span>
+                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets.Automobiles)}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                      <span className="text-[0.8rem] text-[#666] font-medium">Household/Personal</span>
-                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets['Household/Personal'])}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[0.95rem] text-[#666] font-medium">Household/Personal</span>
+                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets['Household/Personal'])}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                      <span className="text-[0.8rem] text-[#666] font-medium">Life Insurance</span>
-                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets['Life Insurance'])}</span>
+                    <div className="flex justify-between items-center">
+                      <span className="text-[0.95rem] text-[#666] font-medium">Life Insurance</span>
+                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets['Life Insurance'])}</span>
                     </div>
                   </div>
                 </td>
-                <td className="p-3 align-top">
-                  <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
-                    <span className="text-[0.8rem] text-[#666] font-medium">Mortgages</span>
-                    <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.liabilities.Mortgages)}</span>
+                <td className="px-4 py-3 align-top border-l border-black/5">
+                  <div className="flex justify-between items-center w-full">
+                    <span className="text-[0.95rem] text-[#666] font-medium">Mortgages</span>
+                    <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.liabilities.Mortgages)}</span>
                   </div>
                 </td>
-                <td className="p-3 text-center border-l border-black/5">
-                  <div className="bg-[#1B1C36] rounded-xl p-4 shadow-lg">
+                <td className="px-4 py-3 text-center border-l border-black/5 align-bottom">
+                  <div className="pt-4 border-t border-[var(--color-accent)]/30 mt-auto">
                     <div className="text-[0.65rem] uppercase text-[#B5945B] font-black tracking-widest mb-1">NET WORTH</div>
-                    <div className="text-[1.25rem] font-black text-[#10b981]">{formatCurrency(calc.netWorth)}</div>
+                    <div className="text-[1.5rem] font-black text-[#10b981]">{formatCurrency(calc.netWorth)}</div>
                   </div>
                 </td>
               </tr>
+
             </tbody>
           </table>
         </div>
