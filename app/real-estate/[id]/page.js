@@ -101,9 +101,7 @@ async function getListingById(id) {
         'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=75',
         'https://images.unsplash.com/photo-1536376074402-f2731042509a?w=800&q=75',
         'https://images.unsplash.com/photo-1502672023488-70e25813efdf?w=800&q=75',
-        'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=75',
-        'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?w=800&q=75',
-        'https://images.unsplash.com/photo-1505691938895-1758d7eaa511?w=800&q=75'
+        'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=75'
       ],
       status: 'active',
       type: 'rent',
@@ -121,9 +119,7 @@ async function getListingById(id) {
         'https://images.unsplash.com/photo-1472396961693-142e6e269027?w=800&q=75',
         'https://images.unsplash.com/photo-1490682143124-b15223b3f041?w=800&q=75',
         'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=75',
-        'https://images.unsplash.com/photo-1449156001437-37c446bfdf30?w=800&q=75',
-        'https://images.unsplash.com/photo-1444333509402-6b9997f39a80?w=800&q=75',
-        'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=800&q=75'
+        'https://images.unsplash.com/photo-1449156001437-37c446bfdf30?w=800&q=75'
       ],
       status: 'active',
       type: 'sale',
