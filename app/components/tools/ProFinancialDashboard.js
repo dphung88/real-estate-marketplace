@@ -284,7 +284,7 @@ const ProFinancialDashboard = () => {
             <tbody>
               {Object.entries(data[category]).map(([name, vals], rowIndex) => (
                 <tr key={name}>
-                  <td style={{ padding: '8px 0', fontSize: '0.7rem', fontWeight: '600', color: '#666', width: '25%' }}>
+                  <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '700', color: '#666666', width: '25%' }}>
                     {name}
                   </td>
                   {vals.map((v, i) => (
