@@ -121,11 +121,11 @@ export default function FeaturedDetailContent({ item, images = [] }) {
         <div className="z-gallery">
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(0); 
-            if (window.innerWidth > 768) setIsModalOpen(true); 
+            setIsModalOpen(true); 
           }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <Image 
-                src={safeImages[selectedIndex] || displayImages[0]} 
+                src={safeImages[0]} 
                 alt={item.title} 
                 fill 
                 style={{ objectFit: 'cover' }}
@@ -136,11 +136,11 @@ export default function FeaturedDetailContent({ item, images = [] }) {
           </div>
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(1 % safeImages.length); 
-            if (window.innerWidth > 768) setIsModalOpen(true); 
+            setIsModalOpen(true); 
           }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <Image 
-                src={displayImages[1]} 
+                src={safeImages[1] || safeImages[0]} 
                 alt={item.title} 
                 fill 
                 style={{ objectFit: 'cover' }}
@@ -150,11 +150,11 @@ export default function FeaturedDetailContent({ item, images = [] }) {
           </div>
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(2 % safeImages.length); 
-            if (window.innerWidth > 768) setIsModalOpen(true); 
+            setIsModalOpen(true); 
           }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <Image 
-                src={displayImages[2]} 
+                src={safeImages[2] || safeImages[0]} 
                 alt={item.title} 
                 fill 
                 style={{ objectFit: 'cover' }}
