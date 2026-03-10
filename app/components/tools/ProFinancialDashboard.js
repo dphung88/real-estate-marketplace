@@ -5,7 +5,7 @@ import {
   TrendingUp, Wallet, PieChart, BarChart3, Users, 
   Target, ArrowUpRight, ArrowDownRight, 
   Save, Download, Info, LayoutDashboard,
-  Calendar, Building, FileText, Activity, CreditCard
+  Calendar, Building, FileText, Activity, CreditCard, ChevronDown, ChevronUp
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
@@ -250,54 +250,93 @@ const ProFinancialDashboard = () => {
     </div>
   );
 
-  const renderTableData = (category, title, yearsList) => (
-    <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden mb-8">
-      <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-slate-800 uppercase text-sm tracking-wider">
-        {title}
+  const [openSections, setOpenSections] = useState({
+    sales: true, cogs: false, salesExpenses: false, adminExpenses: false,
+    assets: true, liabilities: false
+  });
+
+  const toggleSection = (sec) => setOpenSections(prev => ({ ...prev, [sec]: !prev[sec] }));
+
+  const renderTableData = (category, title, yearsList, sectionKey) => {
+    const isOpen = openSections[sectionKey];
+    return (
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm mb-6 transition-all duration-300 overflow-hidden">
+        <button 
+          onClick={() => toggleSection(sectionKey)}
+          className="w-full flex items-center justify-between p-5 bg-slate-50 hover:bg-slate-100 transition-colors border-b border-slate-200"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+              <span className="text-blue-600 font-bold text-sm">{title.split('.')[0]}</span>
+            </div>
+            <span className="font-bold text-slate-800 text-sm uppercase tracking-wider">{title.split('.')[1] || title}</span>
+          </div>
+          <div className="text-slate-400">
+            {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          </div>
+        </button>
+
+        {isOpen && (
+          <div className="p-6">
+            <div className="overflow-x-auto custom-scrollbar">
+              <table className="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr>
+                    <th className="p-3 font-semibold text-slate-500 w-1/4 sticky left-0 bg-white z-10 border-b-2 border-slate-100">Category</th>
+                    {yearsList.map(y => <th key={y} className="p-3 font-semibold text-slate-500 text-right border-b-2 border-slate-100">{y}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {Object.entries(data[category]).map(([name, vals], rowIndex) => (
+                    <tr key={name} className="group hover:bg-blue-50/30 transition-colors">
+                      <td className="p-3 font-medium text-slate-700 border-b border-slate-50 sticky left-0 bg-white group-hover:bg-blue-50/10">
+                        {name}
+                      </td>
+                      {vals.map((v, i) => (
+                        <td key={i} className="p-2 border-b border-slate-50">
+                          <div className="relative flex items-center">
+                            <span className="absolute left-3 text-slate-400 text-xs font-medium">$</span>
+                            <input 
+                              type="number" 
+                              value={v} 
+                              onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
+                              className="w-full text-right bg-slate-50 hover:bg-slate-100 focus:bg-white border border-transparent focus:border-blue-400 focus:ring-4 focus:ring-blue-100 rounded-xl pl-6 pr-3 py-2 font-medium text-slate-800 outline-none transition-all shadow-inner"
+                            />
+                          </div>
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
-          <thead>
-            <tr className="border-b border-slate-100">
-              <th className="p-4 font-semibold text-slate-500 w-1/4">Category</th>
-              {yearsList.map(y => <th key={y} className="p-4 font-semibold text-slate-500 text-right">{y}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(data[category]).map(([name, vals]) => (
-              <tr key={name} className="border-b border-slate-50 hover:bg-slate-50">
-                <td className="p-4 font-medium text-slate-700">{name}</td>
-                {vals.map((v, i) => (
-                  <td key={i} className="p-2">
-                    <input type="number" value={v} onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                      className="w-full text-right bg-transparent border border-transparent focus:border-blue-300 focus:bg-blue-50 rounded px-2 py-1 outline-none transition-all"
-                    />
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+    );
+  };
 
   const renderIncomeStatement = () => (
-    <div className="space-y-6">
-      {renderTableData('sales', '1. Sales Activities', data.years)}
-      {renderTableData('cogs', '2. Cost of Sales', data.years)}
-      {renderTableData('salesExpenses', '3. Sales Expenses', data.years)}
-      {renderTableData('adminExpenses', '4. Admin Expenses', data.years)}
+    <div className="max-w-6xl mx-auto">
+      <div className="bg-blue-50/50 text-blue-800 p-5 rounded-2xl text-sm mb-8 border border-blue-100 flex items-start gap-3">
+        <Info className="text-blue-500 shrink-0 mt-0.5" size={18} />
+        <p><strong>Income Statement Setup:</strong> Enter your historical and projected revenue, costs, and operating expenses across the timeline. These figures will directly fuel the Dashboard's profit analysis.</p>
+      </div>
+      {renderTableData('sales', '1. Sales Activities', data.years, 'sales')}
+      {renderTableData('cogs', '2. Cost of Sales', data.years, 'cogs')}
+      {renderTableData('salesExpenses', '3. Sales Expenses', data.years, 'salesExpenses')}
+      {renderTableData('adminExpenses', '4. Admin Expenses', data.years, 'adminExpenses')}
     </div>
   );
 
   const renderBalanceSheet = () => (
-    <div className="space-y-6">
-      <div className="bg-blue-50 text-blue-800 p-4 rounded-xl text-sm mb-4">
-        * Note: Balance Sheet data covers the last 3 historical/projected years (2014, 2015, 2016).
+    <div className="max-w-6xl mx-auto">
+      <div className="bg-purple-50/50 text-purple-800 p-5 rounded-2xl text-sm mb-8 border border-purple-100 flex items-start gap-3">
+        <Info className="text-purple-500 shrink-0 mt-0.5" size={18} />
+        <p><strong>Balance Sheet Input:</strong> Note that balance sheet data covers the last 3 historical/projected years (2014, 2015, 2016). Ensure Assets always equal Liabilities + Equity.</p>
       </div>
-      {renderTableData('assets', 'Assets', ['2014', '2015', '2016'])}
-      {renderTableData('liabilities', 'Liabilities & Shareholders Equity', ['2014', '2015', '2016'])}
+      {renderTableData('assets', '5. Assets', ['2014', '2015', '2016'], 'assets')}
+      {renderTableData('liabilities', '6. Liabilities & Equity', ['2014', '2015', '2016'], 'liabilities')}
     </div>
   );
 
