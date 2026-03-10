@@ -36,6 +36,13 @@ const AxiomBreakEven = () => {
     interest: 29500
   });
 
+  // Growth Assumptions for 5-Year Plan
+  const [growthAssumptions, setGrowthAssumptions] = useState({
+    revenueGrowth: 12, // %
+    cogsGrowth: 10,    // %
+    expenseInflation: 5 // %
+  });
+
   const [maxUnits, setMaxUnits] = useState(1500);
   const [isInputExpanded, setIsInputExpanded] = useState(true);
   const [activeTab, setActiveTab] = useState('forecast');
@@ -61,16 +68,19 @@ const AxiomBreakEven = () => {
   useEffect(() => {
     const years = ['2024', '2025', '2026', '2027', '2028', '2029'];
     const projection = years.map((year, i) => {
-      const growth = Math.pow(1.12, i); // 12% revenue growth
-      const rev = totalSales * growth;
-      const cost = totalCogs * Math.pow(1.10, i); // 10% cost growth
-      const exp = totalExpenses * Math.pow(1.05, i); // 5% expense inflation
+      const revGrowthFactor = Math.pow(1 + (growthAssumptions.revenueGrowth / 100), i);
+      const cogsGrowthFactor = Math.pow(1 + (growthAssumptions.cogsGrowth / 100), i);
+      const expGrowthFactor = Math.pow(1 + (growthAssumptions.expenseInflation / 100), i);
+      
+      const rev = totalSales * revGrowthFactor;
+      const cost = totalCogs * cogsGrowthFactor;
+      const exp = totalExpenses * expGrowthFactor;
       const gp = rev - cost;
       const np = gp - exp;
       return { year, revenue: rev, grossProfit: gp, netProfit: np, expenses: exp };
     });
     setForecast(projection);
-  }, [salesData, cogsData, expensesData]);
+  }, [salesData, cogsData, expensesData, growthAssumptions]);
 
   const formatUSD = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(v);
 
@@ -118,6 +128,14 @@ const AxiomBreakEven = () => {
                 <MiniInput label="Management Salaries ($)" value={expensesData.managementSalaries} onChange={(v) => setExpensesData({...expensesData, managementSalaries: v})} />
                 <MiniInput label="Interest ($)" value={expensesData.interest} onChange={(v) => setExpensesData({...expensesData, interest: v})} />
               </div>
+
+              {/* Col 4: Growth Assumptions */}
+              <div className="space-y-4">
+                <p className="input-header">Strategic Growth (5-Year)</p>
+                <MiniInput label="Annual Revenue Growth (%)" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, revenueGrowth: v})} />
+                <MiniInput label="COGS Increase Rate (%)" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, cogsGrowth: v})} />
+                <MiniInput label="OpEx Inflation (%)" value={growthAssumptions.expenseInflation} onChange={(v) => setGrowthAssumptions({...growthAssumptions, expenseInflation: v})} />
+              </div>
             </div>
             <style jsx>{`
               .input-header { font-size: 0.75rem; font-weight: 800; color: #B5945B; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid rgba(181, 148, 91, 0.2); padding-bottom: 8px; margin-bottom: 15px; }
@@ -152,6 +170,40 @@ const AxiomBreakEven = () => {
 
         {/* Chart Column */}
         <div className="lg:col-span-8 space-y-6">
+          {activeTab === 'performance' && (
+             <div className="contact-form-box" style={{ padding: '25px', overflowX: 'auto' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '20px', color: '#1B1C36' }}>
+                  Detailed 5-Year Financial Outlook
+                </h3>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
+                  <thead>
+                    <tr style={{ borderBottom: '2px solid #B5945B', textAlign: 'left' }}>
+                      <th style={{ padding: '10px' }}>Year</th>
+                      <th style={{ padding: '10px' }}>Revenue</th>
+                      <th style={{ padding: '10px' }}>Gross Profit</th>
+                      <th style={{ padding: '10px' }}>Expenses</th>
+                      <th style={{ padding: '10px' }}>Net Profit</th>
+                      <th style={{ padding: '10px' }}>Margin %</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {forecast.map((row) => (
+                      <tr key={row.year} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
+                        <td style={{ padding: '10px', fontWeight: '700' }}>{row.year}</td>
+                        <td style={{ padding: '10px' }}>{formatUSD(row.revenue)}</td>
+                        <td style={{ padding: '10px' }}>{formatUSD(row.grossProfit)}</td>
+                        <td style={{ padding: '10px' }}>{formatUSD(row.expenses)}</td>
+                        <td style={{ padding: '10px', color: row.netProfit >= 0 ? '#10B981' : '#EF4444', fontWeight: '700' }}>
+                          {formatUSD(row.netProfit)}
+                        </td>
+                        <td style={{ padding: '10px' }}>{((row.netProfit/row.revenue)*100).toFixed(1)}%</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+             </div>
+          )}
+
           <div className="contact-form-box" style={{ padding: '25px' }}>
             <h3 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '20px', color: '#1B1C36' }}>
               {activeTab === 'forecast' ? '5-Year Revenue & Profit Projection' : 'Revenue vs. Total Costs Analysis'}
