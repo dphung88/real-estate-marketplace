@@ -127,8 +127,7 @@ async function getListingById(id) {
     }
   ];
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  if (!supabase || !supabaseUrl || supabaseUrl.includes('xxxxx')) {
+  if (!supabase || process.env.NEXT_PUBLIC_SUPABASE_URL.includes('xxxxx')) {
     return mockListings.find(item => item.id === id) || null;
   }
 
@@ -137,14 +136,13 @@ async function getListingById(id) {
       .from('listings')
       .select('*')
       .eq('id', id)
+      .eq('status', 'active')
       .single();
-
-    if (error || !data) {
+    if (error) {
       return mockListings.find(item => item.id === id) || null;
     }
     return data;
-  } catch (err) {
-    console.error('Error fetching listing:', err);
+  } catch {
     return mockListings.find(item => item.id === id) || null;
   }
 }
@@ -172,20 +170,9 @@ export default async function RealEstateDetailPage({ params }) {
 
   const imgSrc = listing.image_url ||
     (listing.property_type === 'rent' ? DEFAULT_IMAGES.rent : DEFAULT_IMAGES.sale);
-  
-  // Ensure we have an array of at least 4 image URLs
-  let images = [];
-  if (listing.images && Array.isArray(listing.images) && listing.images.length > 0) {
-    images = [...listing.images];
-  } else {
-    images = [imgSrc];
-  }
-  
-  // Pad the array to at least 4 items for the gallery
-  while (images.length < 4) {
-    images.push(images[0]);
-  }
-  
+  const images = listing.images && listing.images.length >= 3
+    ? listing.images.slice(0, 4)
+    : [imgSrc, imgSrc, imgSrc, imgSrc];
   const cat = getCategoryLabel(listing);
 
   return (
@@ -196,11 +183,11 @@ export default async function RealEstateDetailPage({ params }) {
           <Link href="/real-estate" style={{ color: 'var(--color-accent)', marginBottom: '8px', display: 'inline-block' }}>
             <i className="fa-solid fa-arrow-left"></i> Back to Real Estate
           </Link>
-          <h1><i className={cat.icon}></i> {listing.title}</h1>
+          <h1><i className="fa-solid fa-building"></i> {listing.title}</h1>
           <p>{cat.label} • {listing.location}</p>
         </div>
       </section>
-      <section className="section">
+      <section className="section" style={{ paddingTop: '0' }}>
         <div className="container">
           <RealEstateDetailContent listing={listing} images={images} />
         </div>

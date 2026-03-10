@@ -16,14 +16,14 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
 
   if (!listing) return null;
 
-  // Ensure we have an array of image URLs
-  const safeImages = Array.isArray(images) && images.length > 0 ? images : [FALLBACK_IMAGE, FALLBACK_IMAGE, FALLBACK_IMAGE, FALLBACK_IMAGE];
+  // Use a fallback if images are missing or empty
+  const safeImages = images && images.length > 0 ? images : [FALLBACK_IMAGE];
   
-  // Ensure we have at least 3 images for the top gallery grid
+  // Logic for display in the 3-image grid (desktop)
   const displayImages = [
-    safeImages[0] || FALLBACK_IMAGE,
-    safeImages[1] || safeImages[0] || FALLBACK_IMAGE,
-    safeImages[2] || safeImages[0] || FALLBACK_IMAGE
+    safeImages[0],
+    safeImages[1] || safeImages[0],
+    safeImages[2] || safeImages[0]
   ];
   
   const hasMorePhotos = safeImages.length > 3;
@@ -117,51 +117,57 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
 
       {/* Zillow-style Gallery (Desktop) & Mobile Swipe-like Gallery */}
       <div className="z-gallery-wrapper">
-        <div className="z-gallery" style={{ display: 'grid' }}>
-          <div className="z-gallery-item" onClick={() => { 
+        <div className="z-gallery" style={{ borderRadius: '16px', overflow: 'hidden' }}>
+          <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }} onClick={() => { 
             setSelectedIndex(0); 
-            setIsModalOpen(true); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
-            <Image 
-              src={safeImages[selectedIndex] || safeImages[0]} 
-              alt={listing.title} 
-              fill 
-              style={{ objectFit: 'cover' }}
-              sizes="(max-width: 768px) 100vw, 66vw"
-              priority
-            />
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image 
+                src={safeImages[selectedIndex] || displayImages[0]} 
+                alt={listing.title} 
+                fill 
+                style={{ objectFit: 'cover', borderRadius: '16px' }}
+                sizes="(max-width: 768px) 100vw, 66vw"
+                priority
+              />
+            </div>
           </div>
-          <div className="z-gallery-item" onClick={() => { 
+          <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }} onClick={() => { 
             setSelectedIndex(1 % safeImages.length); 
-            setIsModalOpen(true); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
-            <Image 
-              src={safeImages[1] || safeImages[0]} 
-              alt={listing.title} 
-              fill 
-              style={{ objectFit: 'cover' }}
-              sizes="(max-width: 768px) 50vw, 33vw"
-            />
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image 
+                src={displayImages[1]} 
+                alt={listing.title} 
+                fill 
+                style={{ objectFit: 'cover', borderRadius: '16px' }}
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+            </div>
           </div>
-          <div className="z-gallery-item" onClick={() => { 
+          <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }} onClick={() => { 
             setSelectedIndex(2 % safeImages.length); 
-            setIsModalOpen(true); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
-            <Image 
-              src={safeImages[2] || safeImages[0]} 
-              alt={listing.title} 
-              fill 
-              style={{ objectFit: 'cover' }}
-              sizes="(max-width: 768px) 50vw, 33vw"
-            />
-            {hasMorePhotos && (
-              <div className="z-gallery-more">+{safeImages.length - 2} photos</div>
-            )}
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <Image 
+                src={displayImages[2]} 
+                alt={listing.title} 
+                fill 
+                style={{ objectFit: 'cover', borderRadius: '16px' }}
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+              {hasMorePhotos && (
+                <div className="z-gallery-more">+{safeImages.length - 2} photos</div>
+              )}
+            </div>
           </div>
         </div>
 
-        {/* Mobile Thumbnails - Interaction changes main image */}
-        <div className="mobile-only-thumbs" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
+        {/* Mobile Thumbnails - Interaction only changes main image, no modal */}
+        <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
           {[0, 1, 2, 3].map((idx) => (
             <div 
               key={idx} 
@@ -171,7 +177,7 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
                 borderRadius: '8px', 
                 overflow: 'hidden', 
                 cursor: 'pointer', 
-                border: selectedIndex === idx ? '2px solid var(--color-accent)' : '2px solid transparent' 
+                border: selectedIndex === idx ? '2px solid var(--color-accent)' : 'none' 
               }}
               onClick={() => {
                 setSelectedIndex(idx % safeImages.length);

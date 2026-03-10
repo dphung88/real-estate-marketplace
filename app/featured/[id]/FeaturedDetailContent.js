@@ -118,14 +118,14 @@ export default function FeaturedDetailContent({ item, images = [] }) {
 
       {/* Zillow-style Gallery (Desktop) & Mobile Swipe-like Gallery */}
       <div className="z-gallery-wrapper">
-        <div className="z-gallery" style={{ display: 'grid' }}>
+        <div className="z-gallery">
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(0); 
-            setIsModalOpen(true); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <Image 
-                src={safeImages[selectedIndex] || safeImages[0]} 
+                src={safeImages[selectedIndex] || displayImages[0]} 
                 alt={item.title} 
                 fill 
                 style={{ objectFit: 'cover' }}
@@ -136,11 +136,11 @@ export default function FeaturedDetailContent({ item, images = [] }) {
           </div>
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(1 % safeImages.length); 
-            setIsModalOpen(true); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <Image 
-                src={safeImages[1] || safeImages[0]} 
+                src={displayImages[1]} 
                 alt={item.title} 
                 fill 
                 style={{ objectFit: 'cover' }}
@@ -150,11 +150,11 @@ export default function FeaturedDetailContent({ item, images = [] }) {
           </div>
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(2 % safeImages.length); 
-            setIsModalOpen(true); 
+            if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
             <div style={{ position: 'relative', width: '100%', height: '100%' }}>
               <Image 
-                src={safeImages[2] || safeImages[0]} 
+                src={displayImages[2]} 
                 alt={item.title} 
                 fill 
                 style={{ objectFit: 'cover' }}
@@ -167,8 +167,8 @@ export default function FeaturedDetailContent({ item, images = [] }) {
           </div>
         </div>
 
-        {/* Mobile Thumbnails - Interaction changes main image */}
-        <div className="mobile-only-thumbs" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
+        {/* Mobile Thumbnails - Interaction only changes main image, no modal */}
+        <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
           {[0, 1, 2, 3].map((idx) => (
             <div 
               key={idx} 
@@ -178,7 +178,7 @@ export default function FeaturedDetailContent({ item, images = [] }) {
                 borderRadius: '8px', 
                 overflow: 'hidden', 
                 cursor: 'pointer', 
-                border: selectedIndex === idx ? '2px solid var(--color-accent)' : '2px solid transparent' 
+                border: selectedIndex === idx ? '2px solid var(--color-accent)' : 'none' 
               }}
               onClick={() => {
                 setSelectedIndex(idx % safeImages.length);
