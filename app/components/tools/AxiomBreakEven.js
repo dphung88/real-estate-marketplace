@@ -2,88 +2,82 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  ReferenceLine,
-  AreaChart,
-  Area,
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
+  ResponsiveContainer, ReferenceLine, AreaChart, Area, BarChart, Bar
 } from 'recharts';
 import { 
-  Calculator, 
-  TrendingUp, 
-  DollarSign, 
-  Users, 
-  Info,
-  ChevronDown,
-  ChevronUp,
-  BarChart3,
-  Calendar
+  Calculator, TrendingUp, DollarSign, Users, Info, ChevronDown, ChevronUp, Calendar, 
+  Table as TableIcon, Activity
 } from 'lucide-react';
 
 const AxiomBreakEven = () => {
-  // --- State for Inputs ---
-  const [fixedCosts, setFixedCosts] = useState(10000);
-  const [sellingPrice, setSellingPrice] = useState(1000);
-  const [variableCost, setVariableCost] = useState(600);
-  const [totalRevenue, setTotalRevenue] = useState(100000);
-  const [cogs, setCogs] = useState(40000);
-  const [laborCost, setLaborCost] = useState(20000);
-  const [area, setArea] = useState(50);
-  const [marketingCost, setMarketingCost] = useState(5000);
-  const [newCustomers, setNewCustomers] = useState(50);
-  const [oldCustomers, setOldCustomers] = useState(70);
-  const [totalOrders, setTotalOrders] = useState(120);
+  // --- DETAILED STATE BASED ON EXCEL PLAN ---
+  // Revenue by Category
+  const [salesData, setSalesData] = useState({
+    frenchDoors: 571900,
+    panelDoors: 275400,
+    windows: 74100,
+    newProducts: 0
+  });
 
-  const [maxUnits, setMaxUnits] = useState(50);
-  const [chartData, setChartData] = useState([]);
-  const [forecastData, setForecastData] = useState([]);
+  // Cost of Sales (Direct Costs)
+  const [cogsData, setCogsData] = useState({
+    materials: 491900,
+    directLabour: 80800,
+    freightDuty: 18600
+  });
+
+  // Operating Expenses (Fixed)
+  const [expensesData, setExpensesData] = useState({
+    sellingSalaries: 38200,
+    advertising: 9800,
+    managementSalaries: 32000,
+    officeExpenses: 12600,
+    interest: 29500
+  });
+
+  const [maxUnits, setMaxUnits] = useState(1500);
   const [isInputExpanded, setIsInputExpanded] = useState(true);
-  const [activeTab, setActiveTab] = useState('break-even');
+  const [activeTab, setActiveTab] = useState('forecast');
 
-  // --- Calculations ---
-  const contributionMargin = sellingPrice - variableCost;
-  const breakEvenUnits = contributionMargin > 0 ? Math.ceil(fixedCosts / contributionMargin) : Infinity;
-  const grossProfitMargin = totalRevenue > 0 ? ((totalRevenue - cogs) / totalRevenue) * 100 : 0;
-  const retentionRate = (newCustomers + oldCustomers) > 0 ? (oldCustomers / (newCustomers + oldCustomers)) * 100 : 0;
-  const clv = totalOrders > 0 ? (totalRevenue / totalOrders) * (retentionRate > 0 ? (100 / Math.max(1, 100 - retentionRate)) : 1) : 0;
-  const revenuePerSqm = area > 0 ? totalRevenue / area : 0;
+  // --- DERIVED CALCULATIONS ---
+  const totalSales = Object.values(salesData).reduce((a, b) => a + b, 0);
+  const totalCogs = Object.values(cogsData).reduce((a, b) => a + b, 0);
+  const totalExpenses = Object.values(expensesData).reduce((a, b) => a + b, 0);
+  const grossProfit = totalSales - totalCogs;
+  const netProfit = grossProfit - totalExpenses;
+  
+  // For Break-even: Assume weighted average
+  const avgSellingPrice = 1000; // Normalized for chart
+  const avgVariableCost = (totalCogs / totalSales) * avgSellingPrice;
+  const yearlyFixedCosts = totalExpenses;
+  const monthlyFixedCosts = yearlyFixedCosts / 12;
+  const contributionMargin = avgSellingPrice - avgVariableCost;
+  const breakEvenUnits = contributionMargin > 0 ? Math.ceil(yearlyFixedCosts / (totalSales / avgSellingPrice * (1 - totalCogs/totalSales))) : 0;
 
+  // --- 5-YEAR PROJECTION LOGIC ---
+  const [forecast, setForecast] = useState([]);
+  
   useEffect(() => {
-    // 1. Generate Break-even Chart Data
-    const beData = [];
-    const step = Math.max(1, Math.ceil(maxUnits / 10));
-    const limit = Math.max(maxUnits, isFinite(breakEvenUnits) ? breakEvenUnits * 1.5 : 0);
-    for (let i = 0; i <= Math.min(limit, 5000); i += step) {
-      beData.push({ units: i, totalCost: fixedCosts + (i * variableCost), totalRevenue: i * sellingPrice });
-    }
-    setChartData(beData);
-
-    // 2. Generate 5-Year Forecast Data (Simple Projection)
-    const years = ['2025', '2026', '2027', '2028', '2029'];
-    const projection = years.map((year, index) => {
-      const growthFactor = Math.pow(1.15, index); // Assume 15% growth
-      const yearlyRevenue = totalRevenue * growthFactor;
-      const yearlyCogs = cogs * growthFactor;
-      const yearlyExpenses = (fixedCosts * 12 + laborCost + marketingCost) * Math.pow(1.05, index);
-      const profit = yearlyRevenue - yearlyCogs - yearlyExpenses;
-      return { year, revenue: yearlyRevenue, profit: profit };
+    const years = ['2024', '2025', '2026', '2027', '2028', '2029'];
+    const projection = years.map((year, i) => {
+      const growth = Math.pow(1.12, i); // 12% revenue growth
+      const rev = totalSales * growth;
+      const cost = totalCogs * Math.pow(1.10, i); // 10% cost growth
+      const exp = totalExpenses * Math.pow(1.05, i); // 5% expense inflation
+      const gp = rev - cost;
+      const np = gp - exp;
+      return { year, revenue: rev, grossProfit: gp, netProfit: np, expenses: exp };
     });
-    setForecastData(projection);
-
-  }, [fixedCosts, variableCost, sellingPrice, maxUnits, breakEvenUnits, totalRevenue, cogs, laborCost, marketingCost]);
+    setForecast(projection);
+  }, [salesData, cogsData, expensesData]);
 
   const formatUSD = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(v);
 
   return (
     <div className="axiom-finance-hub" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       
-      {/* 1. COLLAPSIBLE INPUT PANEL */}
+      {/* 1. COMPREHENSIVE INPUT PANEL (3 COLUMNS) */}
       <div className="contact-form-box mb-8" style={{ padding: '0', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
         <button 
           onClick={() => setIsInputExpanded(!isInputExpanded)}
@@ -91,104 +85,113 @@ const AxiomBreakEven = () => {
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Calculator size={18} color="#B5945B" />
-            <span style={{ color: '#E8E4D8', fontWeight: '700', fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Financial Settings</span>
+            <span style={{ color: '#E8E4D8', fontWeight: '700', fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Pro Financial Input (Excel Sync)</span>
           </div>
           {isInputExpanded ? <ChevronUp color="#B5945B" size={20} /> : <ChevronDown color="#B5945B" size={20} />}
         </button>
 
         {isInputExpanded && (
-          <div style={{ padding: '25px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
+          <div style={{ padding: '30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {/* Col 1: Sales Activities */}
               <div className="space-y-4">
-                <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)', paddingBottom: '8px', marginBottom: '15px' }}>Core Finance</p>
-                <InlineInput label="Fixed Costs ($)" value={fixedCosts} set={setFixedCosts} />
-                <InlineInput label="Selling Price ($)" value={sellingPrice} set={setSellingPrice} />
-                <InlineInput label="Variable Cost ($)" value={variableCost} set={setVariableCost} />
+                <p className="input-header">Sales Activities</p>
+                <MiniInput label="French Doors ($)" value={salesData.frenchDoors} onChange={(v) => setSalesData({...salesData, frenchDoors: v})} />
+                <MiniInput label="Panel Doors ($)" value={salesData.panelDoors} onChange={(v) => setSalesData({...salesData, panelDoors: v})} />
+                <MiniInput label="Windows ($)" value={salesData.windows} onChange={(v) => setSalesData({...salesData, windows: v})} />
+                <MiniInput label="New Products ($)" value={salesData.newProducts} onChange={(v) => setSalesData({...salesData, newProducts: v})} />
               </div>
+
+              {/* Col 2: Cost of Sales */}
               <div className="space-y-4">
-                <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)', paddingBottom: '8px', marginBottom: '15px' }}>Operations</p>
-                <InlineInput label="Total Revenue ($)" value={totalRevenue} set={setTotalRevenue} />
-                <InlineInput label="Labor Cost ($)" value={laborCost} set={setLaborCost} />
-                <InlineInput label="Area (SQM)" value={area} set={setArea} />
+                <p className="input-header">Cost of Sales (Direct)</p>
+                <MiniInput label="Material Purchases ($)" value={cogsData.materials} onChange={(v) => setCogsData({...cogsData, materials: v})} />
+                <MiniInput label="Direct Labour ($)" value={cogsData.directLabour} onChange={(v) => setCogsData({...cogsData, directLabour: v})} />
+                <MiniInput label="Freight & Duty ($)" value={cogsData.freightDuty} onChange={(v) => setCogsData({...cogsData, freightDuty: v})} />
               </div>
+
+              {/* Col 3: Operating Expenses */}
               <div className="space-y-4">
-                <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)', paddingBottom: '8px', marginBottom: '15px' }}>Marketing & View</p>
-                <InlineInput label="Marketing Budget ($)" value={marketingCost} set={setMarketingCost} />
-                <InlineInput label="New Customers" value={newCustomers} set={setNewCustomers} />
-                <InlineInput label="Max Chart Units" value={maxUnits} set={setMaxUnits} />
+                <p className="input-header">Operating Expenses</p>
+                <MiniInput label="Selling Salaries ($)" value={expensesData.sellingSalaries} onChange={(v) => setExpensesData({...expensesData, sellingSalaries: v})} />
+                <MiniInput label="Advertising ($)" value={expensesData.advertising} onChange={(v) => setExpensesData({...expensesData, advertising: v})} />
+                <MiniInput label="Management Salaries ($)" value={expensesData.managementSalaries} onChange={(v) => setExpensesData({...expensesData, managementSalaries: v})} />
+                <MiniInput label="Interest ($)" value={expensesData.interest} onChange={(v) => setExpensesData({...expensesData, interest: v})} />
               </div>
             </div>
+            <style jsx>{`
+              .input-header { font-size: 0.75rem; font-weight: 800; color: #B5945B; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid rgba(181, 148, 91, 0.2); padding-bottom: 8px; margin-bottom: 15px; }
+            `}</style>
           </div>
         )}
       </div>
 
       {/* 2. NAVIGATION TABS */}
       <div className="flex gap-4 mb-8">
-        <TabButton active={activeTab === 'break-even'} onClick={() => setActiveTab('break-even')} label="Break-Even Analysis" icon={<TrendingUp size={16} />} />
-        <TabButton active={activeTab === 'forecast'} onClick={() => setActiveTab('forecast')} label="5-Year Strategic Forecast" icon={<Calendar size={16} />} />
+        <TabButton active={activeTab === 'forecast'} onClick={() => setActiveTab('forecast')} label="Strategic Forecast" icon={<Calendar size={16} />} />
+        <TabButton active={activeTab === 'performance'} onClick={() => setActiveTab('performance')} label="Performance Analysis" icon={<Activity size={16} />} />
       </div>
 
-      {/* 3. MAIN CONTENT AREA */}
+      {/* 3. DASHBOARD CONTENT */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Stats Column */}
+        {/* Stats Column */}
         <div className="lg:col-span-4 space-y-4">
-          <CompactMetric label="Break-Even Point" value={`${breakEvenUnits.toLocaleString()} units`} icon={<TrendingUp size={20} color="#B5945B" />} />
-          <CompactMetric label="Gross Margin" value={`${grossProfitMargin.toFixed(1)}%`} icon={<DollarSign size={20} color="#B5945B" />} />
-          <CompactMetric label="CLV Value" value={formatUSD(clv)} icon={<Users size={20} color="#B5945B" />} />
+          <CompactMetric label="Total Yearly Revenue" value={formatUSD(totalSales)} icon={<TrendingUp size={20} color="#B5945B" />} />
+          <CompactMetric label="Gross Profit" value={formatUSD(grossProfit)} icon={<DollarSign size={20} color="#B5945B" />} />
+          <CompactMetric label="Net Income" value={formatUSD(netProfit)} icon={<Users size={20} color="#B5945B" />} />
           
           <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8' }}>
-            <div className="flex justify-between items-center mb-4">
-              <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#B5945B', fontWeight: '800' }}>Strategic Insights</p>
-              <Info size={16} color="#B5945B" />
-            </div>
-            <p style={{ fontSize: '0.8rem', lineHeight: '1.5', opacity: '0.9' }}>
-              {activeTab === 'break-even' 
-                ? (grossProfitMargin < 40 ? "Profit margin is below healthy threshold. Review variable costs." : "Strong margin detected. Efficiency is optimal.")
-                : "Forecast assumes a 15% annual revenue growth and 5% expense inflation."}
+            <h4 style={{ color: '#B5945B', fontSize: '0.8rem', fontWeight: '800', marginBottom: '12px' }}>EXPERT FINANCIAL INSIGHT</h4>
+            <p style={{ fontSize: '0.8rem', lineHeight: '1.6', opacity: '0.9' }}>
+              Current Gross Margin is <strong>{((grossProfit/totalSales)*100).toFixed(1)}%</strong>. 
+              {netProfit > 0 ? " Your operations are profitable. " : " You are currently operating at a loss. "}
+              Strategic target should be reducing COGS to below 60% of sales.
             </p>
           </div>
         </div>
 
-        {/* Right Content Column (Switchable) */}
+        {/* Chart Column */}
         <div className="lg:col-span-8 space-y-6">
           <div className="contact-form-box" style={{ padding: '25px' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '20px', color: '#1B1C36' }}>
+              {activeTab === 'forecast' ? '5-Year Revenue & Profit Projection' : 'Revenue vs. Total Costs Analysis'}
+            </h3>
             <div style={{ height: '350px', width: '100%' }}>
               <ResponsiveContainer width="100%" height="100%">
-                {activeTab === 'break-even' ? (
-                  <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
-                    <XAxis dataKey="units" stroke="#1B1C36" fontSize={10} fontWeight="700" />
-                    <YAxis stroke="#1B1C36" fontSize={10} fontWeight="700" tickFormatter={(v) => `$${v/1000}k`} />
-                    <Tooltip contentStyle={{ background: '#1B1C36', border: 'none', borderRadius: '12px', color: '#E8E4D8' }} formatter={(v) => formatUSD(v)} />
-                    <Legend />
-                    <Line type="monotone" dataKey="totalCost" name="Total Cost" stroke="#1B1C36" strokeWidth={3} dot={false} />
-                    <Line type="monotone" dataKey="totalRevenue" name="Total Revenue" stroke="#B5945B" strokeWidth={3} dot={false} />
-                    {isFinite(breakEvenUnits) && <ReferenceLine x={breakEvenUnits} stroke="#E74C3C" strokeDasharray="5 5" />}
-                  </LineChart>
-                ) : (
-                  <AreaChart data={forecastData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                {activeTab === 'forecast' ? (
+                  <AreaChart data={forecast}>
                     <defs>
                       <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#B5945B" stopOpacity={0.1}/>
+                        <stop offset="5%" stopColor="#B5945B" stopOpacity={0.2}/>
                         <stop offset="95%" stopColor="#B5945B" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
-                    <XAxis dataKey="year" stroke="#1B1C36" fontSize={10} fontWeight="700" />
-                    <YAxis stroke="#1B1C36" fontSize={10} fontWeight="700" tickFormatter={(v) => `$${v/1000}k`} />
-                    <Tooltip contentStyle={{ background: '#1B1C36', border: 'none', borderRadius: '12px', color: '#E8E4D8' }} formatter={(v) => formatUSD(v)} />
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                    <XAxis dataKey="year" fontSize={10} fontWeight="700" />
+                    <YAxis tickFormatter={(v) => `$${v/1000}k`} fontSize={10} fontWeight="700" />
+                    <Tooltip formatter={(v) => formatUSD(v)} contentStyle={{ borderRadius: '12px', border: 'none', background: '#1B1C36', color: '#E8E4D8' }} />
                     <Legend />
-                    <Area type="monotone" dataKey="revenue" name="Revenue Forecast" stroke="#B5945B" strokeWidth={3} fillOpacity={1} fill="url(#colorRev)" />
-                    <Area type="monotone" dataKey="profit" name="Net Profit" stroke="#1B1C36" strokeWidth={2} fillOpacity={0} />
+                    <Area type="monotone" dataKey="revenue" name="Total Revenue" stroke="#B5945B" strokeWidth={3} fill="url(#colorRev)" />
+                    <Area type="monotone" dataKey="netProfit" name="Net Profit" stroke="#1B1C36" strokeWidth={2} fill="transparent" />
                   </AreaChart>
+                ) : (
+                  <BarChart data={forecast}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
+                    <XAxis dataKey="year" />
+                    <YAxis tickFormatter={(v) => `$${v/1000}k`} />
+                    <Tooltip formatter={(v) => formatUSD(v)} />
+                    <Legend />
+                    <Bar dataKey="revenue" fill="#B5945B" name="Revenue" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="expenses" fill="#1B1C36" name="Expenses" radius={[4, 4, 0, 0]} />
+                  </BarChart>
                 )}
               </ResponsiveContainer>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <MiniMetricCard label="Revenue / SQM" value={formatUSD(revenuePerSqm)} />
-            <MiniMetricCard label={activeTab === 'break-even' ? "Order Value (AOV)" : "Proj. 5Y Revenue"} value={activeTab === 'break-even' ? formatUSD(totalRevenue / (totalOrders || 1)) : formatUSD(forecastData[4]?.revenue || 0)} />
+            <MetricCard label="Gross Margin %" value={`${((grossProfit/totalSales)*100).toFixed(1)}%`} />
+            <MetricCard label="Expense Ratio" value={`${((totalExpenses/totalSales)*100).toFixed(1)}%`} />
           </div>
         </div>
       </div>
@@ -196,49 +199,45 @@ const AxiomBreakEven = () => {
   );
 };
 
-const TabButton = ({ active, onClick, label, icon }) => (
-  <button 
-    onClick={onClick}
-    style={{ 
-      display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 24px', borderRadius: '12px',
-      fontSize: '0.85rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s',
-      background: active ? '#B5945B' : 'white',
-      color: active ? '#1B1C36' : '#666',
-      border: active ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.1)',
-      boxShadow: active ? '0 10px 15px -3px rgba(181, 148, 91, 0.2)' : 'none'
-    }}
-  >
-    {icon}
-    {label}
-  </button>
-);
-
-const InlineInput = ({ label, value, set }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-    <label style={{ fontSize: '0.75rem', fontWeight: '600', color: '#666' }}>{label}</label>
+const MiniInput = ({ label, value, onChange }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+    <label style={{ fontSize: '0.7rem', fontWeight: '600', color: '#666' }}>{label}</label>
     <input 
-      type="number" value={value} onChange={(e) => set(Number(e.target.value))} 
-      style={{ width: '100%', padding: '10px 14px', fontSize: '0.9rem', fontWeight: '700', background: '#F9F9F9', border: '1.5px solid rgba(27, 28, 54, 0.1)', borderRadius: '10px', color: '#1B1C36' }}
+      type="number" value={value} onChange={(e) => onChange(Number(e.target.value))}
+      style={{ width: '100%', padding: '8px 12px', fontSize: '0.85rem', fontWeight: '700', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}
     />
   </div>
 );
 
+const TabButton = ({ active, onClick, label, icon }) => (
+  <button 
+    onClick={onClick}
+    style={{ 
+      display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '10px',
+      fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s',
+      background: active ? '#B5945B' : 'white',
+      color: active ? '#1B1C36' : '#666',
+      border: active ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.1)'
+    }}
+  >
+    {icon} {label}
+  </button>
+);
+
 const CompactMetric = ({ label, value, icon }) => (
-  <div className="contact-form-box" style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '15px' }}>
-    <div style={{ width: '40px', height: '40px', background: 'rgba(27, 28, 54, 0.03)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      {icon}
-    </div>
+  <div className="contact-form-box" style={{ padding: '18px', display: 'flex', alignItems: 'center', gap: '12px' }}>
+    <div style={{ width: '36px', height: '36px', background: 'rgba(181, 148, 91, 0.1)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon}</div>
     <div>
-      <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#999', fontWeight: '800', letterSpacing: '1px' }}>{label}</p>
-      <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#1B1C36' }}>{value}</h4>
+      <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#999', fontWeight: '800' }}>{label}</p>
+      <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#1B1C36' }}>{value}</h4>
     </div>
   </div>
 );
 
-const MiniMetricCard = ({ label, value }) => (
-  <div className="contact-form-box" style={{ padding: '15px 20px', textAlign: 'center' }}>
-    <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#B5945B', fontWeight: '800', marginBottom: '2px' }}>{label}</p>
-    <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#1B1C36' }}>{value}</h4>
+const MetricCard = ({ label, value }) => (
+  <div className="contact-form-box" style={{ padding: '15px', textAlign: 'center' }}>
+    <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#B5945B', fontWeight: '800' }}>{label}</p>
+    <h4 style={{ fontSize: '1.1rem', fontWeight: '800' }}>{value}</h4>
   </div>
 );
 
