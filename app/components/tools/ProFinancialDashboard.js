@@ -244,19 +244,48 @@ const ProFinancialDashboard = () => {
         </ChartContainer>
       </div>
 
-      {/* Ratios & Advice */}
-      <div className="bg-slate-900 rounded-3xl p-8 text-white flex flex-col md:flex-row gap-8 items-center justify-between">
-        <div>
-          <h3 className="text-xl font-bold mb-2 flex items-center gap-2"><Info className="text-blue-400" /> Executive Summary</h3>
-          <p className="text-slate-300 text-sm max-w-2xl leading-relaxed">
+      {/* Expert Financial Insight / Executive Summary */}
+      <div className="flex flex-col md:flex-row gap-6">
+        <div className="flex-grow contact-info-box" style={{ padding: '30px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '24px' }}>
+          <div className="flex items-center gap-3 mb-4">
+            <Info size={20} color="#B5945B" />
+            <h3 style={{ color: '#B5945B', fontSize: '0.9rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', margin: 0 }}>
+              EXECUTIVE FINANCIAL INSIGHT
+            </h3>
+          </div>
+          <p style={{ fontSize: '0.95rem', lineHeight: '1.7', opacity: '0.95', color: '#E8E4D8' }}>
             The company demonstrates strong revenue growth, primarily driven by <strong>French doors</strong>. 
             The debt-to-equity ratio of <strong>{calc.bs[2].debtEquity.toFixed(2)}</strong> indicates a leveraged but manageable position.
             Personal guarantees are backed by a strong net worth of <strong>{formatCurrency(calc.netWorth)}</strong>.
+            Strategic focus should remain on maintaining the current growth trajectory while optimizing operational overhead.
           </p>
         </div>
-        <button onClick={handleDownloadPDF} disabled={isExporting} className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-xl transition-all flex items-center gap-2 whitespace-nowrap">
-          <Download size={18} /> {isExporting ? 'Exporting...' : 'Download Full Appendix'}
-        </button>
+        
+        <div className="flex items-center justify-center">
+          <button 
+            onClick={handleDownloadPDF} 
+            disabled={isExporting} 
+            className="group"
+            style={{ 
+              background: '#B5945B', 
+              color: '#1B1C36', 
+              fontWeight: '800', 
+              padding: '24px 40px', 
+              borderRadius: '20px', 
+              border: 'none',
+              transition: 'all 0.3s ease',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+              fontSize: '1rem',
+              cursor: isExporting ? 'not-allowed' : 'pointer',
+              boxShadow: '0 10px 25px rgba(181, 148, 91, 0.2)'
+            }}
+          >
+            <Download size={20} /> 
+            <span>{isExporting ? 'Exporting...' : 'Download Appendix'}</span>
+          </button>
+        </div>
       </div>
     </div>
   );
