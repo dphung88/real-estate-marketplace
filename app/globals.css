@@ -244,7 +244,7 @@ a.listing-card { text-decoration: none; color: inherit; }
 .filter-bar .filter-select,
 .filter-bar .btn { min-height: 42px; box-sizing: border-box; }
 .filter-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--color-dark); margin-bottom: 6px; }
-.filter-select { padding: 10px 14px; border: 1.5px solid rgba(27, 28, 54, 0.2); border-radius: 8px; font-size: 0.9rem; font-family: inherit; background: var(--color-light); color: var(--color-dark); cursor: pointer; transition: border-color 0.2s; }
+.filter-select { height: 42px; padding: 0 14px; border: 1.5px solid rgba(27, 28, 54, 0.2); border-radius: 8px; font-size: 0.9rem; font-family: inherit; background: var(--color-light); color: var(--color-dark); cursor: pointer; transition: border-color 0.2s; display: flex; align-items: center; }
 .filter-select:focus { outline: none; border-color: var(--color-accent); }
 .empty-filter-message { text-align: center; padding: 40px; font-size: 1.1rem; color: var(--color-dark); opacity: 0.8; }
 
