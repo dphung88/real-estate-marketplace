@@ -43,30 +43,42 @@ export default function HomePage() {
         <div className="container">
           <h2 className="section-title">Browse Categories</h2>
           
-          <div className="cat-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
+          <div className="cat-grid">
             <Link href="/real-estate?category=house" className="cat-card">
-              <i className="fa-solid fa-house-circle-check"></i>
-              Homes
+              <div className="cat-icon-wrapper">
+                <i className="fa-solid fa-house-circle-check"></i>
+              </div>
+              <span className="cat-text">Homes</span>
             </Link>
             <Link href="/real-estate?type=rent" className="cat-card">
-              <i className="fa-solid fa-house-user"></i>
-              Rentals
+              <div className="cat-icon-wrapper">
+                <i className="fa-solid fa-house-user"></i>
+              </div>
+              <span className="cat-text">Rentals</span>
             </Link>
             <Link href="/used-items?category=cars" className="cat-card">
-              <i className="fa-solid fa-car-side"></i>
-              Cars & Trucks
+              <div className="cat-icon-wrapper">
+                <i className="fa-solid fa-car-side"></i>
+              </div>
+              <span className="cat-text">Cars & Trucks</span>
             </Link>
             <Link href="/used-items?category=mobile-homes" className="cat-card">
-              <i className="fa-solid fa-truck-moving"></i>
-              Mobile Homes
+              <div className="cat-icon-wrapper">
+                <i className="fa-solid fa-truck-moving"></i>
+              </div>
+              <span className="cat-text">Mobile Homes</span>
             </Link>
             <Link href="/used-items?category=lawnmowers" className="cat-card">
-              <i className="fa-solid fa-tractor"></i>
-              Lawn Mowers
+              <div className="cat-icon-wrapper">
+                <i className="fa-solid fa-tractor"></i>
+              </div>
+              <span className="cat-text">Lawn Mowers</span>
             </Link>
             <Link href="/used-items?category=other" className="cat-card">
-              <i className="fa-solid fa-boxes-stacked"></i>
-              Other Items
+              <div className="cat-icon-wrapper">
+                <i className="fa-solid fa-boxes-stacked"></i>
+              </div>
+              <span className="cat-text">Other Items</span>
             </Link>
           </div>
         </div>
