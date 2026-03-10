@@ -265,17 +265,17 @@ const ProFinancialDashboard = () => {
   const renderTableData = (category, title, yearsList, sectionKey) => {
     return (
       <div className="mb-10">
-        <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)', paddingBottom: '8px', marginBottom: '20px' }}>
-          {title}
-        </p>
-
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
             <thead>
               <tr>
-                <th style={{ width: '25%', paddingBottom: '10px' }}></th>
+                <th style={{ width: '25%', paddingBottom: '12px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
+                    {title}
+                  </span>
+                </th>
                 {yearsList.map(y => (
-                  <th key={y} style={{ paddingBottom: '10px', textAlign: 'right', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>
+                  <th key={y} style={{ paddingBottom: '12px', textAlign: 'right', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800', borderBottom: '1px solid rgba(181, 148, 91, 0.2)' }}>
                     {y}
                   </th>
                 ))}
