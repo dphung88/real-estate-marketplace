@@ -50,9 +50,6 @@ export default function Navbar() {
             <Link href="/used-items" className={navClass('/used-items')}>Used Items</Link>
           </li>
           <li>
-            <Link href="/go-live" className={navClass('/go-live')}>Go Live</Link>
-          </li>
-          <li>
             <Link href="/contact" className={navClass('/contact')}>Contact</Link>
           </li>
         </ul>
