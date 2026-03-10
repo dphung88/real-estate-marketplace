@@ -14,9 +14,11 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.98.0",
     "dotenv": "^17.3.1",
+    "lucide-react": "^0.577.0",
     "next": "14.2.35",
     "react": "^18",
     "react-dom": "^18",
+    "recharts": "^3.8.0",
     "resend": "^3.2.0",
     "stripe": "^14.0.0"
   }
