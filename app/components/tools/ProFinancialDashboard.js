@@ -263,54 +263,44 @@ const ProFinancialDashboard = () => {
   );
 
   const renderTableData = (category, title, yearsList, sectionKey) => {
-    const colCount = yearsList.length;
-    const dataColWidth = `${75 / colCount}%`;
-
     return (
-      <div className="mb-10 px-8 py-2">
-        <div className="overflow-x-auto custom-scrollbar pb-2">
-          <table className="w-full text-left border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+      <div className="mb-10">
+        <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)', paddingBottom: '8px', marginBottom: '20px' }}>
+          {title}
+        </p>
+
+        <div className="overflow-x-auto custom-scrollbar">
+          <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
             <thead>
               <tr>
-                <th className="pb-3 align-bottom border-b border-[var(--color-accent)]/20" style={{ width: '25%' }}>
-                  <h2 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold m-0 tracking-[1.5px] uppercase">
-                    {title}
-                  </h2>
-                </th>
+                <th style={{ width: '25%', paddingBottom: '10px' }}></th>
                 {yearsList.map(y => (
-                  <th key={y} className="pb-3 align-bottom font-bold text-[var(--color-dark)] text-sm text-right border-b border-[var(--color-accent)]/20" style={{ width: dataColWidth }}>
+                  <th key={y} style={{ paddingBottom: '10px', textAlign: 'right', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>
                     {y}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-                {Object.entries(data[category]).map(([name, vals], rowIndex) => (
-                  <tr key={name} className="group transition-colors mt-2">
-                    <td className="py-3 font-semibold text-[#666] text-[0.7rem] truncate flex items-center gap-2 mt-2" style={{ width: '100%' }}>
-                      {name}
+              {Object.entries(data[category]).map(([name, vals], rowIndex) => (
+                <tr key={name}>
+                  <td style={{ padding: '8px 0', fontSize: '0.7rem', fontWeight: '600', color: '#666', width: '25%' }}>
+                    {name}
+                  </td>
+                  {vals.map((v, i) => (
+                    <td key={i} style={{ padding: '6px 4px' }}>
+                      <input 
+                        type="text" 
+                        value={formatInputDisplay(v)} 
+                        onFocus={(e) => { e.target.value = v; }}
+                        onBlur={(e) => { e.target.value = formatInputDisplay(v); }}
+                        onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
+                        style={{ width: '100%', padding: '8px 12px', fontSize: '0.85rem', fontWeight: '700', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
+                      />
                     </td>
-                    {vals.map((v, i) => (
-                      <td key={i} className="py-2 text-right px-1" style={{ width: dataColWidth }}>
-                        <div className="relative flex items-center justify-end">
-                          <span className="absolute left-4 text-[#666] text-[0.85rem] font-bold pointer-events-none">$</span>
-                          <input 
-                            type="text" 
-                            value={formatInputDisplay(v)} 
-                            onFocus={(e) => {
-                              e.target.value = v; 
-                            }}
-                            onBlur={(e) => {
-                              e.target.value = formatInputDisplay(v);
-                            }}
-                            onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                            className="w-full text-right bg-[#F9F9F9] focus:bg-white border border-black/10 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/50 rounded-lg pl-7 pr-3 py-2 font-bold text-[0.85rem] text-[var(--color-dark)] outline-none transition-all"
-                          />
-                        </div>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
+                  ))}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -320,7 +310,7 @@ const ProFinancialDashboard = () => {
 
   const renderIncomeStatement = () => (
     <div className="max-w-7xl mx-auto">
-      <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] py-6">
+      <div className="contact-form-box mb-8" style={{ padding: '30px', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)', background: '#FFF' }}>
         {renderTableData('sales', 'Sales Activities', data.years, 'sales')}
         {renderTableData('cogs', 'Cost of Sales (Direct)', data.years, 'cogs')}
         {renderTableData('salesExpenses', 'Sales Expenses', data.years, 'salesExpenses')}
@@ -331,13 +321,7 @@ const ProFinancialDashboard = () => {
 
   const renderBalanceSheet = () => (
     <div className="max-w-7xl mx-auto">
-      <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] py-6">
-        <div className="px-8 pb-4">
-          <div className="bg-[#1B1C36] text-[#E8E4D8] p-5 rounded-2xl text-sm mb-6 flex items-start gap-3">
-            <Info className="text-[var(--color-accent)] shrink-0 mt-0.5" size={18} />
-            <p><strong>Balance Sheet Notes:</strong> Data covers the projected years (2028, 2029, 2030). Ensure Total Assets always equal Total Liabilities + Equity.</p>
-          </div>
-        </div>
+      <div className="contact-form-box mb-8" style={{ padding: '30px', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)', background: '#FFF' }}>
         {renderTableData('assets', 'Assets', ['2028', '2029', '2030'], 'assets')}
         {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'], 'liabilities')}
       </div>
@@ -396,11 +380,11 @@ const ProFinancialDashboard = () => {
   );
 
   return (
-    <div className="w-full bg-[var(--color-light)] font-sans" style={{ color: 'var(--color-dark)', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+    <div className="w-full font-sans axiom-finance-hub" style={{ color: '#1B1C36', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="max-w-7xl mx-auto">
         
         {/* Tabs */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'income', label: 'Income Statement', icon: FileText },
@@ -410,19 +394,21 @@ const ProFinancialDashboard = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-8 py-3 rounded-full font-bold text-[15px] transition-all duration-300 ${
-                activeTab === tab.id 
-                  ? 'bg-[#1B1C36] text-[var(--color-accent)] shadow-md' 
-                  : 'bg-white text-[#666] hover:bg-gray-50 border border-black/5'
-              }`}
+              style={{ 
+                display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '10px',
+                fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s',
+                background: activeTab === tab.id ? '#B5945B' : 'white',
+                color: activeTab === tab.id ? '#1B1C36' : '#666',
+                border: activeTab === tab.id ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.1)'
+              }}
             >
-              <tab.icon size={18} /> {tab.label}
+              <tab.icon size={16} /> {tab.label}
             </button>
           ))}
         </div>
 
         {/* Content Area */}
-        <div id="pro-financial-report" className="animate-in fade-in duration-700 bg-[var(--color-light)]">
+        <div id="pro-financial-report" className="animate-in fade-in duration-500">
           {activeTab === 'dashboard' && renderDashboard()}
           {activeTab === 'income' && renderIncomeStatement()}
           {activeTab === 'balance' && renderBalanceSheet()}
