@@ -175,11 +175,22 @@ const ProFinancialDashboard = () => {
   const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
 
   const updateArrayValue = (category, item, index, newValue) => {
+    // Remove non-numeric characters except minus sign
+    const cleanValue = String(newValue).replace(/[^\d.-]/g, '');
+    const numValue = cleanValue === '' || cleanValue === '-' ? 0 : Number(cleanValue);
+    
     setData(prev => {
       const newData = { ...prev };
-      newData[category][item][index] = Number(newValue);
+      newData[category][item][index] = numValue;
       return newData;
     });
+  };
+
+  // Format number for display with commas
+  const formatInputDisplay = (val) => {
+    if (val === 0 || val === '0') return '0';
+    if (!val) return '';
+    return new Intl.NumberFormat('en-US').format(val);
   };
 
   const handleDownloadPDF = () => {
@@ -252,23 +263,25 @@ const ProFinancialDashboard = () => {
   );
 
   const renderTableData = (category, title, yearsList, sectionKey) => {
+    // Determine exact column widths to guarantee alignment across all tables
+    // First col is 25%, remaining cols split the rest equally
+    const colCount = yearsList.length;
+    const dataColWidth = `${75 / colCount}%`;
+
     return (
       <div className="mb-10">
         <div className="flex items-center gap-3 mb-4 pb-2 border-b-2 border-slate-100">
-          <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
-            <span className="text-blue-600 font-bold text-sm">{title.split('.')[0]}</span>
-          </div>
-          <h3 className="font-bold text-slate-800 text-lg tracking-wide">{title.split('.')[1] || title}</h3>
+          <h3 className="font-bold text-slate-800 text-lg tracking-wide">{title}</h3>
         </div>
 
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="overflow-x-auto custom-scrollbar">
-            <table className="w-full text-left text-sm border-collapse" style={{ tableLayout: 'fixed', minWidth: '800px' }}>
+            <table className="w-full text-left text-sm border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
               <thead>
                 <tr className="bg-slate-50">
-                  <th className="p-4 font-bold text-slate-600 w-1/4 min-w-[200px] border-b border-slate-200 uppercase tracking-wider text-xs">Category</th>
+                  <th className="p-4 font-bold text-slate-600 border-b border-slate-200 uppercase tracking-wider text-xs" style={{ width: '25%' }}></th>
                   {yearsList.map(y => (
-                    <th key={y} className="p-4 font-bold text-slate-600 text-right border-b border-slate-200 uppercase tracking-wider text-xs">
+                    <th key={y} className="p-4 font-bold text-slate-800 text-right border-b border-slate-200 uppercase tracking-wider text-sm" style={{ width: dataColWidth }}>
                       {y}
                     </th>
                   ))}
@@ -277,18 +290,26 @@ const ProFinancialDashboard = () => {
               <tbody>
                 {Object.entries(data[category]).map(([name, vals], rowIndex) => (
                   <tr key={name} className="group hover:bg-blue-50/50 transition-colors border-b border-slate-100 last:border-0">
-                    <td className="p-4 font-semibold text-slate-700 w-1/4">
+                    <td className="p-4 font-semibold text-slate-700 truncate" style={{ width: '25%' }}>
                       {name}
                     </td>
                     {vals.map((v, i) => (
-                      <td key={i} className="p-3 text-right">
+                      <td key={i} className="p-3 text-right" style={{ width: dataColWidth }}>
                         <div className="relative flex items-center justify-end">
                           <span className="absolute left-3 text-slate-400 text-xs font-semibold">$</span>
                           <input 
-                            type="number" 
-                            value={v} 
+                            type="text" 
+                            value={formatInputDisplay(v)} 
+                            onFocus={(e) => {
+                              // Temporarily show raw value when focusing to edit easily
+                              e.target.value = v; 
+                            }}
+                            onBlur={(e) => {
+                              // Re-format when clicking away
+                              e.target.value = formatInputDisplay(v);
+                            }}
                             onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                            className="w-full text-right bg-transparent hover:bg-white focus:bg-white border border-transparent focus:border-blue-300 focus:ring-4 focus:ring-blue-100/50 rounded-lg pl-6 pr-3 py-2 font-medium text-slate-800 outline-none transition-all no-spinners"
+                            className="w-full text-right bg-transparent hover:bg-white focus:bg-white border border-transparent focus:border-blue-300 focus:ring-4 focus:ring-blue-100/50 rounded-lg pl-6 pr-3 py-2 font-medium text-slate-800 outline-none transition-all"
                           />
                         </div>
                       </td>
@@ -304,26 +325,26 @@ const ProFinancialDashboard = () => {
   };
 
   const renderIncomeStatement = () => (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <div className="bg-blue-50/50 text-blue-800 p-5 rounded-2xl text-sm mb-8 border border-blue-100 flex items-start gap-3">
         <Info className="text-blue-500 shrink-0 mt-0.5" size={18} />
         <p><strong>Income Statement Setup:</strong> Enter your historical and projected revenue, costs, and operating expenses across the timeline. These figures will directly fuel the Dashboard's profit analysis.</p>
       </div>
-      {renderTableData('sales', '1. Sales Activities', data.years, 'sales')}
-      {renderTableData('cogs', '2. Cost of Sales', data.years, 'cogs')}
-      {renderTableData('salesExpenses', '3. Sales Expenses', data.years, 'salesExpenses')}
-      {renderTableData('adminExpenses', '4. Admin Expenses', data.years, 'adminExpenses')}
+      {renderTableData('sales', 'Sales Activities', data.years, 'sales')}
+      {renderTableData('cogs', 'Cost of Sales', data.years, 'cogs')}
+      {renderTableData('salesExpenses', 'Sales Expenses', data.years, 'salesExpenses')}
+      {renderTableData('adminExpenses', 'Admin Expenses', data.years, 'adminExpenses')}
     </div>
   );
 
   const renderBalanceSheet = () => (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-7xl mx-auto">
       <div className="bg-purple-50/50 text-purple-800 p-5 rounded-2xl text-sm mb-8 border border-purple-100 flex items-start gap-3">
         <Info className="text-purple-500 shrink-0 mt-0.5" size={18} />
         <p><strong>Balance Sheet Input:</strong> Note that balance sheet data covers the projected years (2028, 2029, 2030). Ensure Total Assets always equal Total Liabilities + Equity to balance the sheet.</p>
       </div>
-      {renderTableData('assets', '5. Assets', ['2028', '2029', '2030'], 'assets')}
-      {renderTableData('liabilities', '6. Liabilities & Equity', ['2028', '2029', '2030'], 'liabilities')}
+      {renderTableData('assets', 'Assets', ['2028', '2029', '2030'], 'assets')}
+      {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'], 'liabilities')}
     </div>
   );
 
@@ -387,20 +408,9 @@ const ProFinancialDashboard = () => {
           <div>
             <h1 className="text-4xl font-black text-slate-900 flex items-center gap-3 tracking-tight">
               <Building className="text-blue-600" size={36} />
-              Enterprise Financial Appendix
+              Enterprise Financial
             </h1>
             <p className="text-slate-500 mt-2 font-medium">{data.company.name} | Professional Grade Financial Modeler</p>
-            <style jsx global>{`
-              /* Hide spinners for number inputs globally */
-              .no-spinners::-webkit-outer-spin-button,
-              .no-spinners::-webkit-inner-spin-button {
-                -webkit-appearance: none;
-                margin: 0;
-              }
-              .no-spinners {
-                -moz-appearance: textfield;
-              }
-            `}</style>
           </div>
         </div>
 
