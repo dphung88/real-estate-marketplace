@@ -51,19 +51,19 @@ export default function HomePage() {
               <i className="fa-solid fa-key"></i>
               Real Estate for Rent
             </Link>
-            <Link href="/used-items" className="cat-card">
+            <Link href="/used-items?category=cars" className="cat-card">
               <i className="fa-solid fa-car"></i>
               Cars
             </Link>
-            <Link href="/used-items" className="cat-card">
+            <Link href="/used-items?category=lawnmowers" className="cat-card">
               <i className="fa-solid fa-tractor"></i>
               Lawn Mowers
             </Link>
-            <Link href="/used-items" className="cat-card">
+            <Link href="/used-items?category=mobile-homes" className="cat-card">
               <i className="fa-solid fa-house-chimney"></i>
               Mobile Homes
             </Link>
-            <Link href="/used-items" className="cat-card">
+            <Link href="/used-items?category=other" className="cat-card">
               <i className="fa-solid fa-tag"></i>
               Other Used Items
             </Link>

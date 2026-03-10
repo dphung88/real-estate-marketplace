@@ -56,6 +56,13 @@ export default function UsedItemsPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    
+    // Handle category filter from URL
+    const catParam = params.get('category');
+    if (catParam) {
+      setSelectedCategory(catParam);
+    }
+
     if (params.get('success') === 'true') {
       setSuccessMsg(params.get('item') ? `Thank you! Payment received for ${decodeURIComponent(params.get('item'))}.` : 'Payment successful!');
       window.history.replaceState({}, '', '/used-items');
