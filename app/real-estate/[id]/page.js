@@ -174,8 +174,8 @@ export default async function RealEstateDetailPage({ params }) {
 
   const imgSrc = listing.image_url ||
     (listing.property_type === 'rent' ? DEFAULT_IMAGES.rent : DEFAULT_IMAGES.sale);
-  const images = listing.images && listing.images.length >= 3
-    ? listing.images.slice(0, 4)
+  const images = listing.images && listing.images.length > 0
+    ? listing.images
     : [imgSrc, imgSrc, imgSrc, imgSrc];
   const cat = getCategoryLabel(listing);
 
