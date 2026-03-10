@@ -332,115 +332,124 @@ const ProFinancialDashboard = () => {
 
   const renderPersonal = () => (
     <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="contact-form-box mb-8" style={{ padding: '30px', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)', background: '#FFF' }}>
         
-        {/* Left Col: Info & Summary */}
-        <div className="space-y-8 flex flex-col">
-          <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] p-8">
-            <h3 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold tracking-[1.5px] uppercase border-b border-[var(--color-accent)]/20 pb-3 mb-6">
-              Director Info
-            </h3>
-            <div className="space-y-6">
-              <div>
-                <label className="block text-[0.75rem] font-bold text-[#666] uppercase tracking-wider mb-2">Name</label>
-                <div className="bg-[#F9F9F9] rounded-xl px-5 py-3 border border-black/5 font-bold text-[#1B1C36]">
-                  {data.personal.name}
-                </div>
-              </div>
-              <div>
-                <label className="block text-[0.75rem] font-bold text-[#666] uppercase tracking-wider mb-2">Annual Salary</label>
-                <div className="relative">
-                  <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[#666] font-bold">$</span>
-                  <input 
-                    type="text" 
-                    value={formatInputDisplay(data.personal.salary)}
-                    onFocus={(e) => { e.target.value = data.personal.salary; }}
-                    onBlur={(e) => { e.target.value = formatInputDisplay(data.personal.salary); }}
-                    onChange={(e) => setData(prev => ({...prev, personal: {...prev.personal, salary: Number(e.target.value.replace(/[^\d.-]/g, ''))}}))}
-                    className="w-full bg-[#F9F9F9] focus:bg-white border border-black/5 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/50 rounded-xl pl-9 pr-5 py-3 font-bold text-[#1B1C36] outline-none transition-all"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* Table-style Layout for Personal Status */}
+        <div className="overflow-x-auto custom-scrollbar">
+          <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+            <thead>
+              <tr>
+                <th style={{ width: '25%', paddingBottom: '12px' }}></th>
+                <th style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Director Info</th>
+                <th style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Personal Assets</th>
+                <th style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Personal Liabilities</th>
+                <th style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>Summary</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {/* Row: Name / Cash / Bank Loans / Total Assets */}
+              <tr className="group transition-colors hover:bg-black/[0.02]">
+                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
+                  Liquid Assets & Short-term
+                </td>
+                <td className="p-3 text-center">
+                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-1">Name</div>
+                  <div className="text-[0.95rem] font-bold text-[#1B1C36]">{data.personal.name}</div>
+                </td>
+                <td className="p-3">
+                  <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                    <span className="text-[0.8rem] text-[#666] font-medium">Cash</span>
+                    <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets.Cash)}</span>
+                  </div>
+                </td>
+                <td className="p-3">
+                  <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                    <span className="text-[0.8rem] text-[#666] font-medium">Credit Cards</span>
+                    <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.liabilities['Credit Cards'])}</span>
+                  </div>
+                </td>
+                <td className="p-3 text-center border-l border-black/5">
+                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-1">Total Assets</div>
+                  <div className="text-[1.1rem] font-bold text-[#B5945B]">{formatCurrency(calc.personalAssets)}</div>
+                </td>
+              </tr>
 
-          <div className="bg-[#1B1C36] rounded-[2rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.15)] p-8 text-white mt-auto">
-            <h3 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold tracking-[1.5px] uppercase border-b border-white/10 pb-3 mb-6">
-              Net Worth Summary
-            </h3>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-white/60 font-medium">Total Assets</span>
-                <span className="font-bold text-lg">{formatCurrency(calc.personalAssets)}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-white/60 font-medium">Total Liabilities</span>
-                <span className="font-bold text-lg">{formatCurrency(calc.personalLiab)}</span>
-              </div>
-              <div className="pt-5 border-t border-white/10 flex justify-between items-center mt-2">
-                <span className="text-[var(--color-accent)] font-extrabold tracking-wider">NET WORTH</span>
-                <span className="font-black text-2xl text-green-400">{formatCurrency(calc.netWorth)}</span>
-              </div>
-            </div>
-          </div>
+              {/* Row: Salary / RRSP & Stocks / Bank Loans / Total Liab */}
+              <tr className="group transition-colors hover:bg-black/[0.02]">
+                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
+                  Investments & Loans
+                </td>
+                <td className="p-3 text-center">
+                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-1">Annual Salary</div>
+                  <div className="text-[0.95rem] font-bold text-[#1B1C36]">{formatCurrency(data.personal.salary)}</div>
+                </td>
+                <td className="p-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                      <span className="text-[0.8rem] text-[#666] font-medium">RRSP</span>
+                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets.RRSP)}</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                      <span className="text-[0.8rem] text-[#666] font-medium">Stocks/Bonds</span>
+                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets['Stocks/Bonds'])}</span>
+                    </div>
+                  </div>
+                </td>
+                <td className="p-3 align-top">
+                  <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                    <span className="text-[0.8rem] text-[#666] font-medium">Bank Loans</span>
+                    <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.liabilities['Bank Loans'])}</span>
+                  </div>
+                </td>
+                <td className="p-3 text-center border-l border-black/5 align-top">
+                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-1">Total Liabilities</div>
+                  <div className="text-[1.1rem] font-bold text-[#ef4444]">{formatCurrency(calc.personalLiab)}</div>
+                </td>
+              </tr>
+
+              {/* Row: Empty / Fixed Assets / Mortgages / Net Worth */}
+              <tr className="group transition-colors hover:bg-black/[0.02]">
+                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
+                  Fixed Assets & Mortgages
+                </td>
+                <td className="p-3"></td>
+                <td className="p-3">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                      <span className="text-[0.8rem] text-[#666] font-medium">Real Estate</span>
+                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets['Real Estate'])}</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                      <span className="text-[0.8rem] text-[#666] font-medium">Automobiles</span>
+                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets.Automobiles)}</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                      <span className="text-[0.8rem] text-[#666] font-medium">Household/Personal</span>
+                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets['Household/Personal'])}</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                      <span className="text-[0.8rem] text-[#666] font-medium">Life Insurance</span>
+                      <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.assets['Life Insurance'])}</span>
+                    </div>
+                  </div>
+                </td>
+                <td className="p-3 align-top">
+                  <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2 border border-black/5">
+                    <span className="text-[0.8rem] text-[#666] font-medium">Mortgages</span>
+                    <span className="font-bold text-[#1B1C36]">${formatInputDisplay(data.personal.liabilities.Mortgages)}</span>
+                  </div>
+                </td>
+                <td className="p-3 text-center border-l border-black/5">
+                  <div className="bg-[#1B1C36] rounded-xl p-4 shadow-lg">
+                    <div className="text-[0.65rem] uppercase text-[#B5945B] font-black tracking-widest mb-1">NET WORTH</div>
+                    <div className="text-[1.25rem] font-black text-[#10b981]">{formatCurrency(calc.netWorth)}</div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        {/* Middle Col: Assets */}
-        <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] p-8">
-          <h3 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold tracking-[1.5px] uppercase border-b border-[var(--color-accent)]/20 pb-3 mb-6">
-            Personal Assets
-          </h3>
-          <div className="space-y-4">
-            {Object.entries(data.personal.assets).map(([k, v]) => (
-              <div key={k}>
-                <label className="block text-[0.8rem] font-medium text-[#666] mb-1.5">{k}</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#666] font-bold text-sm">$</span>
-                  <input 
-                    type="text" 
-                    value={formatInputDisplay(v)} 
-                    onFocus={(e) => { e.target.value = v; }}
-                    onBlur={(e) => { e.target.value = formatInputDisplay(v); }}
-                    onChange={(e) => {
-                      const num = Number(e.target.value.replace(/[^\d.-]/g, ''));
-                      setData(prev => ({...prev, personal: {...prev.personal, assets: {...prev.personal.assets, [k]: num}}}));
-                    }}
-                    className="w-full bg-[#F9F9F9] focus:bg-white border border-black/5 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/50 rounded-xl pl-8 pr-4 py-2.5 font-bold text-[#1B1C36] outline-none transition-all text-right"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Col: Liabilities */}
-        <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] p-8">
-          <h3 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold tracking-[1.5px] uppercase border-b border-[var(--color-accent)]/20 pb-3 mb-6">
-            Personal Liabilities
-          </h3>
-          <div className="space-y-4">
-            {Object.entries(data.personal.liabilities).map(([k, v]) => (
-              <div key={k}>
-                <label className="block text-[0.8rem] font-medium text-[#666] mb-1.5">{k}</label>
-                <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#666] font-bold text-sm">$</span>
-                  <input 
-                    type="text" 
-                    value={formatInputDisplay(v)} 
-                    onFocus={(e) => { e.target.value = v; }}
-                    onBlur={(e) => { e.target.value = formatInputDisplay(v); }}
-                    onChange={(e) => {
-                      const num = Number(e.target.value.replace(/[^\d.-]/g, ''));
-                      setData(prev => ({...prev, personal: {...prev.personal, liabilities: {...prev.personal.liabilities, [k]: num}}}));
-                    }}
-                    className="w-full bg-[#F9F9F9] focus:bg-white border border-black/5 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/50 rounded-xl pl-8 pr-4 py-2.5 font-bold text-[#1B1C36] outline-none transition-all text-right"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
       </div>
     </div>
   );
