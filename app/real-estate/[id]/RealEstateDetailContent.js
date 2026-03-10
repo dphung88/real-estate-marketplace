@@ -120,10 +120,10 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
         <div className="z-gallery">
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(0); 
-            if (window.innerWidth > 768) setIsModalOpen(true); 
+            setIsModalOpen(true); 
           }}>
             <Image 
-              src={safeImages[selectedIndex] || displayImages[0]} 
+              src={safeImages[0]} 
               alt={listing.title} 
               fill 
               style={{ objectFit: 'cover' }}
@@ -133,10 +133,10 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
           </div>
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(1 % safeImages.length); 
-            if (window.innerWidth > 768) setIsModalOpen(true); 
+            setIsModalOpen(true); 
           }}>
             <Image 
-              src={displayImages[1]} 
+              src={safeImages[1] || safeImages[0]} 
               alt={listing.title} 
               fill 
               style={{ objectFit: 'cover' }}
@@ -145,10 +145,10 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
           </div>
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(2 % safeImages.length); 
-            if (window.innerWidth > 768) setIsModalOpen(true); 
+            setIsModalOpen(true); 
           }}>
             <Image 
-              src={displayImages[2]} 
+              src={safeImages[2] || safeImages[0]} 
               alt={listing.title} 
               fill 
               style={{ objectFit: 'cover' }}
