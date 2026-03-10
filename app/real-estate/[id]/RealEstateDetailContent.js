@@ -16,14 +16,14 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
 
   if (!listing) return null;
 
-  // Use a fallback if images are missing or empty
-  const safeImages = images && images.length > 0 ? images : [FALLBACK_IMAGE];
+  // Ensure we have an array of image URLs
+  const safeImages = Array.isArray(images) && images.length > 0 ? images : [FALLBACK_IMAGE, FALLBACK_IMAGE, FALLBACK_IMAGE, FALLBACK_IMAGE];
   
-  // Logic for display in the 3-image grid (desktop)
+  // Ensure we have at least 3 images for the top gallery grid
   const displayImages = [
-    safeImages[0],
-    safeImages[1] || safeImages[0],
-    safeImages[2] || safeImages[0]
+    safeImages[0] || FALLBACK_IMAGE,
+    safeImages[1] || safeImages[0] || FALLBACK_IMAGE,
+    safeImages[2] || safeImages[0] || FALLBACK_IMAGE
   ];
   
   const hasMorePhotos = safeImages.length > 3;
@@ -117,52 +117,46 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
 
       {/* Zillow-style Gallery (Desktop) & Mobile Swipe-like Gallery */}
       <div className="z-gallery-wrapper">
-        <div className="z-gallery" style={{ borderRadius: '16px', overflow: 'hidden' }}>
-          <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }} onClick={() => { 
+        <div className="z-gallery">
+          <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(0); 
             if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <Image 
-                src={safeImages[selectedIndex] || displayImages[0]} 
-                alt={listing.title} 
-                fill 
-                style={{ objectFit: 'cover', borderRadius: '16px' }}
-                sizes="(max-width: 768px) 100vw, 66vw"
-                priority
-              />
-            </div>
+            <Image 
+              src={safeImages[selectedIndex] || displayImages[0]} 
+              alt={listing.title} 
+              fill 
+              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 768px) 100vw, 66vw"
+              priority
+            />
           </div>
-          <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }} onClick={() => { 
+          <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(1 % safeImages.length); 
             if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <Image 
-                src={displayImages[1]} 
-                alt={listing.title} 
-                fill 
-                style={{ objectFit: 'cover', borderRadius: '16px' }}
-                sizes="(max-width: 768px) 50vw, 33vw"
-              />
-            </div>
+            <Image 
+              src={displayImages[1]} 
+              alt={listing.title} 
+              fill 
+              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 768px) 50vw, 33vw"
+            />
           </div>
-          <div className="z-gallery-item" style={{ borderRadius: '16px', overflow: 'hidden' }} onClick={() => { 
+          <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(2 % safeImages.length); 
             if (window.innerWidth > 768) setIsModalOpen(true); 
           }}>
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <Image 
-                src={displayImages[2]} 
-                alt={listing.title} 
-                fill 
-                style={{ objectFit: 'cover', borderRadius: '16px' }}
-                sizes="(max-width: 768px) 50vw, 33vw"
-              />
-              {hasMorePhotos && (
-                <div className="z-gallery-more">+{safeImages.length - 2} photos</div>
-              )}
-            </div>
+            <Image 
+              src={displayImages[2]} 
+              alt={listing.title} 
+              fill 
+              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 768px) 50vw, 33vw"
+            />
+            {hasMorePhotos && (
+              <div className="z-gallery-more">+{safeImages.length - 2} photos</div>
+            )}
           </div>
         </div>
 

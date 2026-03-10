@@ -341,6 +341,39 @@ a.listing-card { text-decoration: none; color: inherit; }
 .social-btn { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: var(--color-dark); color: var(--color-accent); font-size: 1rem; transition: all 0.2s; }
 .social-btn:hover { background: var(--color-accent); color: var(--color-dark); transform: translateY(-3px); }
 
+/* GO-LIVE PAGE */
+.go-live-page .hero-simple {
+  background: var(--color-dark);
+  color: var(--color-light);
+  padding: 60px 0;
+}
+.go-live-page .hero-simple .section-title {
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+.go-live-page .hero-simple .section-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.go-live-page .pricing-card.popular {
+  border-color: var(--color-accent) !important;
+}
+.go-live-page .pricing-card.popular span {
+  background-color: var(--color-accent) !important;
+  color: var(--color-dark) !important;
+}
+.go-live-page .price {
+  color: var(--color-accent) !important;
+}
+.go-live-page .icon-wrapper {
+  color: var(--color-accent) !important;
+}
+.go-live-page .bg-light {
+  background-color: #f8f7f2 !important;
+}
+
 /* ===== FOOTER ===== */
 .footer { background: var(--color-dark); color: var(--color-light); text-align: center; padding: 16px 20px; border-top: 1px solid rgba(232, 229, 215, 0.15); }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }

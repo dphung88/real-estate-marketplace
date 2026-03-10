@@ -1,13 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RealEstateCard from './RealEstateCard';
 
 const LISTINGS_PER_PAGE = 6;
 
 export default function RealEstateList({ listings = [] }) {
+  const [selectedType, setSelectedType] = useState('all');
+
+  useEffect(() => {
+    const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    const type = params.get('type');
+    if (type) {
+      setSelectedType(type);
+    }
+  }, []);
+
+  const filteredListings = listings.filter(item => {
+    if (selectedType === 'all') return true;
+    return item.type === selectedType;
+  });
+
   const [visibleCount, setVisibleCount] = useState(LISTINGS_PER_PAGE);
-  const listingsToShow = listings.slice(0, visibleCount);
+  const listingsToShow = filteredListings.slice(0, visibleCount);
   const hasMore = visibleCount < listings.length;
   const showLoadMore = listings.length > LISTINGS_PER_PAGE && hasMore;
 

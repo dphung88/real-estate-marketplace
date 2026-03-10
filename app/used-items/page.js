@@ -15,6 +15,15 @@ const BANNER_IMAGES = [
 
 export default function UsedItemsPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
+
+  useEffect(() => {
+    const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+    const cat = params.get('category');
+    if (cat) {
+      setSelectedCategory(cat);
+    }
+  }, []);
+
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
   const [selectedCondition, setSelectedCondition] = useState('');
   const [currentBanner, setCurrentBanner] = useState(0);
