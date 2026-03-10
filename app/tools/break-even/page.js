@@ -43,24 +43,36 @@ export default function BreakEvenPage() {
               <span className="badge badge-used" style={{ padding: '8px 20px', fontSize: '0.9rem', marginBottom: '15px', display: 'inline-block' }}>Business Intelligence</span>
               
               {/* Tab Navigation */}
-              <div className="flex justify-center gap-4 mt-6 mb-12">
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginTop: '24px', marginBottom: '48px' }}>
                 <button 
                   onClick={() => setActiveTab('pro')}
-                  className={`flex items-center gap-2 px-8 py-3.5 rounded-[14px] font-bold transition-all duration-300 ${
-                    activeTab === 'pro' 
-                      ? 'bg-[#1B1C36] text-[var(--color-accent)] shadow-xl' 
-                      : 'bg-transparent text-[var(--color-dark)] opacity-70 hover:bg-white hover:opacity-100 border border-[var(--color-dark)]/10'
-                  }`}
+                  style={{ 
+                    display: 'flex', alignItems: 'center', gap: '10px', 
+                    padding: '14px 28px', borderRadius: '14px',
+                    fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', 
+                    transition: 'all 0.3s ease',
+                    background: activeTab === 'pro' ? '#1B1C36' : '#FFFFFF',
+                    color: activeTab === 'pro' ? '#B5945B' : '#666666',
+                    border: activeTab === 'pro' ? '1.5px solid #1B1C36' : '1.5px solid rgba(0,0,0,0.05)',
+                    boxShadow: activeTab === 'pro' ? '0 4px 14px rgba(27, 28, 54, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
+                    whiteSpace: 'nowrap'
+                  }}
                 >
                   <FileText size={18} /> Pro Financial
                 </button>
                 <button 
                   onClick={() => setActiveTab('breakeven')}
-                  className={`flex items-center gap-2 px-8 py-3.5 rounded-[14px] font-bold transition-all duration-300 ${
-                    activeTab === 'breakeven' 
-                      ? 'bg-[#1B1C36] text-[var(--color-accent)] shadow-xl' 
-                      : 'bg-transparent text-[var(--color-dark)] opacity-70 hover:bg-white hover:opacity-100 border border-[var(--color-dark)]/10'
-                  }`}
+                  style={{ 
+                    display: 'flex', alignItems: 'center', gap: '10px', 
+                    padding: '14px 28px', borderRadius: '14px',
+                    fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', 
+                    transition: 'all 0.3s ease',
+                    background: activeTab === 'breakeven' ? '#1B1C36' : '#FFFFFF',
+                    color: activeTab === 'breakeven' ? '#B5945B' : '#666666',
+                    border: activeTab === 'breakeven' ? '1.5px solid #1B1C36' : '1.5px solid rgba(0,0,0,0.05)',
+                    boxShadow: activeTab === 'breakeven' ? '0 4px 14px rgba(27, 28, 54, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
+                    whiteSpace: 'nowrap'
+                  }}
                 >
                   <BarChart2 size={18} /> Break-Even & Performance
                 </button>
