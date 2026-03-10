@@ -366,13 +366,13 @@ const ProFinancialDashboard = () => {
                 <td className="px-8 py-5 align-top border-l border-black/5 text-left">
                   <div className="flex flex-col items-start w-full">
                     <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Cash</span>
-                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.assets.Cash)}</span>
+                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets.Cash)}</span>
                   </div>
                 </td>
                 <td className="px-8 py-5 align-top border-l border-black/5 text-left">
                   <div className="flex flex-col items-start w-full">
                     <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Credit Cards</span>
-                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.liabilities['Credit Cards'])}</span>
+                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.liabilities['Credit Cards'])}</span>
                   </div>
                 </td>
                 <td className="px-6 py-5 text-left border-l border-black/5 bg-[#F9F9F9]/50">
@@ -398,18 +398,18 @@ const ProFinancialDashboard = () => {
                   <div className="flex flex-col gap-6 w-full text-left">
                     <div className="flex flex-col items-start">
                       <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">RRSP</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.assets.RRSP)}</span>
+                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets.RRSP)}</span>
                     </div>
                     <div className="flex flex-col items-start">
                       <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Stocks/Bonds</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.assets['Stocks/Bonds'])}</span>
+                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets['Stocks/Bonds'])}</span>
                     </div>
                   </div>
                 </td>
                 <td className="px-8 py-5 align-top border-l border-black/5 text-left">
                   <div className="flex flex-col items-start w-full">
                     <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Bank Loans</span>
-                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.liabilities['Bank Loans'])}</span>
+                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.liabilities['Bank Loans'])}</span>
                   </div>
                 </td>
                 <td className="px-6 py-5 text-left border-l border-black/5 bg-[#F9F9F9]/50 align-top">
@@ -430,26 +430,26 @@ const ProFinancialDashboard = () => {
                   <div className="flex flex-col gap-6 w-full">
                     <div className="flex flex-col items-start">
                       <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Real Estate</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.assets['Real Estate'])}</span>
+                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets['Real Estate'])}</span>
                     </div>
                     <div className="flex flex-col items-start">
                       <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Automobiles</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.assets.Automobiles)}</span>
+                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets.Automobiles)}</span>
                     </div>
                     <div className="flex flex-col items-start">
                       <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Household/Personal</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.assets['Household/Personal'])}</span>
+                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets['Household/Personal'])}</span>
                     </div>
                     <div className="flex flex-col items-start">
                       <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Life Insurance</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.assets['Life Insurance'])}</span>
+                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets['Life Insurance'])}</span>
                     </div>
                   </div>
                 </td>
                 <td className="px-8 py-5 align-top border-l border-black/5 text-left">
                   <div className="flex flex-col items-start w-full">
                     <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Mortgages</span>
-                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">${formatInputDisplay(data.personal.liabilities.Mortgages)}</span>
+                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.liabilities.Mortgages)}</span>
                   </div>
                 </td>
                 <td className="px-6 py-5 text-left border-l border-black/5 align-bottom">
