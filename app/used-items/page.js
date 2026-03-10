@@ -180,7 +180,8 @@ export default function UsedItemsPage() {
                 <option value="fair">Fair</option>
               </select>
               <button 
-                className="btn btn-sm"
+                className="btn btn-primary"
+                style={{ height: '42px', padding: '0 18px' }}
                 onClick={() => {
                   setSelectedCategory('');
                   setSelectedPriceRange('');
