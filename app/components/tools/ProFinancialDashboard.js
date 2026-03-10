@@ -542,25 +542,21 @@ const ProFinancialDashboard = () => {
 };
 
 const KpiCard = ({ title, value, trend, icon }) => (
-  <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5 transition-all hover:shadow-md hover:border-[#B5945B]/30">
-    <div className="flex-shrink-0 w-14 h-14 bg-[#1B1C36]/5 rounded-2xl flex items-center justify-center text-[#B5945B]">
-      {React.cloneElement(icon, { size: 28, strokeWidth: 2.5 })}
+  <div className="bg-[#1B1C36] p-8 rounded-[32px] flex flex-col items-center text-center transition-all hover:translate-y-[-4px] hover:shadow-xl shadow-lg border border-white/5">
+    <div className="mb-6 text-[#B5945B]">
+      {React.cloneElement(icon, { size: 40, strokeWidth: 1.5 })}
     </div>
-    <div className="flex-grow">
-      <p className="text-[0.7rem] font-extrabold text-[#64748b] uppercase tracking-widest mb-1.5">{title}</p>
-      <div className="flex items-baseline gap-2">
-        <p className="text-[1.6rem] font-black text-[#1B1C36] leading-none m-0">{value}</p>
-        {trend && (
-          <span className={`text-[0.75rem] font-bold px-2 py-0.5 rounded-full ${
-            trend.includes('+') || trend === 'Strong' || trend === 'Healthy' 
-              ? 'bg-emerald-50 text-emerald-600' 
-              : 'bg-blue-50 text-blue-600'
-          }`}>
-            {trend}
-          </span>
-        )}
-      </div>
-    </div>
+    <h4 className="text-white text-[1.1rem] font-bold mb-3 tracking-tight">{title}</h4>
+    <p className="text-[#B5945B] text-[1.75rem] font-black m-0 leading-tight mb-2">{value}</p>
+    {trend && (
+      <span className={`text-[0.8rem] font-bold px-3 py-1 rounded-full ${
+        trend.includes('+') || trend === 'Strong' || trend === 'Healthy' 
+          ? 'bg-emerald-500/10 text-emerald-400' 
+          : 'bg-blue-500/10 text-blue-400'
+      }`}>
+        {trend}
+      </span>
+    )}
   </div>
 );
 
