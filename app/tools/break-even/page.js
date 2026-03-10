@@ -43,23 +43,23 @@ export default function BreakEvenPage() {
               <span className="badge badge-used" style={{ padding: '8px 20px', fontSize: '0.9rem', marginBottom: '15px', display: 'inline-block' }}>Business Intelligence</span>
               
               {/* Tab Navigation */}
-              <div className="flex justify-center gap-4 mt-6 mb-10">
+              <div className="flex justify-center gap-4 mt-6 mb-12">
                 <button 
                   onClick={() => setActiveTab('pro')}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all ${
+                  className={`flex items-center gap-2 px-8 py-3.5 rounded-[14px] font-bold transition-all duration-300 ${
                     activeTab === 'pro' 
-                      ? 'bg-[var(--color-accent)] text-[var(--color-dark)] shadow-lg' 
-                      : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-200'
+                      ? 'bg-[#1B1C36] text-[var(--color-accent)] shadow-xl' 
+                      : 'bg-transparent text-[var(--color-dark)] opacity-70 hover:bg-white hover:opacity-100 border border-[var(--color-dark)]/10'
                   }`}
                 >
-                  <FileText size={18} /> Pro Financial Appendix
+                  <FileText size={18} /> Pro Financial
                 </button>
                 <button 
                   onClick={() => setActiveTab('breakeven')}
-                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all ${
+                  className={`flex items-center gap-2 px-8 py-3.5 rounded-[14px] font-bold transition-all duration-300 ${
                     activeTab === 'breakeven' 
-                      ? 'bg-[var(--color-accent)] text-[var(--color-dark)] shadow-lg' 
-                      : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-200'
+                      ? 'bg-[#1B1C36] text-[var(--color-accent)] shadow-xl' 
+                      : 'bg-transparent text-[var(--color-dark)] opacity-70 hover:bg-white hover:opacity-100 border border-[var(--color-dark)]/10'
                   }`}
                 >
                   <BarChart2 size={18} /> Break-Even & Performance
@@ -67,17 +67,17 @@ export default function BreakEvenPage() {
               </div>
 
               {activeTab === 'breakeven' ? (
-                <div>
-                  <h2 className="section-title">Break-Even Analysis</h2>
-                  <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', marginBottom: '40px' }}>
+                <div className="mb-14">
+                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4">Break-Even Analysis</h2>
+                  <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
                     Analyze your core financial metrics, monitor operational efficiency, 
                     and determine your exact break-even point.
                   </p>
                 </div>
               ) : (
-                <div>
-                  <h2 className="section-title">Comprehensive Financial Appendix</h2>
-                  <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', marginBottom: '40px' }}>
+                <div className="mb-14">
+                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4">Comprehensive Financial</h2>
+                  <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
                     A professional-grade financial modeling tool complete with Income Statement, Balance Sheet, Cash Flow and Personal Net Worth tracking.
                   </p>
                 </div>
