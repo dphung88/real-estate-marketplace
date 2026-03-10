@@ -99,9 +99,11 @@ async function getListingById(id) {
       image_url: 'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=75',
       images: [
         'https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=75',
-        'https://images.unsplash.com/photo-1502672023488-70e25813efdf?w=800&q=75',
         'https://images.unsplash.com/photo-1536376074402-f2731042509a?w=800&q=75',
-        'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=75'
+        'https://images.unsplash.com/photo-1502672023488-70e25813efdf?w=800&q=75',
+        'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=75',
+        'https://images.unsplash.com/photo-1556912172-45b7abe8b7e1?w=800&q=75',
+        'https://images.unsplash.com/photo-1505691938895-1758d7eaa511?w=800&q=75'
       ],
       status: 'active',
       type: 'rent',
