@@ -384,7 +384,7 @@ const ProFinancialDashboard = () => {
       <div className="max-w-7xl mx-auto">
         
         {/* Tabs */}
-        <div className="flex flex-wrap justify-center gap-3 mb-8">
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginBottom: '40px' }}>
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'income', label: 'Income Statement', icon: FileText },
@@ -395,14 +395,18 @@ const ProFinancialDashboard = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               style={{ 
-                display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '10px',
-                fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s',
-                background: activeTab === tab.id ? '#B5945B' : 'white',
-                color: activeTab === tab.id ? '#1B1C36' : '#666',
-                border: activeTab === tab.id ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.1)'
+                display: 'flex', alignItems: 'center', gap: '10px', 
+                padding: '14px 28px', borderRadius: '14px',
+                fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', 
+                transition: 'all 0.3s ease',
+                background: activeTab === tab.id ? '#B5945B' : '#FFFFFF',
+                color: activeTab === tab.id ? '#1B1C36' : '#666666',
+                border: activeTab === tab.id ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.05)',
+                boxShadow: activeTab === tab.id ? '0 4px 14px rgba(181, 148, 91, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
+                whiteSpace: 'nowrap'
               }}
             >
-              <tab.icon size={16} /> {tab.label}
+              <tab.icon size={18} /> {tab.label}
             </button>
           ))}
         </div>
