@@ -41,32 +41,58 @@ export default function HomePage() {
       {/* CATEGORIES */}
       <section className="categories section">
         <div className="container">
-          <h2 className="section-title">Browse by Category</h2>
-          <div className="cat-grid">
-            <Link href="/real-estate?type=sale" className="cat-card">
-              <i className="fa-solid fa-building"></i>
-              Real Estate for Sale
-            </Link>
-            <Link href="/real-estate?type=rent" className="cat-card">
-              <i className="fa-solid fa-key"></i>
-              Real Estate for Rent
-            </Link>
-            <Link href="/used-items?category=cars" className="cat-card">
-              <i className="fa-solid fa-car"></i>
-              Cars
-            </Link>
-            <Link href="/used-items?category=lawnmowers" className="cat-card">
-              <i className="fa-solid fa-tractor"></i>
-              Lawn Mowers
-            </Link>
-            <Link href="/used-items?category=mobile-homes" className="cat-card">
-              <i className="fa-solid fa-house-chimney"></i>
-              Mobile Homes
-            </Link>
-            <Link href="/used-items?category=other" className="cat-card">
-              <i className="fa-solid fa-tag"></i>
-              Other Used Items
-            </Link>
+          <h2 className="section-title">Browse Categories</h2>
+          
+          <div style={{ marginBottom: '3rem' }}>
+            <h3 style={{ marginBottom: '1.5rem', borderBottom: '2px solid var(--color-accent)', display: 'inline-block', paddingBottom: '5px' }}>
+              Real Estate
+            </h3>
+            <div className="cat-grid">
+              <Link href="/real-estate?type=sale" className="cat-card">
+                <i className="fa-solid fa-house-circle-check"></i>
+                Homes for Sale
+              </Link>
+              <Link href="/real-estate?type=rent" className="cat-card">
+                <i className="fa-solid fa-house-user"></i>
+                Rentals
+              </Link>
+              <Link href="/real-estate?type=land" className="cat-card">
+                <i className="fa-solid fa-mountain-sun"></i>
+                Land & Lots
+              </Link>
+              <Link href="/real-estate?type=commercial" className="cat-card">
+                <i className="fa-solid fa-building-shield"></i>
+                Commercial
+              </Link>
+            </div>
+          </div>
+
+          <div>
+            <h3 style={{ marginBottom: '1.5rem', borderBottom: '2px solid var(--color-accent)', display: 'inline-block', paddingBottom: '5px' }}>
+              Used Items & Vehicles
+            </h3>
+            <div className="cat-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))' }}>
+              <Link href="/used-items?category=cars" className="cat-card">
+                <i className="fa-solid fa-car-side"></i>
+                Cars & Trucks
+              </Link>
+              <Link href="/used-items?category=mobile-homes" className="cat-card">
+                <i className="fa-solid fa-truck-moving"></i>
+                Mobile Homes
+              </Link>
+              <Link href="/used-items?category=lawnmowers" className="cat-card">
+                <i className="fa-solid fa-tractor"></i>
+                Farm Equipment
+              </Link>
+              <Link href="/used-items?category=electronics" className="cat-card">
+                <i className="fa-solid fa-laptop"></i>
+                Electronics
+              </Link>
+              <Link href="/used-items?category=other" className="cat-card">
+                <i className="fa-solid fa-boxes-stacked"></i>
+                Browse All Items
+              </Link>
+            </div>
           </div>
         </div>
       </section>
