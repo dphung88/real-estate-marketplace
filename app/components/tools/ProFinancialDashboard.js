@@ -267,18 +267,18 @@ const ProFinancialDashboard = () => {
     const dataColWidth = `${75 / colCount}%`;
 
     return (
-      <div className="mb-12">
+      <div className="mb-10 px-8 py-2">
         <div className="overflow-x-auto custom-scrollbar pb-2">
           <table className="w-full text-left border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
             <thead>
               <tr>
-                <th className="pb-4 align-bottom border-b border-[var(--color-dark)]/10" style={{ width: '25%' }}>
-                  <h2 className="text-[var(--color-dark)] text-lg font-bold m-0 tracking-tight">
+                <th className="pb-3 align-bottom border-b border-[var(--color-accent)]/20" style={{ width: '25%' }}>
+                  <h2 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold m-0 tracking-[1.5px] uppercase">
                     {title}
                   </h2>
                 </th>
                 {yearsList.map(y => (
-                  <th key={y} className="pb-4 align-bottom font-bold text-[var(--color-dark)] text-base text-right border-b border-[var(--color-dark)]/10" style={{ width: dataColWidth }}>
+                  <th key={y} className="pb-3 align-bottom font-bold text-[var(--color-dark)] text-sm text-right border-b border-[var(--color-accent)]/20" style={{ width: dataColWidth }}>
                     {y}
                   </th>
                 ))}
@@ -286,15 +286,14 @@ const ProFinancialDashboard = () => {
             </thead>
             <tbody>
                 {Object.entries(data[category]).map(([name, vals], rowIndex) => (
-                  <tr key={name} className="group transition-colors hover:bg-black/[0.02]">
-                    <td className="py-2.5 font-medium text-[var(--color-dark)] opacity-80 text-[15px] truncate flex items-center gap-2" style={{ width: '100%' }}>
-                      <span className="w-1 h-1 rounded-full bg-[var(--color-dark)] opacity-60 inline-block"></span>
+                  <tr key={name} className="group transition-colors mt-2">
+                    <td className="py-3 font-semibold text-[#666] text-[0.7rem] truncate flex items-center gap-2 mt-2" style={{ width: '100%' }}>
                       {name}
                     </td>
                     {vals.map((v, i) => (
-                      <td key={i} className="py-2 text-right" style={{ width: dataColWidth }}>
+                      <td key={i} className="py-2 text-right px-1" style={{ width: dataColWidth }}>
                         <div className="relative flex items-center justify-end">
-                          <span className="absolute left-4 text-[var(--color-dark)] opacity-40 text-[13px] font-semibold pointer-events-none">$</span>
+                          <span className="absolute left-4 text-[#666] text-[0.85rem] font-bold pointer-events-none">$</span>
                           <input 
                             type="text" 
                             value={formatInputDisplay(v)} 
@@ -305,7 +304,7 @@ const ProFinancialDashboard = () => {
                               e.target.value = formatInputDisplay(v);
                             }}
                             onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                            className="w-full text-right bg-transparent hover:bg-white/50 focus:bg-white border border-transparent focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/20 rounded-lg pl-7 pr-3 py-1.5 font-medium text-[var(--color-dark)] outline-none transition-all text-[15px]"
+                            className="w-full text-right bg-[#F9F9F9] focus:bg-white border border-black/10 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/50 rounded-lg pl-7 pr-3 py-2 font-bold text-[0.85rem] text-[var(--color-dark)] outline-none transition-all"
                           />
                         </div>
                       </td>
@@ -321,21 +320,27 @@ const ProFinancialDashboard = () => {
 
   const renderIncomeStatement = () => (
     <div className="max-w-7xl mx-auto">
-      {renderTableData('sales', 'Sales Activities', data.years, 'sales')}
-      {renderTableData('cogs', 'Cost of Sales', data.years, 'cogs')}
-      {renderTableData('salesExpenses', 'Sales Expenses', data.years, 'salesExpenses')}
-      {renderTableData('adminExpenses', 'Admin Expenses', data.years, 'adminExpenses')}
+      <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] py-6">
+        {renderTableData('sales', 'Sales Activities', data.years, 'sales')}
+        {renderTableData('cogs', 'Cost of Sales (Direct)', data.years, 'cogs')}
+        {renderTableData('salesExpenses', 'Sales Expenses', data.years, 'salesExpenses')}
+        {renderTableData('adminExpenses', 'Operating Expenses', data.years, 'adminExpenses')}
+      </div>
     </div>
   );
 
   const renderBalanceSheet = () => (
     <div className="max-w-7xl mx-auto">
-      <div className="bg-[var(--color-accent)]/10 text-[var(--color-dark)] p-5 rounded-2xl text-sm mb-12 border border-[var(--color-accent)]/20 flex items-start gap-3">
-        <Info className="text-[var(--color-accent)] shrink-0 mt-0.5" size={18} />
-        <p><strong>Balance Sheet Notes:</strong> Data covers the projected years (2028, 2029, 2030). Ensure Total Assets always equal Total Liabilities + Equity.</p>
+      <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] py-6">
+        <div className="px-8 pb-4">
+          <div className="bg-[#1B1C36] text-[#E8E4D8] p-5 rounded-2xl text-sm mb-6 flex items-start gap-3">
+            <Info className="text-[var(--color-accent)] shrink-0 mt-0.5" size={18} />
+            <p><strong>Balance Sheet Notes:</strong> Data covers the projected years (2028, 2029, 2030). Ensure Total Assets always equal Total Liabilities + Equity.</p>
+          </div>
+        </div>
+        {renderTableData('assets', 'Assets', ['2028', '2029', '2030'], 'assets')}
+        {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'], 'liabilities')}
       </div>
-      {renderTableData('assets', 'Assets', ['2028', '2029', '2030'], 'assets')}
-      {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'], 'liabilities')}
     </div>
   );
 
@@ -391,7 +396,7 @@ const ProFinancialDashboard = () => {
   );
 
   return (
-    <div className="w-full bg-[var(--color-light)] font-sans" style={{ color: 'var(--color-dark)' }}>
+    <div className="w-full bg-[var(--color-light)] font-sans" style={{ color: 'var(--color-dark)', fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       <div className="max-w-7xl mx-auto">
         
         {/* Tabs */}
@@ -407,8 +412,8 @@ const ProFinancialDashboard = () => {
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-8 py-3 rounded-full font-bold text-[15px] transition-all duration-300 ${
                 activeTab === tab.id 
-                  ? 'bg-[var(--color-accent)] text-[var(--color-dark)] shadow-md' 
-                  : 'bg-white/50 text-[var(--color-dark)]/60 hover:bg-white border border-black/5'
+                  ? 'bg-[#1B1C36] text-[var(--color-accent)] shadow-md' 
+                  : 'bg-white text-[#666] hover:bg-gray-50 border border-black/5'
               }`}
             >
               <tab.icon size={18} /> {tab.label}
