@@ -389,7 +389,6 @@ const ProFinancialDashboard = () => {
                 </td>
                 <td className="px-6 py-5 align-top text-left border-l border-black/5">
                   <div className="flex flex-col items-start">
-                    <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Name</span>
                     <span className="text-[1.05rem] font-bold text-[#1B1C36]">{data.personal.name}</span>
                   </div>
                 </td>
