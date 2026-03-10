@@ -353,100 +353,100 @@ const ProFinancialDashboard = () => {
             <tbody>
               
               {/* Row 1: Liquid Assets */}
-              <tr className="group transition-colors hover:bg-black/[0.02] border-t border-black/5">
-                <td style={{ padding: '20px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', letterSpacing: '0.2px' }}>
+              <tr className="group transition-colors hover:bg-black/[0.02]">
+                <td style={{ padding: '24px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
                   Liquid Assets & Short-term
                 </td>
-                <td className="px-6 py-5 align-top text-center border-l border-black/5">
-                  <div className="text-[0.65rem] uppercase text-[#666] font-bold mb-1">Name</div>
-                  <div className="text-[1rem] font-medium text-[#1B1C36]">{data.personal.name}</div>
+                <td className="px-6 py-6 align-top text-center border-l border-black/5">
+                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-2">Name</div>
+                  <div className="text-[1.05rem] font-medium text-[#1B1C36]">{data.personal.name}</div>
                 </td>
-                <td className="px-8 py-5 align-top border-l border-black/5">
-                  <div className="flex justify-between items-center w-full bg-[#F9F9F9] rounded-lg px-4 py-2">
-                    <span className="text-[0.95rem] text-[#666] font-medium">Cash</span>
-                    <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets.Cash)}</span>
+                <td className="px-6 py-6 align-top border-l border-black/5">
+                  <div className="flex flex-row justify-between items-center w-full gap-4">
+                    <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Cash</span>
+                    <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.assets.Cash)}</span>
                   </div>
                 </td>
-                <td className="px-8 py-5 align-top border-l border-black/5">
-                  <div className="flex justify-between items-center w-full bg-[#F9F9F9] rounded-lg px-4 py-2">
-                    <span className="text-[0.95rem] text-[#666] font-medium">Credit Cards</span>
-                    <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.liabilities['Credit Cards'])}</span>
+                <td className="px-6 py-6 align-top border-l border-black/5">
+                  <div className="flex flex-row justify-between items-center w-full gap-4">
+                    <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Credit Cards</span>
+                    <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.liabilities['Credit Cards'])}</span>
                   </div>
                 </td>
-                <td className="px-6 py-5 text-center border-l border-black/5 bg-[#F9F9F9]/50">
-                  <div className="text-[0.65rem] uppercase text-[#666] font-bold mb-1">Total Assets</div>
-                  <div className="text-[1.1rem] font-bold text-[#1B1C36]">{formatCurrency(calc.personalAssets)}</div>
+                <td className="px-6 py-6 text-center border-l border-black/5 bg-[#F9F9F9]/50">
+                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-2">Total Assets</div>
+                  <div className="text-[1.15rem] font-bold text-[#1B1C36]">{formatCurrency(calc.personalAssets)}</div>
                 </td>
               </tr>
 
               {/* Row 2: Investments & Loans */}
               <tr className="group transition-colors hover:bg-black/[0.02] border-t border-black/5">
-                <td style={{ padding: '20px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', letterSpacing: '0.2px' }}>
+                <td style={{ padding: '24px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
                   Investments & Loans
                 </td>
-                <td className="px-6 py-5 align-top text-center border-l border-black/5">
-                  <div className="text-[0.65rem] uppercase text-[#666] font-bold mb-1">Annual Salary</div>
-                  <div className="text-[1rem] font-medium text-[#1B1C36]">{formatCurrency(data.personal.salary)}</div>
+                <td className="px-6 py-6 align-top text-center border-l border-black/5">
+                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-2">Annual Salary</div>
+                  <div className="text-[1.05rem] font-medium text-[#1B1C36]">{formatCurrency(data.personal.salary)}</div>
                 </td>
-                <td className="px-8 py-5 align-top border-l border-black/5">
-                  <div className="flex flex-col gap-3 w-full">
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2">
-                      <span className="text-[0.95rem] text-[#666] font-medium">RRSP</span>
-                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets.RRSP)}</span>
+                <td className="px-6 py-6 align-top border-l border-black/5">
+                  <div className="flex flex-col gap-5 w-full">
+                    <div className="flex flex-row justify-between items-center w-full gap-4">
+                      <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">RRSP</span>
+                      <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.assets.RRSP)}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2">
-                      <span className="text-[0.95rem] text-[#666] font-medium">Stocks/Bonds</span>
-                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets['Stocks/Bonds'])}</span>
+                    <div className="flex flex-row justify-between items-center w-full gap-4">
+                      <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Stocks/Bonds</span>
+                      <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.assets['Stocks/Bonds'])}</span>
                     </div>
                   </div>
                 </td>
-                <td className="px-8 py-5 align-top border-l border-black/5">
-                  <div className="flex justify-between items-center w-full bg-[#F9F9F9] rounded-lg px-4 py-2">
-                    <span className="text-[0.95rem] text-[#666] font-medium">Bank Loans</span>
-                    <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.liabilities['Bank Loans'])}</span>
+                <td className="px-6 py-6 align-top border-l border-black/5">
+                  <div className="flex flex-row justify-between items-center w-full gap-4">
+                    <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Bank Loans</span>
+                    <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.liabilities['Bank Loans'])}</span>
                   </div>
                 </td>
-                <td className="px-6 py-5 text-center border-l border-black/5 bg-[#F9F9F9]/50 align-top">
-                  <div className="text-[0.65rem] uppercase text-[#666] font-bold mb-1">Total Liabilities</div>
-                  <div className="text-[1.1rem] font-bold text-[#ef4444]">{formatCurrency(calc.personalLiab)}</div>
+                <td className="px-6 py-6 text-center border-l border-black/5 bg-[#F9F9F9]/50 align-top">
+                  <div className="text-[0.7rem] uppercase text-[#666] font-bold mb-2">Total Liabilities</div>
+                  <div className="text-[1.15rem] font-bold text-[#ef4444]">{formatCurrency(calc.personalLiab)}</div>
                 </td>
               </tr>
 
               {/* Row 3: Fixed Assets */}
               <tr className="group transition-colors hover:bg-black/[0.02] border-t border-black/5">
-                <td style={{ padding: '20px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', letterSpacing: '0.2px' }}>
+                <td style={{ padding: '24px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px', borderBottom: 'none' }}>
                   Fixed Assets & Mortgages
                 </td>
-                <td className="px-6 py-5 border-l border-black/5"></td>
-                <td className="px-8 py-5 border-l border-black/5">
-                  <div className="flex flex-col gap-3 w-full">
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2">
-                      <span className="text-[0.95rem] text-[#666] font-medium">Real Estate</span>
-                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets['Real Estate'])}</span>
+                <td className="px-6 py-6 border-l border-black/5"></td>
+                <td className="px-6 py-6 border-l border-black/5">
+                  <div className="flex flex-col gap-5 w-full">
+                    <div className="flex flex-row justify-between items-center w-full gap-4">
+                      <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Real Estate</span>
+                      <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.assets['Real Estate'])}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2">
-                      <span className="text-[0.95rem] text-[#666] font-medium">Automobiles</span>
-                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets.Automobiles)}</span>
+                    <div className="flex flex-row justify-between items-center w-full gap-4">
+                      <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Automobiles</span>
+                      <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.assets.Automobiles)}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2">
-                      <span className="text-[0.95rem] text-[#666] font-medium">Household/Personal</span>
-                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets['Household/Personal'])}</span>
+                    <div className="flex flex-row justify-between items-center w-full gap-4">
+                      <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Household/Personal</span>
+                      <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.assets['Household/Personal'])}</span>
                     </div>
-                    <div className="flex justify-between items-center bg-[#F9F9F9] rounded-lg px-4 py-2">
-                      <span className="text-[0.95rem] text-[#666] font-medium">Life Insurance</span>
-                      <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.assets['Life Insurance'])}</span>
+                    <div className="flex flex-row justify-between items-center w-full gap-4">
+                      <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Life Insurance</span>
+                      <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.assets['Life Insurance'])}</span>
                     </div>
                   </div>
                 </td>
-                <td className="px-8 py-5 align-top border-l border-black/5">
-                  <div className="flex justify-between items-center w-full bg-[#F9F9F9] rounded-lg px-4 py-2">
-                    <span className="text-[0.95rem] text-[#666] font-medium">Mortgages</span>
-                    <span className="font-medium text-[#1B1C36] text-[0.95rem]">${formatInputDisplay(data.personal.liabilities.Mortgages)}</span>
+                <td className="px-6 py-6 align-top border-l border-black/5">
+                  <div className="flex flex-row justify-between items-center w-full gap-4">
+                    <span className="text-[1rem] text-[#666] font-medium whitespace-nowrap">Mortgages</span>
+                    <span className="font-semibold text-[#1B1C36] text-[1rem]">${formatInputDisplay(data.personal.liabilities.Mortgages)}</span>
                   </div>
                 </td>
-                <td className="px-6 py-5 text-center border-l border-black/5 align-bottom">
-                  <div className="pt-4 border-t border-[var(--color-accent)]/30 mt-auto">
-                    <div className="text-[0.65rem] uppercase text-[#B5945B] font-black tracking-widest mb-1">NET WORTH</div>
+                <td className="px-6 py-6 text-center border-l border-black/5 align-bottom">
+                  <div className="pt-5 border-t border-[var(--color-accent)]/30 mt-auto">
+                    <div className="text-[0.7rem] uppercase text-[#B5945B] font-black tracking-widest mb-2">NET WORTH</div>
                     <div className="text-[1.5rem] font-black text-[#10b981]">{formatCurrency(calc.netWorth)}</div>
                   </div>
                 </td>
