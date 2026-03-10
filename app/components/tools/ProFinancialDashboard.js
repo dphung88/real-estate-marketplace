@@ -89,9 +89,8 @@ const INITIAL_DATA = {
     'Retained Earnings': [38200, 3100, 45200]
   },
   personal: {
-    name: "Johnathan W. Wright",
-    salary: 58000,
-    spouseSalary: 67000,
+    name: "Duong Tri Thien Phung",
+    salary: 500000,
     assets: {
       'Cash': 6000,
       'RRSP': 85000,
@@ -332,52 +331,116 @@ const ProFinancialDashboard = () => {
   );
 
   const renderPersonal = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div className="space-y-6">
-        <div className="bg-white p-6 rounded-3xl border border-slate-200">
-          <h3 className="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Director / Backer Info</h3>
-          <div className="space-y-4">
-            <div><label className="text-xs text-slate-500 uppercase">Name</label><p className="font-medium">{data.personal.name}</p></div>
-            <div><label className="text-xs text-slate-500 uppercase">Annual Salary</label><p className="font-medium">{formatCurrency(data.personal.salary)}</p></div>
-            <div><label className="text-xs text-slate-500 uppercase">Spouse Salary</label><p className="font-medium">{formatCurrency(data.personal.spouseSalary)}</p></div>
+    <div className="max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left Col: Info & Summary */}
+        <div className="space-y-8 flex flex-col">
+          <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] p-8">
+            <h3 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold tracking-[1.5px] uppercase border-b border-[var(--color-accent)]/20 pb-3 mb-6">
+              Director Info
+            </h3>
+            <div className="space-y-6">
+              <div>
+                <label className="block text-[0.75rem] font-bold text-[#666] uppercase tracking-wider mb-2">Name</label>
+                <div className="bg-[#F9F9F9] rounded-xl px-5 py-3 border border-black/5 font-bold text-[#1B1C36]">
+                  {data.personal.name}
+                </div>
+              </div>
+              <div>
+                <label className="block text-[0.75rem] font-bold text-[#666] uppercase tracking-wider mb-2">Annual Salary</label>
+                <div className="relative">
+                  <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[#666] font-bold">$</span>
+                  <input 
+                    type="text" 
+                    value={formatInputDisplay(data.personal.salary)}
+                    onFocus={(e) => { e.target.value = data.personal.salary; }}
+                    onBlur={(e) => { e.target.value = formatInputDisplay(data.personal.salary); }}
+                    onChange={(e) => setData(prev => ({...prev, personal: {...prev.personal, salary: Number(e.target.value.replace(/[^\d.-]/g, ''))}}))}
+                    className="w-full bg-[#F9F9F9] focus:bg-white border border-black/5 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/50 rounded-xl pl-9 pr-5 py-3 font-bold text-[#1B1C36] outline-none transition-all"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div className="bg-slate-900 text-white p-6 rounded-3xl">
-          <h3 className="text-lg font-bold mb-4">Net Worth Summary</h3>
-          <div className="space-y-3">
-            <div className="flex justify-between"><span className="text-slate-400">Total Assets</span><span>{formatCurrency(calc.personalAssets)}</span></div>
-            <div className="flex justify-between"><span className="text-slate-400">Total Liabilities</span><span>{formatCurrency(calc.personalLiab)}</span></div>
-            <div className="pt-3 mt-3 border-t border-slate-700 flex justify-between font-bold text-xl text-green-400">
-              <span>NET WORTH</span><span>{formatCurrency(calc.netWorth)}</span>
+          <div className="bg-[#1B1C36] rounded-[2rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.15)] p-8 text-white mt-auto">
+            <h3 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold tracking-[1.5px] uppercase border-b border-white/10 pb-3 mb-6">
+              Net Worth Summary
+            </h3>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center">
+                <span className="text-white/60 font-medium">Total Assets</span>
+                <span className="font-bold text-lg">{formatCurrency(calc.personalAssets)}</span>
+              </div>
+              <div className="flex justify-between items-center">
+                <span className="text-white/60 font-medium">Total Liabilities</span>
+                <span className="font-bold text-lg">{formatCurrency(calc.personalLiab)}</span>
+              </div>
+              <div className="pt-5 border-t border-white/10 flex justify-between items-center mt-2">
+                <span className="text-[var(--color-accent)] font-extrabold tracking-wider">NET WORTH</span>
+                <span className="font-black text-2xl text-green-400">{formatCurrency(calc.netWorth)}</span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="space-y-6">
-        <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden">
-          <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-slate-800">Personal Assets</div>
-          <div className="p-4 space-y-3">
+        {/* Middle Col: Assets */}
+        <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] p-8">
+          <h3 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold tracking-[1.5px] uppercase border-b border-[var(--color-accent)]/20 pb-3 mb-6">
+            Personal Assets
+          </h3>
+          <div className="space-y-4">
             {Object.entries(data.personal.assets).map(([k, v]) => (
-              <div key={k} className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">{k}</span>
-                <span className="font-medium">{formatCurrency(v)}</span>
+              <div key={k}>
+                <label className="block text-[0.8rem] font-medium text-[#666] mb-1.5">{k}</label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#666] font-bold text-sm">$</span>
+                  <input 
+                    type="text" 
+                    value={formatInputDisplay(v)} 
+                    onFocus={(e) => { e.target.value = v; }}
+                    onBlur={(e) => { e.target.value = formatInputDisplay(v); }}
+                    onChange={(e) => {
+                      const num = Number(e.target.value.replace(/[^\d.-]/g, ''));
+                      setData(prev => ({...prev, personal: {...prev.personal, assets: {...prev.personal.assets, [k]: num}}}));
+                    }}
+                    className="w-full bg-[#F9F9F9] focus:bg-white border border-black/5 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/50 rounded-xl pl-8 pr-4 py-2.5 font-bold text-[#1B1C36] outline-none transition-all text-right"
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
-        <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden">
-          <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-slate-800">Personal Liabilities</div>
-          <div className="p-4 space-y-3">
+
+        {/* Right Col: Liabilities */}
+        <div className="bg-white rounded-[2rem] border border-[var(--color-accent)]/30 shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] p-8">
+          <h3 className="text-[var(--color-accent)] text-[0.75rem] font-extrabold tracking-[1.5px] uppercase border-b border-[var(--color-accent)]/20 pb-3 mb-6">
+            Personal Liabilities
+          </h3>
+          <div className="space-y-4">
             {Object.entries(data.personal.liabilities).map(([k, v]) => (
-              <div key={k} className="flex justify-between items-center">
-                <span className="text-sm text-slate-600">{k}</span>
-                <span className="font-medium">{formatCurrency(v)}</span>
+              <div key={k}>
+                <label className="block text-[0.8rem] font-medium text-[#666] mb-1.5">{k}</label>
+                <div className="relative">
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#666] font-bold text-sm">$</span>
+                  <input 
+                    type="text" 
+                    value={formatInputDisplay(v)} 
+                    onFocus={(e) => { e.target.value = v; }}
+                    onBlur={(e) => { e.target.value = formatInputDisplay(v); }}
+                    onChange={(e) => {
+                      const num = Number(e.target.value.replace(/[^\d.-]/g, ''));
+                      setData(prev => ({...prev, personal: {...prev.personal, liabilities: {...prev.personal.liabilities, [k]: num}}}));
+                    }}
+                    className="w-full bg-[#F9F9F9] focus:bg-white border border-black/5 focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)]/50 rounded-xl pl-8 pr-4 py-2.5 font-bold text-[#1B1C36] outline-none transition-all text-right"
+                  />
+                </div>
               </div>
             ))}
           </div>
         </div>
+
       </div>
     </div>
   );
