@@ -195,6 +195,7 @@ const ProFinancialDashboard = () => {
   const handleDownloadPDF = () => {
     if (typeof window === 'undefined' || !window.html2pdf) return;
     setIsExporting(true);
+    console.log("Exporting PDF version 1.0.1...");
     const element = document.getElementById('pro-financial-report');
     const opt = {
       margin: 10,
