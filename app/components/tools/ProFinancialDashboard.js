@@ -267,21 +267,18 @@ const ProFinancialDashboard = () => {
     const dataColWidth = `${75 / colCount}%`;
 
     return (
-      <div className="mb-16">
-        <div className="overflow-x-auto custom-scrollbar pb-4">
-          <table className="w-full text-left text-sm border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+      <div className="mb-12">
+        <div className="overflow-x-auto custom-scrollbar pb-2">
+          <table className="w-full text-left border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
             <thead>
               <tr>
-                <th className="pb-6 align-bottom border-b border-[var(--color-accent)]/30" style={{ width: '25%' }}>
-                  {/* Title directly inline with Years */}
-                  <div className="inline-block bg-[var(--color-light)] border border-white/50 shadow-sm rounded-[20px] px-5 py-2">
-                    <h2 className="text-[var(--color-dark)] text-lg md:text-xl font-black m-0 leading-none tracking-tight">
-                      {title}
-                    </h2>
-                  </div>
+                <th className="pb-4 align-bottom border-b border-[var(--color-dark)]/10" style={{ width: '25%' }}>
+                  <h2 className="text-[var(--color-dark)] text-lg font-bold m-0 tracking-tight">
+                    {title}
+                  </h2>
                 </th>
                 {yearsList.map(y => (
-                  <th key={y} className="pb-6 align-bottom font-bold text-[var(--color-dark)] text-xl text-right border-b border-[var(--color-accent)]/30" style={{ width: dataColWidth }}>
+                  <th key={y} className="pb-4 align-bottom font-bold text-[var(--color-dark)] text-base text-right border-b border-[var(--color-dark)]/10" style={{ width: dataColWidth }}>
                     {y}
                   </th>
                 ))}
@@ -289,15 +286,15 @@ const ProFinancialDashboard = () => {
             </thead>
             <tbody>
                 {Object.entries(data[category]).map(([name, vals], rowIndex) => (
-                  <tr key={name} className="group transition-colors border-b border-black/5 last:border-0 hover:bg-black/[0.02]">
-                    <td className="py-4 font-semibold text-[var(--color-dark)] opacity-80 text-base truncate flex items-center gap-3" style={{ width: '100%' }}>
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] inline-block"></span>
+                  <tr key={name} className="group transition-colors hover:bg-black/[0.02]">
+                    <td className="py-2.5 font-medium text-[var(--color-dark)] opacity-80 text-[15px] truncate flex items-center gap-2" style={{ width: '100%' }}>
+                      <span className="w-1 h-1 rounded-full bg-[var(--color-dark)] opacity-60 inline-block"></span>
                       {name}
                     </td>
                     {vals.map((v, i) => (
-                      <td key={i} className="py-3 text-right" style={{ width: dataColWidth }}>
+                      <td key={i} className="py-2 text-right" style={{ width: dataColWidth }}>
                         <div className="relative flex items-center justify-end">
-                          <span className="absolute left-4 text-[var(--color-dark)] opacity-40 text-sm font-semibold pointer-events-none">$</span>
+                          <span className="absolute left-4 text-[var(--color-dark)] opacity-40 text-[13px] font-semibold pointer-events-none">$</span>
                           <input 
                             type="text" 
                             value={formatInputDisplay(v)} 
@@ -308,7 +305,7 @@ const ProFinancialDashboard = () => {
                               e.target.value = formatInputDisplay(v);
                             }}
                             onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                            className="w-full text-right bg-transparent hover:bg-white/50 focus:bg-white border border-transparent focus:border-[var(--color-accent)] focus:ring-4 focus:ring-[var(--color-accent)]/10 rounded-xl pl-8 pr-4 py-2.5 font-medium text-[var(--color-dark)] outline-none transition-all text-base"
+                            className="w-full text-right bg-transparent hover:bg-white/50 focus:bg-white border border-transparent focus:border-[var(--color-accent)] focus:ring-2 focus:ring-[var(--color-accent)]/20 rounded-lg pl-7 pr-3 py-1.5 font-medium text-[var(--color-dark)] outline-none transition-all text-[15px]"
                           />
                         </div>
                       </td>
