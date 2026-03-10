@@ -267,16 +267,23 @@ const ProFinancialDashboard = () => {
     const dataColWidth = `${75 / colCount}%`;
 
     return (
-      <div className="mb-10">
-        <div className="overflow-x-auto custom-scrollbar bg-white rounded-2xl border border-slate-200 shadow-sm">
+      <div className="mb-16">
+        {/* Real Estate Style Badge Title */}
+        <div className="inline-block bg-[var(--color-light)] border border-white/50 shadow-sm rounded-[30px] px-8 py-3 mb-8">
+          <h2 className="text-[var(--color-dark)] text-2xl md:text-3xl font-black m-0 leading-none tracking-tight">
+            {title}
+          </h2>
+        </div>
+
+        <div className="overflow-x-auto custom-scrollbar pb-4">
           <table className="w-full text-left text-sm border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
             <thead>
-              <tr className="bg-slate-50 border-b-2 border-slate-200">
-                <th className="p-5 font-black text-slate-900 text-2xl" style={{ width: '25%' }}>
-                  {title}
+              <tr>
+                <th className="pb-6 font-bold text-[var(--color-dark)] text-lg border-b border-[var(--color-accent)]/30" style={{ width: '25%' }}>
+                  {/* Empty space above the categories */}
                 </th>
                 {yearsList.map(y => (
-                  <th key={y} className="p-5 font-black text-slate-900 text-xl text-right" style={{ width: dataColWidth }}>
+                  <th key={y} className="pb-6 font-bold text-[var(--color-dark)] text-xl text-right border-b border-[var(--color-accent)]/30" style={{ width: dataColWidth }}>
                     {y}
                   </th>
                 ))}
@@ -284,27 +291,26 @@ const ProFinancialDashboard = () => {
             </thead>
             <tbody>
                 {Object.entries(data[category]).map(([name, vals], rowIndex) => (
-                  <tr key={name} className="group hover:bg-blue-50/50 transition-colors border-b border-slate-100 last:border-0">
-                    <td className="p-4 font-semibold text-slate-700 truncate" style={{ width: '25%' }}>
+                  <tr key={name} className="group transition-colors border-b border-black/5 last:border-0 hover:bg-black/[0.02]">
+                    <td className="py-4 font-semibold text-[var(--color-dark)] opacity-80 text-base truncate flex items-center gap-3" style={{ width: '100%' }}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] inline-block"></span>
                       {name}
                     </td>
                     {vals.map((v, i) => (
-                      <td key={i} className="p-3 text-right" style={{ width: dataColWidth }}>
+                      <td key={i} className="py-3 text-right" style={{ width: dataColWidth }}>
                         <div className="relative flex items-center justify-end">
-                          <span className="absolute left-3 text-slate-400 text-xs font-semibold">$</span>
+                          <span className="absolute left-4 text-[var(--color-dark)] opacity-40 text-sm font-semibold pointer-events-none">$</span>
                           <input 
                             type="text" 
                             value={formatInputDisplay(v)} 
                             onFocus={(e) => {
-                              // Temporarily show raw value when focusing to edit easily
                               e.target.value = v; 
                             }}
                             onBlur={(e) => {
-                              // Re-format when clicking away
                               e.target.value = formatInputDisplay(v);
                             }}
                             onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                            className="w-full text-right bg-transparent hover:bg-white focus:bg-white border border-transparent focus:border-blue-300 focus:ring-4 focus:ring-blue-100/50 rounded-lg pl-6 pr-3 py-2 font-medium text-slate-800 outline-none transition-all"
+                            className="w-full text-right bg-transparent hover:bg-white/50 focus:bg-white border border-transparent focus:border-[var(--color-accent)] focus:ring-4 focus:ring-[var(--color-accent)]/10 rounded-xl pl-8 pr-4 py-2.5 font-medium text-[var(--color-dark)] outline-none transition-all text-base"
                           />
                         </div>
                       </td>
@@ -320,10 +326,6 @@ const ProFinancialDashboard = () => {
 
   const renderIncomeStatement = () => (
     <div className="max-w-7xl mx-auto">
-      <div className="bg-blue-50/50 text-blue-800 p-5 rounded-2xl text-sm mb-8 border border-blue-100 flex items-start gap-3">
-        <Info className="text-blue-500 shrink-0 mt-0.5" size={18} />
-        <p><strong>Income Statement Setup:</strong> Enter your historical and projected revenue, costs, and operating expenses across the timeline. These figures will directly fuel the Dashboard's profit analysis.</p>
-      </div>
       {renderTableData('sales', 'Sales Activities', data.years, 'sales')}
       {renderTableData('cogs', 'Cost of Sales', data.years, 'cogs')}
       {renderTableData('salesExpenses', 'Sales Expenses', data.years, 'salesExpenses')}
@@ -333,9 +335,9 @@ const ProFinancialDashboard = () => {
 
   const renderBalanceSheet = () => (
     <div className="max-w-7xl mx-auto">
-      <div className="bg-purple-50/50 text-purple-800 p-5 rounded-2xl text-sm mb-8 border border-purple-100 flex items-start gap-3">
-        <Info className="text-purple-500 shrink-0 mt-0.5" size={18} />
-        <p><strong>Balance Sheet Input:</strong> Note that balance sheet data covers the projected years (2028, 2029, 2030). Ensure Total Assets always equal Total Liabilities + Equity to balance the sheet.</p>
+      <div className="bg-[var(--color-accent)]/10 text-[var(--color-dark)] p-5 rounded-2xl text-sm mb-12 border border-[var(--color-accent)]/20 flex items-start gap-3">
+        <Info className="text-[var(--color-accent)] shrink-0 mt-0.5" size={18} />
+        <p><strong>Balance Sheet Notes:</strong> Data covers the projected years (2028, 2029, 2030). Ensure Total Assets always equal Total Liabilities + Equity.</p>
       </div>
       {renderTableData('assets', 'Assets', ['2028', '2029', '2030'], 'assets')}
       {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'], 'liabilities')}
@@ -394,22 +396,11 @@ const ProFinancialDashboard = () => {
   );
 
   return (
-    <div className="w-full bg-slate-50 min-h-screen p-4 md:p-8 font-sans">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="w-full bg-[var(--color-light)] font-sans" style={{ color: 'var(--color-dark)' }}>
+      <div className="max-w-7xl mx-auto">
         
-        {/* Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            <h1 className="text-4xl font-black text-slate-900 flex items-center gap-3 tracking-tight">
-              <Building className="text-blue-600" size={36} />
-              Enterprise Financial
-            </h1>
-            <p className="text-slate-500 mt-2 font-medium">{data.company.name} | Professional Grade Financial Modeler</p>
-          </div>
-        </div>
-
         {/* Tabs */}
-        <div className="flex flex-wrap gap-2 p-2 bg-white rounded-2xl shadow-sm border border-slate-100">
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'income', label: 'Income Statement', icon: FileText },
@@ -419,7 +410,11 @@ const ProFinancialDashboard = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-sm transition-all ${activeTab === tab.id ? 'bg-blue-600 text-white shadow-md' : 'text-slate-500 hover:bg-slate-100'}`}
+              className={`flex items-center gap-2 px-8 py-3 rounded-full font-bold text-[15px] transition-all duration-300 ${
+                activeTab === tab.id 
+                  ? 'bg-[var(--color-accent)] text-[var(--color-dark)] shadow-md' 
+                  : 'bg-white/50 text-[var(--color-dark)]/60 hover:bg-white border border-black/5'
+              }`}
             >
               <tab.icon size={18} /> {tab.label}
             </button>
@@ -427,7 +422,7 @@ const ProFinancialDashboard = () => {
         </div>
 
         {/* Content Area */}
-        <div id="pro-financial-report" className="animate-in fade-in duration-500">
+        <div id="pro-financial-report" className="animate-in fade-in duration-700 bg-[var(--color-light)]">
           {activeTab === 'dashboard' && renderDashboard()}
           {activeTab === 'income' && renderIncomeStatement()}
           {activeTab === 'balance' && renderBalanceSheet()}
