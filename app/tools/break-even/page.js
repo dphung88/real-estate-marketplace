@@ -36,14 +36,14 @@ export default function BreakEvenPage() {
       </section>
 
       {/* Main Content */}
-      <section className="section">
+      <section className="section" style={{ fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
         <div className="container">
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div className="mb-8 text-center">
+            <div className="text-center">
               <span className="badge badge-used" style={{ padding: '8px 20px', fontSize: '0.9rem', marginBottom: '15px', display: 'inline-block' }}>Business Intelligence</span>
               
               {/* Tab Navigation */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginTop: '24px', marginBottom: '48px' }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginTop: '24px', marginBottom: '40px' }}>
                 <button 
                   onClick={() => setActiveTab('pro')}
                   style={{ 
@@ -79,17 +79,17 @@ export default function BreakEvenPage() {
               </div>
 
               {activeTab === 'breakeven' ? (
-                <div className="mb-14">
-                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4">Break-Even Analysis</h2>
-                  <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
+                <div style={{ marginBottom: '20px' }}>
+                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4 text-center">Break-Even Analysis</h2>
+                  <p className="text-center" style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
                     Analyze your core financial metrics, monitor operational efficiency, 
                     and determine your exact break-even point.
                   </p>
                 </div>
               ) : (
-                <div className="mb-14">
-                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4">Comprehensive Financial</h2>
-                  <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
+                <div style={{ marginBottom: '20px' }}>
+                  <h2 className="text-[var(--color-dark)] text-4xl md:text-5xl font-black tracking-tight mb-4 text-center">Comprehensive Financial</h2>
+                  <p className="text-center" style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
                     A professional-grade financial modeling tool complete with Income Statement, Balance Sheet, Cash Flow and Personal Net Worth tracking.
                   </p>
                 </div>
