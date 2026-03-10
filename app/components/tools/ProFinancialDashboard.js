@@ -378,7 +378,7 @@ const ProFinancialDashboard = () => {
                 <td className="px-6 py-5 text-left border-l border-black/5 bg-[#F9F9F9]/50">
                   <div className="flex flex-col items-start">
                     <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Total Assets</span>
-                    <span className="text-[1.1rem] font-bold text-[#1B1C36]">{formatCurrency(calc.personalAssets)}</span>
+                    <span className="text-[1.1rem] font-bold text-[#1B1C36]">&nbsp;{formatCurrency(calc.personalAssets)}</span>
                   </div>
                 </td>
               </tr>
@@ -415,7 +415,7 @@ const ProFinancialDashboard = () => {
                 <td className="px-6 py-5 text-left border-l border-black/5 bg-[#F9F9F9]/50 align-top">
                   <div className="flex flex-col items-start">
                     <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Total Liabilities</span>
-                    <span className="text-[1.1rem] font-bold text-[#1B1C36]">{formatCurrency(calc.personalLiab)}</span>
+                    <span className="text-[1.1rem] font-bold text-[#1B1C36]">&nbsp;{formatCurrency(calc.personalLiab)}</span>
                   </div>
                 </td>
               </tr>
@@ -455,7 +455,7 @@ const ProFinancialDashboard = () => {
                 <td className="px-6 py-5 text-left border-l border-black/5 align-bottom">
                   <div className="pt-4 border-t border-[var(--color-accent)]/30 mt-auto flex flex-col items-start">
                     <span className="text-[1.1rem] text-[#1B1C36] font-medium mb-1 uppercase">NET WORTH</span>
-                    <span className="text-[1.25rem] font-bold text-[#1B1C36]">{formatCurrency(calc.netWorth)}</span>
+                    <span className="text-[1.25rem] font-bold text-[#1B1C36]">&nbsp;{formatCurrency(calc.netWorth)}</span>
                   </div>
                 </td>
               </tr>
