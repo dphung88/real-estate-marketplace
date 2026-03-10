@@ -1,12 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import AxiomBreakEven from '../../components/tools/AxiomBreakEven';
-import { Calculator } from 'lucide-react';
+import ProFinancialDashboard from '../../components/tools/ProFinancialDashboard';
+import { Calculator, FileText, BarChart2 } from 'lucide-react';
 
 export default function BreakEvenPage() {
+  const [activeTab, setActiveTab] = useState('pro');
+
   return (
     <main className="min-h-screen" style={{ background: 'var(--color-light)' }}>
       <Navbar />
@@ -36,16 +39,52 @@ export default function BreakEvenPage() {
       <section className="section">
         <div className="container">
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div className="mb-10 text-center">
-              <span className="badge badge-used" style={{ padding: '8px 20px', fontSize: '0.9rem' }}>Business Intelligence</span>
-              <h2 className="section-title" style={{ marginTop: '15px' }}>Profitability & Performance</h2>
-              <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto' }}>
-                Analyze your core financial metrics, monitor operational efficiency, 
-                and determine your exact break-even point with our integrated management dashboard.
-              </p>
+            <div className="mb-8 text-center">
+              <span className="badge badge-used" style={{ padding: '8px 20px', fontSize: '0.9rem', marginBottom: '15px', display: 'inline-block' }}>Business Intelligence</span>
+              
+              {/* Tab Navigation */}
+              <div className="flex justify-center gap-4 mt-6 mb-10">
+                <button 
+                  onClick={() => setActiveTab('pro')}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all ${
+                    activeTab === 'pro' 
+                      ? 'bg-[var(--color-accent)] text-[var(--color-dark)] shadow-lg' 
+                      : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-200'
+                  }`}
+                >
+                  <FileText size={18} /> Pro Financial Appendix
+                </button>
+                <button 
+                  onClick={() => setActiveTab('breakeven')}
+                  className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all ${
+                    activeTab === 'breakeven' 
+                      ? 'bg-[var(--color-accent)] text-[var(--color-dark)] shadow-lg' 
+                      : 'bg-white text-gray-500 hover:bg-gray-50 border border-gray-200'
+                  }`}
+                >
+                  <BarChart2 size={18} /> Break-Even & Performance
+                </button>
+              </div>
+
+              {activeTab === 'breakeven' ? (
+                <div>
+                  <h2 className="section-title">Break-Even Analysis</h2>
+                  <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', marginBottom: '40px' }}>
+                    Analyze your core financial metrics, monitor operational efficiency, 
+                    and determine your exact break-even point.
+                  </p>
+                </div>
+              ) : (
+                <div>
+                  <h2 className="section-title">Comprehensive Financial Appendix</h2>
+                  <p style={{ color: 'var(--color-dark)', opacity: '0.7', maxWidth: '700px', margin: '0 auto', marginBottom: '40px' }}>
+                    A professional-grade financial modeling tool complete with Income Statement, Balance Sheet, Cash Flow and Personal Net Worth tracking.
+                  </p>
+                </div>
+              )}
             </div>
 
-            <AxiomBreakEven />
+            {activeTab === 'breakeven' ? <AxiomBreakEven /> : <ProFinancialDashboard />}
 
             <div className="why-card mt-12" style={{ textAlign: 'left', padding: '40px' }}>
               <h4 style={{ color: 'var(--color-accent)', marginBottom: '20px', fontSize: '1.25rem' }}>Strategic Definitions:</h4>
