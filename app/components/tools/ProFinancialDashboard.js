@@ -210,10 +210,10 @@ const ProFinancialDashboard = () => {
     <div className="space-y-8">
       {/* KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <KpiCard title="Projected Revenue (2017)" value={formatCurrency(calc.pnl[5].sales)} trend="+10%" icon={<TrendingUp color={COLORS.blue} />} />
-        <KpiCard title="Projected Net Income" value={formatCurrency(calc.pnl[5].netProfit)} trend="Stable" icon={<Wallet color={COLORS.green} />} />
-        <KpiCard title="Current Ratio (2016)" value={calc.bs[2].currentRatio.toFixed(2)} trend="Healthy" icon={<Activity color={COLORS.purple} />} />
-        <KpiCard title="Personal Net Worth" value={formatCurrency(calc.netWorth)} trend="Strong" icon={<Users color={COLORS.accent} />} />
+        <KpiCard title="Projected Revenue (2017)" value={formatCurrency(calc.pnl[5].sales)} trend="+10%" icon={<BarChart3 />} />
+        <KpiCard title="Projected Net Income" value={formatCurrency(calc.pnl[5].netProfit)} trend="Stable" icon={<Wallet />} />
+        <KpiCard title="Current Ratio (2016)" value={calc.bs[2].currentRatio.toFixed(2)} trend="Healthy" icon={<Activity />} />
+        <KpiCard title="Personal Net Worth" value={formatCurrency(calc.netWorth)} trend="Strong" icon={<Users />} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -542,13 +542,23 @@ const ProFinancialDashboard = () => {
 };
 
 const KpiCard = ({ title, value, trend, icon }) => (
-  <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-4">
-    <div className="p-4 bg-slate-50 rounded-2xl">{icon}</div>
-    <div>
-      <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">{title}</p>
-      <div className="flex items-end gap-2">
-        <p className="text-2xl font-black text-slate-800 leading-none">{value}</p>
-        {trend && <span className="text-xs font-bold text-green-500 mb-1">{trend}</span>}
+  <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-5 transition-all hover:shadow-md hover:border-[#B5945B]/30">
+    <div className="flex-shrink-0 w-14 h-14 bg-[#1B1C36]/5 rounded-2xl flex items-center justify-center text-[#B5945B]">
+      {React.cloneElement(icon, { size: 28, strokeWidth: 2.5 })}
+    </div>
+    <div className="flex-grow">
+      <p className="text-[0.7rem] font-extrabold text-[#64748b] uppercase tracking-widest mb-1.5">{title}</p>
+      <div className="flex items-baseline gap-2">
+        <p className="text-[1.6rem] font-black text-[#1B1C36] leading-none m-0">{value}</p>
+        {trend && (
+          <span className={`text-[0.75rem] font-bold px-2 py-0.5 rounded-full ${
+            trend.includes('+') || trend === 'Strong' || trend === 'Healthy' 
+              ? 'bg-emerald-50 text-emerald-600' 
+              : 'bg-blue-50 text-blue-600'
+          }`}>
+            {trend}
+          </span>
+        )}
       </div>
     </div>
   </div>
