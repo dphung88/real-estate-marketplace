@@ -268,22 +268,20 @@ const ProFinancialDashboard = () => {
 
     return (
       <div className="mb-16">
-        {/* Real Estate Style Badge Title */}
-        <div className="inline-block bg-[var(--color-light)] border border-white/50 shadow-sm rounded-[30px] px-8 py-3 mb-8">
-          <h2 className="text-[var(--color-dark)] text-2xl md:text-3xl font-black m-0 leading-none tracking-tight">
-            {title}
-          </h2>
-        </div>
-
         <div className="overflow-x-auto custom-scrollbar pb-4">
           <table className="w-full text-left text-sm border-collapse" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
             <thead>
               <tr>
-                <th className="pb-6 font-bold text-[var(--color-dark)] text-lg border-b border-[var(--color-accent)]/30" style={{ width: '25%' }}>
-                  {/* Empty space above the categories */}
+                <th className="pb-6 align-bottom border-b border-[var(--color-accent)]/30" style={{ width: '25%' }}>
+                  {/* Title directly inline with Years */}
+                  <div className="inline-block bg-[var(--color-light)] border border-white/50 shadow-sm rounded-[20px] px-5 py-2">
+                    <h2 className="text-[var(--color-dark)] text-lg md:text-xl font-black m-0 leading-none tracking-tight">
+                      {title}
+                    </h2>
+                  </div>
                 </th>
                 {yearsList.map(y => (
-                  <th key={y} className="pb-6 font-bold text-[var(--color-dark)] text-xl text-right border-b border-[var(--color-accent)]/30" style={{ width: dataColWidth }}>
+                  <th key={y} className="pb-6 align-bottom font-bold text-[var(--color-dark)] text-xl text-right border-b border-[var(--color-accent)]/30" style={{ width: dataColWidth }}>
                     {y}
                   </th>
                 ))}
