@@ -117,13 +117,13 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
 
       {/* Zillow-style Gallery (Desktop) & Mobile Swipe-like Gallery */}
       <div className="z-gallery-wrapper">
-        <div className="z-gallery">
+        <div className="z-gallery" style={{ display: 'grid' }}>
           <div className="z-gallery-item" onClick={() => { 
             setSelectedIndex(0); 
             setIsModalOpen(true); 
           }}>
             <Image 
-              src={safeImages[0]} 
+              src={safeImages[selectedIndex] || safeImages[0]} 
               alt={listing.title} 
               fill 
               style={{ objectFit: 'cover' }}
@@ -160,8 +160,8 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
           </div>
         </div>
 
-        {/* Mobile Thumbnails - Interaction only changes main image, no modal */}
-        <div className="mobile-only-thumbs" style={{ display: 'none', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
+        {/* Mobile Thumbnails - Interaction changes main image */}
+        <div className="mobile-only-thumbs" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', marginTop: '10px', marginBottom: '20px' }}>
           {[0, 1, 2, 3].map((idx) => (
             <div 
               key={idx} 
@@ -171,7 +171,7 @@ export default function RealEstateDetailContent({ listing, images = [] }) {
                 borderRadius: '8px', 
                 overflow: 'hidden', 
                 cursor: 'pointer', 
-                border: selectedIndex === idx ? '2px solid var(--color-accent)' : 'none' 
+                border: selectedIndex === idx ? '2px solid var(--color-accent)' : '2px solid transparent' 
               }}
               onClick={() => {
                 setSelectedIndex(idx % safeImages.length);
