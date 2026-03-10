@@ -17,10 +17,7 @@ import {
   TrendingUp, 
   DollarSign, 
   Users, 
-  Target, 
-  ArrowUpRight, 
   Info,
-  ShoppingBag,
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
@@ -41,7 +38,7 @@ const AxiomBreakEven = () => {
 
   const [maxUnits, setMaxUnits] = useState(50);
   const [chartData, setChartData] = useState([]);
-  const [isInputExpanded, setIsInputExpanded] = useState(false);
+  const [isInputExpanded, setIsInputExpanded] = useState(true); // Default expanded for easier editing
 
   // --- Calculations ---
   const contributionMargin = sellingPrice - variableCost;
@@ -66,49 +63,53 @@ const AxiomBreakEven = () => {
   return (
     <div className="axiom-finance-hub" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
       
-      {/* 1. COLLAPSIBLE INPUT PANEL */}
+      {/* 1. COLLAPSIBLE INPUT PANEL WITH 3-COLUMN LAYOUT */}
       <div className="contact-form-box mb-8" style={{ padding: '0', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
         <button 
           onClick={() => setIsInputExpanded(!isInputExpanded)}
-          style={{ width: '100%', padding: '20px 30px', background: '#1B1C36', border: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+          style={{ width: '100%', padding: '18px 25px', background: '#1B1C36', border: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Calculator size={20} color="#B5945B" />
-            <span style={{ color: '#E8E4D8', fontWeight: '700', fontSize: '1.1rem' }}>Configuration Panel</span>
-            {!isInputExpanded && <span style={{ color: '#B5945B', fontSize: '0.75rem', marginLeft: '10px', opacity: '0.8' }}>(Click to edit financial parameters)</span>}
+            <Calculator size={18} color="#B5945B" />
+            <span style={{ color: '#E8E4D8', fontWeight: '700', fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Configuration Panel</span>
           </div>
-          {isInputExpanded ? <ChevronUp color="#B5945B" /> : <ChevronDown color="#B5945B" />}
+          {isInputExpanded ? <ChevronUp color="#B5945B" size={20} /> : <ChevronDown color="#B5945B" size={20} />}
         </button>
 
         {isInputExpanded && (
-          <div style={{ padding: '30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div style={{ padding: '25px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {/* Column 1: Core Finance */}
               <div className="space-y-4">
-                <p style={{ fontSize: '0.7rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px' }}>Core Finance</p>
-                <MiniInput label="Fixed Costs ($)" value={fixedCosts} set={setFixedCosts} />
-                <MiniInput label="Selling Price ($)" value={sellingPrice} set={setSellingPrice} />
-                <MiniInput label="Variable Cost ($)" value={variableCost} set={setVariableCost} />
+                <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)', paddingBottom: '8px', marginBottom: '15px' }}>Core Finance</p>
+                <InlineInput label="Fixed Costs ($)" value={fixedCosts} set={setFixedCosts} />
+                <InlineInput label="Selling Price ($)" value={sellingPrice} set={setSellingPrice} />
+                <InlineInput label="Variable Cost ($)" value={variableCost} set={setVariableCost} />
               </div>
+
+              {/* Column 2: Operations */}
               <div className="space-y-4">
-                <p style={{ fontSize: '0.7rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px' }}>Operations</p>
-                <MiniInput label="Total Revenue ($)" value={totalRevenue} set={setTotalRevenue} />
-                <MiniInput label="Labor Cost ($)" value={laborCost} set={setLaborCost} />
-                <MiniInput label="Area (SQM)" value={area} set={setArea} />
+                <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)', paddingBottom: '8px', marginBottom: '15px' }}>Operations</p>
+                <InlineInput label="Total Revenue ($)" value={totalRevenue} set={setTotalRevenue} />
+                <InlineInput label="Labor Cost ($)" value={laborCost} set={setLaborCost} />
+                <InlineInput label="Area (SQM)" value={area} set={setArea} />
               </div>
+
+              {/* Column 3: Marketing & Chart */}
               <div className="space-y-4">
-                <p style={{ fontSize: '0.7rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px' }}>Marketing</p>
-                <MiniInput label="Marketing Budget ($)" value={marketingCost} set={setMarketingCost} />
-                <MiniInput label="New Customers" value={newCustomers} set={setNewCustomers} />
-                <MiniInput label="Max Chart Units" value={maxUnits} set={setMaxUnits} />
+                <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', borderBottom: '1px solid rgba(181, 148, 91, 0.2)', paddingBottom: '8px', marginBottom: '15px' }}>Marketing & View</p>
+                <InlineInput label="Marketing Budget ($)" value={marketingCost} set={setMarketingCost} />
+                <InlineInput label="New Customers" value={newCustomers} set={setNewCustomers} />
+                <InlineInput label="Max Chart Units" value={maxUnits} set={setMaxUnits} />
               </div>
             </div>
           </div>
         )}
       </div>
 
-      {/* 2. MAIN DASHBOARD (FIXED HEIGHT) */}
+      {/* 2. MAIN DASHBOARD */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left: Key Metrics (4 cols) */}
+        {/* Left Stats */}
         <div className="lg:col-span-4 space-y-4">
           <CompactMetric label="Break-Even Point" value={`${breakEvenUnits.toLocaleString()} units`} icon={<TrendingUp size={20} color="#B5945B" />} />
           <CompactMetric label="Gross Margin" value={`${grossProfitMargin.toFixed(1)}%`} icon={<DollarSign size={20} color="#B5945B" />} />
@@ -125,7 +126,7 @@ const AxiomBreakEven = () => {
           </div>
         </div>
 
-        {/* Right: Chart & Efficiency (8 cols) */}
+        {/* Right Chart */}
         <div className="lg:col-span-8 space-y-6">
           <div className="contact-form-box" style={{ padding: '25px' }}>
             <div style={{ height: '350px', width: '100%' }}>
@@ -157,14 +158,35 @@ const AxiomBreakEven = () => {
   );
 };
 
-const MiniInput = ({ label, value, set }) => (
-  <div className="form-group" style={{ marginBottom: '0' }}>
-    <label style={{ fontSize: '0.75rem', marginBottom: '4px' }}>{label}</label>
+// IMPROVED INLINE INPUT FOR 3-COLUMN LAYOUT
+const InlineInput = ({ label, value, set }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+    <label style={{ fontSize: '0.75rem', fontWeight: '600', color: '#666' }}>{label}</label>
     <input 
       type="number" 
       value={value} 
       onChange={(e) => set(Number(e.target.value))} 
-      style={{ padding: '8px 12px', fontSize: '0.9rem' }}
+      style={{ 
+        width: '100%',
+        padding: '10px 14px', 
+        fontSize: '0.9rem', 
+        fontWeight: '700',
+        background: '#F9F9F9',
+        border: '1.5px solid rgba(27, 28, 54, 0.1)',
+        borderRadius: '10px',
+        color: '#1B1C36',
+        transition: 'all 0.2s'
+      }}
+      onFocus={(e) => {
+        e.target.style.borderColor = '#B5945B';
+        e.target.style.background = '#FFF';
+        e.target.style.boxShadow = '0 0 0 3px rgba(181, 148, 91, 0.1)';
+      }}
+      onBlur={(e) => {
+        e.target.style.borderColor = 'rgba(27, 28, 54, 0.1)';
+        e.target.style.background = '#F9F9F9';
+        e.target.style.boxShadow = 'none';
+      }}
     />
   </div>
 );
