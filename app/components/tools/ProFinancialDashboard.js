@@ -284,7 +284,7 @@ const ProFinancialDashboard = () => {
             <tbody>
               {Object.entries(data[category]).map(([name, vals], rowIndex) => (
                 <tr key={name}>
-                  <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '700', color: '#666666', width: '25%' }}>
+                  <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '600', color: '#666666', width: '25%' }}>
                     {name}
                   </td>
                   {vals.map((v, i) => (
@@ -295,7 +295,7 @@ const ProFinancialDashboard = () => {
                         onFocus={(e) => { e.target.value = v; }}
                         onBlur={(e) => { e.target.value = formatInputDisplay(v); }}
                         onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                        style={{ width: '100%', padding: '8px 12px', fontSize: '0.85rem', fontWeight: '700', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
+                        style={{ width: '100%', padding: '8px 12px', fontSize: '0.9rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
                       />
                     </td>
                   ))}
