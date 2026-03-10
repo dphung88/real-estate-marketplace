@@ -14,16 +14,16 @@ import {
 
 const INITIAL_DATA = {
   company: {
-    name: "Doors To The World, Inc.",
-    tradingName: "Doors To The World, Inc.",
-    address: "2020 Sommerhill Drive Suite 203 New Barton, ON N2O 1T1",
-    phone: "(514) 555-2020",
-    email: "info@doorstotheworld.com",
-    form: "Corporation",
-    naicsCode: "321911",
-    exportPercent: 10
+    name: "Axiom Enterprises LLC",
+    tradingName: "Axiom Advanced Manufacturing",
+    address: "One World Trade Center, Suite 8500, New York, NY 10007",
+    phone: "+1 (800) 555-0199",
+    email: "finance@axiom-enterprises.com",
+    form: "Limited Liability Company (LLC)",
+    naicsCode: "332999",
+    exportPercent: 25
   },
-  years: ['2012', '2013', '2014', '2015', '2016', '2017'],
+  years: ['2026', '2027', '2028', '2029', '2030', '2031'],
   sales: {
     'French doors': [571900, 625300, 789000, 863000, 932000, 1007000],
     'Panel doors': [275400, 225000, 218900, 180000, 194000, 210000],
@@ -142,8 +142,9 @@ const ProFinancialDashboard = () => {
       return { year: years[i], sales, cogs, gp, totalExp, netProfit, margin };
     });
 
-    // Balance Sheet Calcs (Last 3 years: 2014, 2015, 2016 mapped to indices 0, 1, 2)
-    const bsYears = ['2014', '2015', '2016'];
+    // Balance Sheet Calcs (Last 3 years: 2028, 2029, 2030 mapped to indices 2, 3, 4 of the main data arrays for visual sync)
+    // Wait, the BS initial data arrays only have 3 elements. Let's map them properly to 2028-2030.
+    const bsYears = ['2028', '2029', '2030'];
     const bs = bsYears.map((_, i) => {
       const currentAssets = data.assets['Cash'][i] + data.assets['Accounts Receivable'][i] + data.assets['Inventory'][i] + data.assets['Prepaid Expenses'][i] + data.assets['Other Current Assets'][i];
       const fixedAssets = data.assets['Land'][i] + data.assets['Building'][i] + data.assets['Furniture & Fixtures'][i] + data.assets['Equipment & Machinery'][i] + data.assets['Other Fixed Assets'][i] + data.assets['Research & Dev. Asset'][i];
@@ -250,68 +251,54 @@ const ProFinancialDashboard = () => {
     </div>
   );
 
-  const [openSections, setOpenSections] = useState({
-    sales: true, cogs: false, salesExpenses: false, adminExpenses: false,
-    assets: true, liabilities: false
-  });
-
-  const toggleSection = (sec) => setOpenSections(prev => ({ ...prev, [sec]: !prev[sec] }));
-
   const renderTableData = (category, title, yearsList, sectionKey) => {
-    const isOpen = openSections[sectionKey];
     return (
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm mb-6 transition-all duration-300 overflow-hidden">
-        <button 
-          onClick={() => toggleSection(sectionKey)}
-          className="w-full flex items-center justify-between p-5 bg-slate-50 hover:bg-slate-100 transition-colors border-b border-slate-200"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
-              <span className="text-blue-600 font-bold text-sm">{title.split('.')[0]}</span>
-            </div>
-            <span className="font-bold text-slate-800 text-sm uppercase tracking-wider">{title.split('.')[1] || title}</span>
+      <div className="mb-10">
+        <div className="flex items-center gap-3 mb-4 pb-2 border-b-2 border-slate-100">
+          <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+            <span className="text-blue-600 font-bold text-sm">{title.split('.')[0]}</span>
           </div>
-          <div className="text-slate-400">
-            {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
-          </div>
-        </button>
+          <h3 className="font-bold text-slate-800 text-lg tracking-wide">{title.split('.')[1] || title}</h3>
+        </div>
 
-        {isOpen && (
-          <div className="p-6">
-            <div className="overflow-x-auto custom-scrollbar">
-              <table className="w-full text-left text-sm border-collapse">
-                <thead>
-                  <tr>
-                    <th className="p-3 font-semibold text-slate-500 w-1/4 sticky left-0 bg-white z-10 border-b-2 border-slate-100">Category</th>
-                    {yearsList.map(y => <th key={y} className="p-3 font-semibold text-slate-500 text-right border-b-2 border-slate-100">{y}</th>)}
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.entries(data[category]).map(([name, vals], rowIndex) => (
-                    <tr key={name} className="group hover:bg-blue-50/30 transition-colors">
-                      <td className="p-3 font-medium text-slate-700 border-b border-slate-50 sticky left-0 bg-white group-hover:bg-blue-50/10">
-                        {name}
-                      </td>
-                      {vals.map((v, i) => (
-                        <td key={i} className="p-2 border-b border-slate-50">
-                          <div className="relative flex items-center">
-                            <span className="absolute left-3 text-slate-400 text-xs font-medium">$</span>
-                            <input 
-                              type="number" 
-                              value={v} 
-                              onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                              className="w-full text-right bg-slate-50 hover:bg-slate-100 focus:bg-white border border-transparent focus:border-blue-400 focus:ring-4 focus:ring-blue-100 rounded-xl pl-6 pr-3 py-2 font-medium text-slate-800 outline-none transition-all shadow-inner"
-                            />
-                          </div>
-                        </td>
-                      ))}
-                    </tr>
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="overflow-x-auto custom-scrollbar">
+            <table className="w-full text-left text-sm border-collapse" style={{ tableLayout: 'fixed', minWidth: '800px' }}>
+              <thead>
+                <tr className="bg-slate-50">
+                  <th className="p-4 font-bold text-slate-600 w-1/4 min-w-[200px] border-b border-slate-200 uppercase tracking-wider text-xs">Category</th>
+                  {yearsList.map(y => (
+                    <th key={y} className="p-4 font-bold text-slate-600 text-right border-b border-slate-200 uppercase tracking-wider text-xs">
+                      {y}
+                    </th>
                   ))}
-                </tbody>
-              </table>
-            </div>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.entries(data[category]).map(([name, vals], rowIndex) => (
+                  <tr key={name} className="group hover:bg-blue-50/50 transition-colors border-b border-slate-100 last:border-0">
+                    <td className="p-4 font-semibold text-slate-700 w-1/4">
+                      {name}
+                    </td>
+                    {vals.map((v, i) => (
+                      <td key={i} className="p-3 text-right">
+                        <div className="relative flex items-center justify-end">
+                          <span className="absolute left-3 text-slate-400 text-xs font-semibold">$</span>
+                          <input 
+                            type="number" 
+                            value={v} 
+                            onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
+                            className="w-full text-right bg-transparent hover:bg-white focus:bg-white border border-transparent focus:border-blue-300 focus:ring-4 focus:ring-blue-100/50 rounded-lg pl-6 pr-3 py-2 font-medium text-slate-800 outline-none transition-all no-spinners"
+                          />
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        )}
+        </div>
       </div>
     );
   };
@@ -333,10 +320,10 @@ const ProFinancialDashboard = () => {
     <div className="max-w-6xl mx-auto">
       <div className="bg-purple-50/50 text-purple-800 p-5 rounded-2xl text-sm mb-8 border border-purple-100 flex items-start gap-3">
         <Info className="text-purple-500 shrink-0 mt-0.5" size={18} />
-        <p><strong>Balance Sheet Input:</strong> Note that balance sheet data covers the last 3 historical/projected years (2014, 2015, 2016). Ensure Assets always equal Liabilities + Equity.</p>
+        <p><strong>Balance Sheet Input:</strong> Note that balance sheet data covers the projected years (2028, 2029, 2030). Ensure Total Assets always equal Total Liabilities + Equity to balance the sheet.</p>
       </div>
-      {renderTableData('assets', '5. Assets', ['2014', '2015', '2016'], 'assets')}
-      {renderTableData('liabilities', '6. Liabilities & Equity', ['2014', '2015', '2016'], 'liabilities')}
+      {renderTableData('assets', '5. Assets', ['2028', '2029', '2030'], 'assets')}
+      {renderTableData('liabilities', '6. Liabilities & Equity', ['2028', '2029', '2030'], 'liabilities')}
     </div>
   );
 
@@ -398,11 +385,22 @@ const ProFinancialDashboard = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-black text-slate-900 flex items-center gap-3">
-              <Building className="text-blue-600" size={32} />
-              Financial Appendix (Pro)
+            <h1 className="text-4xl font-black text-slate-900 flex items-center gap-3 tracking-tight">
+              <Building className="text-blue-600" size={36} />
+              Enterprise Financial Appendix
             </h1>
-            <p className="text-slate-500 mt-1">{data.company.name} | Professional Grade Financial Modeler</p>
+            <p className="text-slate-500 mt-2 font-medium">{data.company.name} | Professional Grade Financial Modeler</p>
+            <style jsx global>{`
+              /* Hide spinners for number inputs globally */
+              .no-spinners::-webkit-outer-spin-button,
+              .no-spinners::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+              }
+              .no-spinners {
+                -moz-appearance: textfield;
+              }
+            `}</style>
           </div>
         </div>
 
