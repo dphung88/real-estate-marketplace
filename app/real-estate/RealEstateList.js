@@ -7,18 +7,24 @@ const LISTINGS_PER_PAGE = 6;
 
 export default function RealEstateList({ listings = [] }) {
   const [selectedType, setSelectedType] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   useEffect(() => {
     const params = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
     const type = params.get('type');
+    const category = params.get('category');
     if (type) {
       setSelectedType(type);
+    }
+    if (category) {
+      setSelectedCategory(category);
     }
   }, []);
 
   const filteredListings = listings.filter(item => {
-    if (selectedType === 'all') return true;
-    return item.type === selectedType;
+    const matchType = selectedType === 'all' || item.type === selectedType;
+    const matchCategory = selectedCategory === 'all' || item.category === selectedCategory;
+    return matchType && matchCategory;
   });
 
   const [visibleCount, setVisibleCount] = useState(LISTINGS_PER_PAGE);

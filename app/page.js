@@ -48,21 +48,21 @@ export default function HomePage() {
               Real Estate
             </h3>
             <div className="cat-grid">
-              <Link href="/real-estate?type=sale" className="cat-card">
+              <Link href="/real-estate?category=house" className="cat-card">
                 <i className="fa-solid fa-house-circle-check"></i>
-                Homes for Sale
+                Homes
+              </Link>
+              <Link href="/real-estate?category=apartment" className="cat-card">
+                <i className="fa-solid fa-building"></i>
+                Apartments
+              </Link>
+              <Link href="/real-estate?category=cabin" className="cat-card">
+                <i className="fa-solid fa-cabin"></i>
+                Cabins
               </Link>
               <Link href="/real-estate?type=rent" className="cat-card">
                 <i className="fa-solid fa-house-user"></i>
-                Rentals
-              </Link>
-              <Link href="/real-estate?type=land" className="cat-card">
-                <i className="fa-solid fa-mountain-sun"></i>
-                Land & Lots
-              </Link>
-              <Link href="/real-estate?type=commercial" className="cat-card">
-                <i className="fa-solid fa-building-shield"></i>
-                Commercial
+                All Rentals
               </Link>
             </div>
           </div>

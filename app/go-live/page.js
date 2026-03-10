@@ -86,7 +86,7 @@ export default function GoLivePage() {
                 }}>
                   <div className="icon-wrapper" style={{ 
                     fontSize: '2.5rem', 
-                    color: 'var(--primary-color)', 
+                    color: 'var(--color-accent)', 
                     marginBottom: '1.5rem' 
                   }}>
                     <i className={`fa-solid ${step.icon}`}></i>
@@ -115,7 +115,7 @@ export default function GoLivePage() {
                   backgroundColor: '#fff', 
                   borderRadius: '16px',
                   boxShadow: pkg.popular ? '0 10px 30px rgba(0,0,0,0.15)' : '0 4px 15px rgba(0,0,0,0.05)',
-                  border: pkg.popular ? '2px solid var(--primary-color)' : '1px solid #eee',
+                  border: pkg.popular ? '2px solid var(--color-accent)' : '1px solid #eee',
                   position: 'relative',
                   display: 'flex',
                   flexDirection: 'column'
@@ -126,8 +126,8 @@ export default function GoLivePage() {
                       top: '-12px',
                       left: '50%',
                       transform: 'translateX(-50%)',
-                      backgroundColor: 'var(--primary-color)',
-                      color: 'white',
+                      backgroundColor: 'var(--color-accent)',
+                      color: 'var(--color-dark)',
                       padding: '4px 15px',
                       borderRadius: '20px',
                       fontSize: '0.8rem',
@@ -140,7 +140,7 @@ export default function GoLivePage() {
                     fontSize: '2.5rem', 
                     fontWeight: 'bold', 
                     marginBottom: '1.5rem',
-                    color: 'var(--primary-color)'
+                    color: 'var(--color-accent)'
                   }}>{pkg.price}</div>
                   <ul style={{ 
                     listStyle: 'none', 
@@ -156,7 +156,7 @@ export default function GoLivePage() {
                     ))}
                   </ul>
                   <Link 
-                    href={pkg.name === 'Professional' ? '/contact' : `/api/create-checkout-session?package=${pkg.name.toLowerCase()}`}
+                    href="/contact"
                     className={`btn ${pkg.popular ? 'btn-primary' : 'btn-secondary'}`}
                     style={{ textAlign: 'center' }}
                   >
@@ -165,6 +165,17 @@ export default function GoLivePage() {
                 </div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Contact Info Section */}
+        <section className="contact-info section bg-light" style={{ padding: '4rem 0' }}>
+          <div className="container text-center">
+            <h2 className="section-title">Visit Our Office</h2>
+            <p className="section-subtitle">
+              AXIOM REALTY - REAL ESTATE & USED ITEMS<br />
+              65 Đ. Số 2, Hiệp Bình Phước, Thủ Đức, Hồ Chí Minh, Vietnam
+            </p>
           </div>
         </section>
 
