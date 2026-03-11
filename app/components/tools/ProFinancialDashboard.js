@@ -549,16 +549,16 @@ const ProFinancialDashboard = () => {
 };
 
 const KpiCard = ({ title, value, trend, icon }) => (
-  <div className="flex flex-col items-start justify-start text-left mb-6">
-    <div className="text-[#1B1C36] mb-2" style={{ borderBottom: '2px solid #1B1C36', paddingBottom: '4px', display: 'inline-block' }}>
-      {React.cloneElement(icon, { size: 32, strokeWidth: 2 })}
+  <div className="flex flex-col items-start text-left bg-transparent">
+    <div className="text-[#1B1C36] mb-1 pb-1" style={{ borderBottom: '2px solid #1B1C36', display: 'inline-flex' }}>
+      {React.cloneElement(icon, { size: 28, strokeWidth: 1.5 })}
     </div>
-    <h4 className="text-[#1B1C36] text-[1.1rem] font-bold mb-1 leading-tight">{title}</h4>
-    <div className="text-[#1B1C36] text-[1.15rem] font-normal leading-tight">
+    <h4 className="text-[#1B1C36] text-[1.15rem] font-bold leading-snug mt-1 mb-0 tracking-tight">{title}</h4>
+    <div className="text-[#1B1C36] text-[1.05rem] font-medium leading-snug">
       {value}
     </div>
     {trend && (
-      <div className="text-[#1B1C36] text-[1.15rem] font-normal leading-tight mt-1">
+      <div className="text-[#1B1C36] text-[1.05rem] font-medium leading-snug">
         {trend}
       </div>
     )}
