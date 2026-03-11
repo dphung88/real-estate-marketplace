@@ -46,21 +46,30 @@ const AxiomBreakEven = () => {
   const [maxUnits, setMaxUnits] = useState(1500);
   const [isInputExpanded, setIsInputExpanded] = useState(true);
   const [activeTab, setActiveTab] = useState('forecast');
+  
+  // What-if Scenario adjustments
+  const [priceAdjustment, setPriceAdjustment] = useState(0); // % change
+  const [costAdjustment, setCostAdjustment] = useState(0); // % change
 
   // --- DERIVED CALCULATIONS ---
-  const totalSales = Object.values(salesData).reduce((a, b) => a + b, 0);
-  const totalCogs = Object.values(cogsData).reduce((a, b) => a + b, 0);
+  const rawSales = Object.values(salesData).reduce((a, b) => a + b, 0);
+  const totalSales = rawSales * (1 + priceAdjustment / 100);
+  
+  const rawCogs = Object.values(cogsData).reduce((a, b) => a + b, 0);
+  const totalCogs = rawCogs * (1 + costAdjustment / 100);
+  
   const totalExpenses = Object.values(expensesData).reduce((a, b) => a + b, 0);
   const grossProfit = totalSales - totalCogs;
   const netProfit = grossProfit - totalExpenses;
   
+  // Margin of Safety
+  const marginOfSafety = totalSales > 0 ? ((totalSales - (totalExpenses / (grossProfit / totalSales))) / totalSales) * 100 : 0;
+  
   // For Break-even: Assume weighted average
-  const avgSellingPrice = 1000; // Normalized for chart
+  const avgSellingPrice = 1000; 
   const avgVariableCost = (totalCogs / totalSales) * avgSellingPrice;
   const yearlyFixedCosts = totalExpenses;
-  const monthlyFixedCosts = yearlyFixedCosts / 12;
-  const contributionMargin = avgSellingPrice - avgVariableCost;
-  const breakEvenUnits = contributionMargin > 0 ? Math.ceil(yearlyFixedCosts / (totalSales / avgSellingPrice * (1 - totalCogs/totalSales))) : 0;
+  const breakEvenRevenue = (yearlyFixedCosts / (grossProfit / totalSales));
 
   // --- 5-YEAR PROJECTION LOGIC ---
   const [forecast, setForecast] = useState([]);
@@ -148,16 +157,51 @@ const AxiomBreakEven = () => {
       <div className="flex gap-4 mb-8">
         <TabButton active={activeTab === 'forecast'} onClick={() => setActiveTab('forecast')} label="Strategic Forecast" icon={<Calendar size={16} />} />
         <TabButton active={activeTab === 'performance'} onClick={() => setActiveTab('performance')} label="Performance Analysis" icon={<Activity size={16} />} />
+        <TabButton active={activeTab === 'whatif'} onClick={() => setActiveTab('whatif')} label="What-If Analysis" icon={<Calculator size={16} />} />
       </div>
 
       {/* 3. DASHBOARD CONTENT */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Stats Column */}
         <div className="lg:col-span-4 space-y-4">
-          <CompactMetric label="Total Yearly Revenue" value={formatUSD(totalSales)} icon={<TrendingUp size={20} color="#B5945B" />} />
+          <CompactMetric label="Adjusted Revenue" value={formatUSD(totalSales)} icon={<TrendingUp size={20} color="#B5945B" />} />
           <CompactMetric label="Gross Profit" value={formatUSD(grossProfit)} icon={<DollarSign size={20} color="#B5945B" />} />
           <CompactMetric label="Net Income" value={formatUSD(netProfit)} icon={<Users size={20} color="#B5945B" />} />
           
+          {activeTab === 'whatif' && (
+            <div className="contact-form-box" style={{ padding: '24px' }}>
+              <h4 style={{ fontSize: '0.8rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', marginBottom: '20px' }}>What-If Controls</h4>
+              <div className="space-y-6">
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <label style={{ fontSize: '0.85rem', fontWeight: '700' }}>Price Change: {priceAdjustment}%</label>
+                  </div>
+                  <input 
+                    type="range" min="-20" max="20" step="1" value={priceAdjustment} 
+                    onChange={(e) => setPriceAdjustment(Number(e.target.value))}
+                    style={{ width: '100%', accentColor: '#B5945B' }}
+                  />
+                </div>
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <label style={{ fontSize: '0.85rem', fontWeight: '700' }}>COGS Change: {costAdjustment}%</label>
+                  </div>
+                  <input 
+                    type="range" min="-20" max="20" step="1" value={costAdjustment} 
+                    onChange={(e) => setCostAdjustment(Number(e.target.value))}
+                    style={{ width: '100%', accentColor: '#1B1C36' }}
+                  />
+                </div>
+                <button 
+                  onClick={() => { setPriceAdjustment(0); setCostAdjustment(0); }}
+                  style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #ddd', background: '#f5f5f5', fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer' }}
+                >
+                  Reset Scenario
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="contact-info-box" style={{ padding: '24px 32px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px' }}>
             <h4 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0, marginBottom: '8px' }}>
               EXECUTIVE FINANCIAL INSIGHT
@@ -243,9 +287,10 @@ const AxiomBreakEven = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <MetricCard label="Gross Margin %" value={`${((grossProfit/totalSales)*100).toFixed(1)}%`} />
-            <MetricCard label="Expense Ratio" value={`${((totalExpenses/totalSales)*100).toFixed(1)}%`} />
+            <MetricCard label="Margin of Safety" value={`${marginOfSafety.toFixed(1)}%`} />
+            <MetricCard label="BEP Revenue" value={formatUSD(breakEvenRevenue)} />
           </div>
         </div>
       </div>
