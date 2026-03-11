@@ -220,7 +220,6 @@ const ProFinancialDashboard = () => {
       <div className="flex flex-col gap-4 w-full">
         <div style={{ padding: '24px 32px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px' }}>
           <div className="flex items-center gap-2 mb-2">
-            <Info size={16} color="#B5945B" />
             <h3 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
               EXECUTIVE FINANCIAL INSIGHT
             </h3>
