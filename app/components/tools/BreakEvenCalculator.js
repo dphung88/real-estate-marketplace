@@ -71,21 +71,21 @@ const BreakEvenCalculator = () => {
               
               {/* Col 1: Operational Costs */}
               <div style={{ flex: '1 0 30%', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1' }}>Operational Costs</p>
+                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '20px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1.2', display: 'flex', alignItems: 'center', minHeight: '1.2rem' }}>Operational Costs</p>
                 <QuickInput label="Fixed Costs" description="Monthly Total" value={fixedCosts} onChange={setFixedCosts} />
                 <QuickInput label="Variable Cost" description="Per Unit" value={variableCostPerUnit} onChange={setVariableCostPerUnit} />
               </div>
 
               {/* Col 2: Revenue & Targets */}
               <div style={{ flex: '1 0 30%', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1' }}>Revenue & Targets</p>
+                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '20px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1.2', display: 'flex', alignItems: 'center', minHeight: '1.2rem' }}>Revenue & Targets</p>
                 <QuickInput label="Selling Price" description="Per Unit" value={sellingPricePerUnit} onChange={setSellingPricePerUnit} />
                 <QuickInput label="Target Profit" description="Goal" value={targetProfit} onChange={setTargetProfit} highlight />
               </div>
 
               {/* Col 3: Profitability Insight */}
               <div style={{ flex: '1 0 30%', minWidth: '280px', display: 'flex', flexDirection: 'column' }}>
-                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '20px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1' }}>Profitability Insight</p>
+                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '20px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1.2', display: 'flex', alignItems: 'center', minHeight: '1.2rem' }}>Profitability Insight</p>
                 <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <div className="flex items-center gap-2 mb-2">
                     <ShieldCheck size={18} color="#B5945B" />
