@@ -7,7 +7,7 @@ import {
 } from 'recharts';
 import { 
   Calculator, DollarSign, Package, TrendingUp, Info, 
-  ChevronRight, ArrowRight, ShieldCheck, AlertCircle, ChevronUp, ChevronDown
+  ChevronRight, ArrowRight, ShieldCheck, AlertCircle, ChevronUp, ChevronDown, Target
 } from 'lucide-react';
 
 const BreakEvenCalculator = () => {
