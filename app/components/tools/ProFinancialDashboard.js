@@ -549,18 +549,18 @@ const ProFinancialDashboard = () => {
 };
 
 const KpiCard = ({ title, value, trend, icon }) => (
-  <div className="bg-[#1B1C36] p-6 rounded-[32px] flex flex-row items-center justify-between transition-all hover:translate-y-[-4px] hover:shadow-xl shadow-lg border border-white/5">
-    <div className="flex flex-col items-start text-left gap-1">
-      <div className="text-[#B5945B] shrink-0 bg-white/5 p-2 rounded-xl mb-2">
-        {React.cloneElement(icon, { size: 24, strokeWidth: 1.5 })}
-      </div>
-      <h4 className="text-white/60 text-[0.85rem] font-bold tracking-tight">{title}</h4>
-      <p className="text-white text-[1.25rem] font-black m-0 leading-tight">{value}</p>
+  <div className="bg-[#1B1C36] p-6 sm:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all hover:translate-y-[-4px] hover:shadow-xl shadow-lg border border-white/5 h-full">
+    <div className="text-[#B5945B] mb-4">
+      {React.cloneElement(icon, { size: 40, strokeWidth: 1.5 })}
+    </div>
+    <h4 className="text-white text-lg font-bold mb-2">{title}</h4>
+    <div className="text-white/80 text-sm flex flex-col items-center gap-1">
+      <span className="font-medium text-lg text-white/90">{value}</span>
       {trend && (
-        <span className={`text-[0.8rem] font-medium mt-1 ${
+        <span className={`text-sm ${
           trend.includes('+') || trend === 'Strong' || trend === 'Healthy' 
             ? 'text-emerald-400' 
-            : 'text-white/80'
+            : 'text-white/60'
         }`}>
           {trend}
         </span>
