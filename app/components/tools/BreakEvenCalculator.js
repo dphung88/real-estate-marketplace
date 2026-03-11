@@ -54,43 +54,46 @@ const BreakEvenCalculator = () => {
         
         {/* Left: Input Panel */}
         <div className="lg:col-span-4 space-y-6">
-          <div className="contact-form-box" style={{ padding: '30px' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '25px', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div className="contact-form-box" style={{ padding: '30px', background: '#FFF' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '30px', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '10px' }}>
               <Calculator size={20} color="#B5945B" />
-              INPUT PARAMETERS
+              QUICK PARAMETERS
             </h3>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <QuickInput 
-                label="Fixed Costs (Total)" 
-                description="Rent, salaries, insurance..."
-                value={fixedCosts} 
-                onChange={setFixedCosts} 
-                icon={<BuildingIcon size={16} />}
-              />
-              <QuickInput 
-                label="Variable Cost (Per Unit)" 
-                description="Materials, labor, shipping..."
-                value={variableCostPerUnit} 
-                onChange={setVariableCostPerUnit} 
-                icon={<Package size={16} />}
-              />
-              <QuickInput 
-                label="Selling Price (Per Unit)" 
-                description="Revenue per sale"
-                value={sellingPricePerUnit} 
-                onChange={setSellingPricePerUnit} 
-                icon={<TagIcon size={16} />}
-              />
-              <div style={{ paddingTop: '20px', marginTop: '5px', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1' }}>Operational Costs</p>
                 <QuickInput 
-                  label="Target Desired Profit" 
-                  description="Required net income goal"
-                  value={targetProfit} 
-                  onChange={setTargetProfit} 
-                  icon={<TargetIcon size={16} />}
-                  highlight
+                  label="Fixed Costs" 
+                  description="Total Monthly"
+                  value={fixedCosts} 
+                  onChange={setFixedCosts} 
                 />
+                <QuickInput 
+                  label="Variable Cost" 
+                  description="Per Unit"
+                  value={variableCostPerUnit} 
+                  onChange={setVariableCostPerUnit} 
+                />
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1' }}>Revenue & Targets</p>
+                <QuickInput 
+                  label="Selling Price" 
+                  description="Per Unit"
+                  value={sellingPricePerUnit} 
+                  onChange={setSellingPricePerUnit} 
+                />
+                <div style={{ paddingTop: '15px', marginTop: '5px', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+                  <QuickInput 
+                    label="Target Profit" 
+                    description="Desired Goal"
+                    value={targetProfit} 
+                    onChange={setTargetProfit} 
+                    highlight
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -188,7 +191,7 @@ const BreakEvenCalculator = () => {
   );
 };
 
-const QuickInput = ({ label, description, value, onChange, icon, highlight }) => {
+const QuickInput = ({ label, description, value, onChange, highlight }) => {
   const formatInputDisplay = (val) => {
     if (val === 0 || val === '0') return '0';
     if (!val) return '';
@@ -205,7 +208,7 @@ const QuickInput = ({ label, description, value, onChange, icon, highlight }) =>
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
       <div className="flex items-baseline justify-between gap-4">
-        <label style={{ fontSize: '0.9rem', fontWeight: '800', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+        <label style={{ fontSize: '0.85rem', fontWeight: '900', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
           {label}
         </label>
         <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500', textAlign: 'right' }}>{description}</span>
@@ -220,8 +223,8 @@ const QuickInput = ({ label, description, value, onChange, icon, highlight }) =>
           onChange={handleInputChange}
           style={{ 
             width: '100%', 
-            padding: '14px 16px 14px 40px', 
-            fontSize: '1.1rem', 
+            padding: '12px 16px 12px 40px', 
+            fontSize: '1rem', 
             fontWeight: '800', 
             background: '#FFFFFF', 
             border: highlight ? '2px solid #B5945B' : '1.5px solid rgba(27, 28, 54, 0.1)', 
