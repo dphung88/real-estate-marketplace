@@ -190,11 +190,11 @@ const BreakEvenCalculator = () => {
 
 const QuickInput = ({ label, description, value, onChange, icon, highlight }) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-    <div className="flex flex-col gap-0.5">
-      <label style={{ fontSize: '0.9rem', fontWeight: '800', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px' }}>
+    <div className="flex items-baseline justify-between gap-4">
+      <label style={{ fontSize: '0.9rem', fontWeight: '800', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
         {label}
       </label>
-      <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500' }}>{description}</span>
+      <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500', textAlign: 'right' }}>{description}</span>
     </div>
     <div style={{ position: 'relative', width: '100%' }}>
       <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
