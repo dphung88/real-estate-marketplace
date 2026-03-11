@@ -549,23 +549,19 @@ const ProFinancialDashboard = () => {
 };
 
 const KpiCard = ({ title, value, trend, icon }) => (
-  <div className="bg-[#1B1C36] p-6 sm:p-8 rounded-2xl flex flex-col items-center justify-center text-center transition-all hover:translate-y-[-4px] hover:shadow-xl shadow-lg border border-white/5 h-full">
-    <div className="text-[#B5945B] mb-4">
-      {React.cloneElement(icon, { size: 40, strokeWidth: 1.5 })}
+  <div className="flex flex-col items-start justify-start text-left mb-6">
+    <div className="text-[#1B1C36] mb-2" style={{ borderBottom: '2px solid #1B1C36', paddingBottom: '4px', display: 'inline-block' }}>
+      {React.cloneElement(icon, { size: 32, strokeWidth: 2 })}
     </div>
-    <h4 className="text-white text-lg font-bold mb-2">{title}</h4>
-    <div className="text-white/80 text-sm flex flex-col items-center gap-1">
-      <span className="font-medium text-lg text-white/90">{value}</span>
-      {trend && (
-        <span className={`text-sm ${
-          trend.includes('+') || trend === 'Strong' || trend === 'Healthy' 
-            ? 'text-emerald-400' 
-            : 'text-white/60'
-        }`}>
-          {trend}
-        </span>
-      )}
+    <h4 className="text-[#1B1C36] text-[1.1rem] font-bold mb-1 leading-tight">{title}</h4>
+    <div className="text-[#1B1C36] text-[1.15rem] font-normal leading-tight">
+      {value}
     </div>
+    {trend && (
+      <div className="text-[#1B1C36] text-[1.15rem] font-normal leading-tight mt-1">
+        {trend}
+      </div>
+    )}
   </div>
 );
 
