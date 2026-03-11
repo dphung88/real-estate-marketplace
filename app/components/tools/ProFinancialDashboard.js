@@ -216,18 +216,24 @@ const ProFinancialDashboard = () => {
 
   const renderDashboard = () => (
     <div className="space-y-8">
-      {/* KPIs DELETED TEMPORARILY FOR TESTING */}
+      {/* KPIs */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-2">
+        <KpiCard title="Projected Revenue" value={formatCurrency(calc.pnl[5].sales)} trend="+10%" icon={<BarChart3 />} />
+        <KpiCard title="Projected Net Income" value={formatCurrency(calc.pnl[5].netProfit)} trend="Stable" icon={<Wallet />} />
+        <KpiCard title="Current Ratio" value={calc.bs[2].currentRatio.toFixed(2)} trend="Healthy" icon={<Activity />} />
+        <KpiCard title="Personal Net Worth" value={formatCurrency(calc.netWorth)} trend="Strong" icon={<Users />} />
+      </div>
 
       {/* Expert Financial Insight / Executive Summary */}
-      <div className="flex flex-col md:flex-row gap-6">
-        <div className="flex-grow contact-info-box" style={{ padding: '30px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '24px' }}>
-          <div className="flex items-center gap-3 mb-4">
-            <Info size={20} color="#B5945B" />
-            <h3 style={{ color: '#B5945B', fontSize: '0.9rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1.5px', margin: 0 }}>
+      <div className="flex flex-col gap-4 w-full">
+        <div style={{ padding: '24px 32px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px' }}>
+          <div className="flex items-center gap-2 mb-2">
+            <Info size={16} color="#B5945B" />
+            <h3 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
               EXECUTIVE FINANCIAL INSIGHT
             </h3>
           </div>
-          <p style={{ fontSize: '0.95rem', lineHeight: '1.7', opacity: '0.95', color: '#E8E4D8' }}>
+          <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: '#E8E4D8', margin: 0 }}>
             The company demonstrates strong revenue growth, primarily driven by <strong>French doors</strong>. 
             The debt-to-equity ratio of <strong>{calc.bs[2].debtEquity.toFixed(2)}</strong> indicates a leveraged but manageable position.
             Personal guarantees are backed by a strong net worth of <strong>{formatCurrency(calc.netWorth)}</strong>.
@@ -235,34 +241,32 @@ const ProFinancialDashboard = () => {
           </p>
         </div>
         
-        <div className="flex items-center justify-center">
+        <div className="flex justify-start">
           <button 
             onClick={handleDownloadPDF} 
             disabled={isExporting} 
-            className="group"
+            className="hover:bg-[#a1824b] transition-colors"
             style={{ 
               background: '#B5945B', 
               color: '#1B1C36', 
-              fontWeight: '800', 
-              padding: '24px 40px', 
-              borderRadius: '20px', 
+              fontWeight: '700', 
+              padding: '12px 24px', 
+              borderRadius: '12px', 
               border: 'none',
-              transition: 'all 0.3s ease',
               display: 'flex',
               alignItems: 'center',
-              gap: '12px',
-              fontSize: '1rem',
-              cursor: isExporting ? 'not-allowed' : 'pointer',
-              boxShadow: '0 10px 25px rgba(181, 148, 91, 0.2)'
+              gap: '8px',
+              fontSize: '0.95rem',
+              cursor: isExporting ? 'not-allowed' : 'pointer'
             }}
           >
-            <Download size={20} /> 
+            <Download size={18} /> 
             <span>{isExporting ? 'Exporting...' : 'Download Appendix'}</span>
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-2">
         <ChartContainer title="Revenue & Net Profit Projection">
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={calc.pnl}>
