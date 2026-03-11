@@ -111,9 +111,9 @@ const AxiomBreakEven = () => {
 
         {isInputExpanded && (
           <div style={{ padding: '40px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4" style={{ columnGap: '40px', rowGap: '60px' }}>
               {/* Col 1: Sales Activities */}
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Sales Activities</p>
                 <QuickInput label="French Doors" description="Main Line" value={salesData.frenchDoors} onChange={(v) => setSalesData({...salesData, frenchDoors: v})} />
                 <QuickInput label="Panel Doors" description="Secondary" value={salesData.panelDoors} onChange={(v) => setSalesData({...salesData, panelDoors: v})} />
@@ -122,7 +122,7 @@ const AxiomBreakEven = () => {
               </div>
 
               {/* Col 2: Cost of Sales */}
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Cost of Sales (Direct)</p>
                 <QuickInput label="Materials" description="Purchases" value={cogsData.materials} onChange={(v) => setCogsData({...cogsData, materials: v})} />
                 <QuickInput label="Direct Labour" description="Wages" value={cogsData.directLabour} onChange={(v) => setCogsData({...cogsData, directLabour: v})} />
@@ -130,7 +130,7 @@ const AxiomBreakEven = () => {
               </div>
 
               {/* Col 3: Operating Expenses */}
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Operating Expenses</p>
                 <QuickInput label="Selling Salaries" description="S&M" value={expensesData.sellingSalaries} onChange={(v) => setExpensesData({...expensesData, sellingSalaries: v})} />
                 <QuickInput label="Advertising" description="Marketing" value={expensesData.advertising} onChange={(v) => setExpensesData({...expensesData, advertising: v})} />
@@ -139,7 +139,7 @@ const AxiomBreakEven = () => {
               </div>
 
               {/* Col 4: Growth Assumptions */}
-              <div className="space-y-4">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Strategic Growth (5-Year)</p>
                 <QuickInput label="Rev Growth" description="Annual %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, revenueGrowth: v})} isPercent />
                 <QuickInput label="COGS Growth" description="Annual %" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, cogsGrowth: v})} isPercent />
