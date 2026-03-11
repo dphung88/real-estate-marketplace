@@ -343,18 +343,19 @@ const QuickInput = ({ label, description, value, onChange, isPercent }) => {
             transition: 'all 0.3s ease',
             boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
           }}
-        onFocus={(e) => {
-          e.target.style.borderColor = '#B5945B';
-          e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
-        }}
-        onBlur={(e) => {
-          e.target.style.borderColor = 'rgba(27, 28, 54, 0.1)';
-          e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
-        }}
-      />
+          onFocus={(e) => {
+            e.target.style.borderColor = '#B5945B';
+            e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = 'rgba(27, 28, 54, 0.1)';
+            e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
+          }}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const TabButton = ({ active, onClick, label, icon }) => (
   <button 
