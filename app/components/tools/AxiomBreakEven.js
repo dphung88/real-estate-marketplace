@@ -154,7 +154,7 @@ const AxiomBreakEven = () => {
       </div>
 
       {/* 2. NAVIGATION TABS */}
-      <div className="flex gap-4 mb-8">
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginBottom: '32px' }}>
         <TabButton active={activeTab === 'forecast'} onClick={() => setActiveTab('forecast')} label="Strategic Forecast" icon={<Calendar size={16} />} />
         <TabButton active={activeTab === 'performance'} onClick={() => setActiveTab('performance')} label="Performance Analysis" icon={<Activity size={16} />} />
         <TabButton active={activeTab === 'whatif'} onClick={() => setActiveTab('whatif')} label="What-If Analysis" icon={<Calculator size={16} />} />
@@ -313,10 +313,12 @@ const TabButton = ({ active, onClick, label, icon }) => (
     onClick={onClick}
     style={{ 
       display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 24px', borderRadius: '12px',
-      fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s',
-      background: active ? '#B5945B' : 'white',
-      color: active ? '#1B1C36' : '#666',
-      border: active ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.1)'
+      fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.3s ease',
+      background: active ? '#1B1C36' : '#FFFFFF',
+      color: active ? '#B5945B' : '#666666',
+      border: active ? '1.5px solid #1B1C36' : '1.5px solid rgba(0,0,0,0.05)',
+      boxShadow: active ? '0 4px 14px rgba(27, 28, 54, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
+      whiteSpace: 'nowrap'
     }}
   >
     {icon} {label}
