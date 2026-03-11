@@ -158,9 +158,11 @@ const AxiomBreakEven = () => {
           <CompactMetric label="Gross Profit" value={formatUSD(grossProfit)} icon={<DollarSign size={20} color="#B5945B" />} />
           <CompactMetric label="Net Income" value={formatUSD(netProfit)} icon={<Users size={20} color="#B5945B" />} />
           
-          <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8' }}>
-            <h4 style={{ color: '#B5945B', fontSize: '0.8rem', fontWeight: '800', marginBottom: '12px' }}>EXPERT FINANCIAL INSIGHT</h4>
-            <p style={{ fontSize: '0.8rem', lineHeight: '1.6', opacity: '0.9' }}>
+          <div className="contact-info-box" style={{ padding: '24px 32px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px' }}>
+            <h4 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0, marginBottom: '8px' }}>
+              EXECUTIVE FINANCIAL INSIGHT
+            </h4>
+            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: '#E8E4D8', margin: 0 }}>
               Current Gross Margin is <strong>{((grossProfit/totalSales)*100).toFixed(1)}%</strong>. 
               {netProfit > 0 ? " Your operations are profitable. " : " You are currently operating at a loss. "}
               Strategic target should be reducing COGS to below 60% of sales.
@@ -171,11 +173,11 @@ const AxiomBreakEven = () => {
         {/* Chart Column */}
         <div className="lg:col-span-8 space-y-6">
           {activeTab === 'performance' && (
-             <div className="contact-form-box" style={{ padding: '25px', overflowX: 'auto' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '20px', color: '#1B1C36' }}>
+             <div className="contact-form-box" style={{ padding: '30px', overflowX: 'auto' }}>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '20px', color: '#1B1C36' }}>
                   Detailed 5-Year Financial Outlook
                 </h3>
-                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.8rem' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.95rem' }}>
                   <thead>
                     <tr style={{ borderBottom: '2px solid #B5945B', textAlign: 'left' }}>
                       <th style={{ padding: '10px' }}>Year</th>
@@ -204,8 +206,8 @@ const AxiomBreakEven = () => {
              </div>
           )}
 
-          <div className="contact-form-box" style={{ padding: '25px' }}>
-            <h3 style={{ fontSize: '1rem', fontWeight: '700', marginBottom: '20px', color: '#1B1C36' }}>
+          <div className="contact-form-box" style={{ padding: '30px' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '20px', color: '#1B1C36' }}>
               {activeTab === 'forecast' ? '5-Year Revenue & Profit Projection' : 'Revenue vs. Total Costs Analysis'}
             </h3>
             <div style={{ height: '350px', width: '100%' }}>
@@ -253,10 +255,10 @@ const AxiomBreakEven = () => {
 
 const MiniInput = ({ label, value, onChange }) => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-    <label style={{ fontSize: '0.7rem', fontWeight: '600', color: '#666' }}>{label}</label>
+    <label style={{ fontSize: '0.85rem', fontWeight: '600', color: '#666' }}>{label}</label>
     <input 
       type="number" value={value} onChange={(e) => onChange(Number(e.target.value))}
-      style={{ width: '100%', padding: '8px 12px', fontSize: '0.85rem', fontWeight: '700', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}
+      style={{ width: '100%', padding: '10px 14px', fontSize: '0.95rem', fontWeight: '700', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}
     />
   </div>
 );
@@ -265,8 +267,8 @@ const TabButton = ({ active, onClick, label, icon }) => (
   <button 
     onClick={onClick}
     style={{ 
-      display: 'flex', alignItems: 'center', gap: '8px', padding: '10px 20px', borderRadius: '10px',
-      fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s',
+      display: 'flex', alignItems: 'center', gap: '8px', padding: '12px 24px', borderRadius: '12px',
+      fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s',
       background: active ? '#B5945B' : 'white',
       color: active ? '#1B1C36' : '#666',
       border: active ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.1)'
@@ -277,19 +279,19 @@ const TabButton = ({ active, onClick, label, icon }) => (
 );
 
 const CompactMetric = ({ label, value, icon }) => (
-  <div className="contact-form-box" style={{ padding: '18px', display: 'flex', alignItems: 'center', gap: '16px' }}>
-    <div style={{ width: '44px', height: '44px', background: 'rgba(181, 148, 91, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
+  <div className="contact-form-box" style={{ padding: '24px 20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+    <div style={{ width: '48px', height: '48px', background: 'rgba(181, 148, 91, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-      <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#999', fontWeight: '800', marginBottom: '2px' }}>{label}</p>
-      <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#1B1C36', margin: 0 }}>{value}</h4>
+      <p style={{ fontSize: '0.85rem', textTransform: 'uppercase', color: '#999', fontWeight: '800', marginBottom: '4px' }}>{label}</p>
+      <h4 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#1B1C36', margin: 0 }}>{value}</h4>
     </div>
   </div>
 );
 
 const MetricCard = ({ label, value }) => (
-  <div className="contact-form-box" style={{ padding: '15px', textAlign: 'center' }}>
-    <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#B5945B', fontWeight: '800' }}>{label}</p>
-    <h4 style={{ fontSize: '1.1rem', fontWeight: '800' }}>{value}</h4>
+  <div className="contact-form-box" style={{ padding: '20px', textAlign: 'center' }}>
+    <p style={{ fontSize: '0.85rem', textTransform: 'uppercase', color: '#B5945B', fontWeight: '800', marginBottom: '4px' }}>{label}</p>
+    <h4 style={{ fontSize: '1.5rem', fontWeight: '900' }}>{value}</h4>
   </div>
 );
 
