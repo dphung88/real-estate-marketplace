@@ -115,39 +115,39 @@ const AxiomBreakEven = () => {
               {/* Col 1: Sales Activities */}
               <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Sales Activities</p>
-                <QuickInput label="French Doors" description="Main Line" value={salesData.frenchDoors} onChange={(v) => setSalesData({...salesData, frenchDoors: v})} />
-                <QuickInput label="Panel Doors" description="Secondary" value={salesData.panelDoors} onChange={(v) => setSalesData({...salesData, panelDoors: v})} />
-                <QuickInput label="Windows" description="Accessory" value={salesData.windows} onChange={(v) => setSalesData({...salesData, windows: v})} />
-                <QuickInput label="New Products" description="R&D" value={salesData.newProducts} onChange={(v) => setSalesData({...salesData, newProducts: v})} />
+                <QuickInput label="French Doors" description="Main Line" value={salesData.frenchDoors} onChange={(v) => setSalesData(prev => ({...prev, frenchDoors: v}))} />
+                <QuickInput label="Panel Doors" description="Secondary" value={salesData.panelDoors} onChange={(v) => setSalesData(prev => ({...prev, panelDoors: v}))} />
+                <QuickInput label="Windows" description="Accessory" value={salesData.windows} onChange={(v) => setSalesData(prev => ({...prev, windows: v}))} />
+                <QuickInput label="New Products" description="R&D" value={salesData.newProducts} onChange={(v) => setSalesData(prev => ({...prev, newProducts: v}))} />
               </div>
 
               {/* Col 2: Cost of Sales */}
               <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Cost of Sales (Direct)</p>
-                <QuickInput label="Materials" description="Purchases" value={cogsData.materials} onChange={(v) => setCogsData({...cogsData, materials: v})} />
-                <QuickInput label="Direct Labour" description="Wages" value={cogsData.directLabour} onChange={(v) => setCogsData({...cogsData, directLabour: v})} />
-                <QuickInput label="Freight & Duty" description="Shipping" value={cogsData.freightDuty} onChange={(v) => setCogsData({...cogsData, freightDuty: v})} />
+                <QuickInput label="Materials" description="Purchases" value={cogsData.materials} onChange={(v) => setCogsData(prev => ({...prev, materials: v}))} />
+                <QuickInput label="Direct Labour" description="Wages" value={cogsData.directLabour} onChange={(v) => setCogsData(prev => ({...prev, directLabour: v}))} />
+                <QuickInput label="Freight & Duty" description="Shipping" value={cogsData.freightDuty} onChange={(v) => setCogsData(prev => ({...prev, freightDuty: v}))} />
               </div>
 
               {/* Col 3: Operating Expenses */}
               <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Operating Expenses</p>
-                <QuickInput label="Selling Salaries" description="S&M" value={expensesData.sellingSalaries} onChange={(v) => setExpensesData({...expensesData, sellingSalaries: v})} />
-                <QuickInput label="Advertising" description="Marketing" value={expensesData.advertising} onChange={(v) => setExpensesData({...advertising, advertising: v})} />
-                <QuickInput label="Management" description="Admin" value={expensesData.managementSalaries} onChange={(v) => setExpensesData({...expensesData, managementSalaries: v})} />
-                <QuickInput label="Interest" description="Finance" value={expensesData.interest} onChange={(v) => setExpensesData({...expensesData, interest: v})} />
+                <QuickInput label="Selling Salaries" description="S&M" value={expensesData.sellingSalaries} onChange={(v) => setExpensesData(prev => ({...prev, sellingSalaries: v}))} />
+                <QuickInput label="Advertising" description="Marketing" value={expensesData.advertising} onChange={(v) => setExpensesData(prev => ({...prev, advertising: v}))} />
+                <QuickInput label="Management" description="Admin" value={expensesData.managementSalaries} onChange={(v) => setExpensesData(prev => ({...prev, managementSalaries: v}))} />
+                <QuickInput label="Interest" description="Finance" value={expensesData.interest} onChange={(v) => setExpensesData(prev => ({...prev, interest: v}))} />
               </div>
 
               {/* Col 4: Growth Assumptions */}
               <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <p className="input-header">Strategic Growth</p>
-                <QuickInput label="Rev Growth" description="Annual %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, revenueGrowth: v})} isPercent />
-                <QuickInput label="COGS Growth" description="Annual %" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, cogsGrowth: v})} isPercent />
-                <QuickInput label="OpEx Inflation" description="Annual %" value={growthAssumptions.expenseInflation} onChange={(v) => setGrowthAssumptions({...growthAssumptions, expenseInflation: v})} isPercent />
+                <p className="input-header">Strategic Growth (5-Year)</p>
+                <QuickInput label="Rev Growth" description="Annual %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions(prev => ({...prev, revenueGrowth: v}))} isPercent />
+                <QuickInput label="COGS Growth" description="Annual %" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions(prev => ({...prev, cogsGrowth: v}))} isPercent />
+                <QuickInput label="OpEx Inflation" description="Annual %" value={growthAssumptions.expenseInflation} onChange={(v) => setGrowthAssumptions(prev => ({...prev, expenseInflation: v}))} isPercent />
               </div>
             </div>
             <style jsx>{`
-              .input-header { font-size: 0.95rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; padding-left: 10px; border-left: 4px solid #B5945B; line-height: 1; display: flex; align-items: center; height: 1.2rem; }
+              .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 8px; border-left: 3px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.2rem; }
             `}</style>
           </div>
         )}
