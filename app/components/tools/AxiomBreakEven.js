@@ -100,20 +100,20 @@ const AxiomBreakEven = () => {
       <div className="contact-form-box mb-8" style={{ padding: '0', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
         <button 
           onClick={() => setIsInputExpanded(!isInputExpanded)}
-          style={{ width: '100%', padding: '22px 25px', background: '#1B1C36', border: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+          style={{ width: '100%', padding: '14px 28px', background: '#1B1C36', border: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Calculator size={20} color="#B5945B" />
-            <span style={{ color: '#E8E4D8', fontWeight: '800', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Strategic Operational Input</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Calculator size={18} color="#B5945B" />
+            <span style={{ color: '#E8E4D8', fontWeight: '700', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Strategic Operational Input</span>
           </div>
-          {isInputExpanded ? <ChevronUp color="#B5945B" size={24} /> : <ChevronDown color="#B5945B" size={24} />}
+          {isInputExpanded ? <ChevronUp color="#B5945B" size={20} /> : <ChevronDown color="#B5945B" size={20} />}
         </button>
 
         {isInputExpanded && (
           <div style={{ padding: '40px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '40px' }}>
+            <div style={{ display: 'flex', flexWrap: 'nowrap', gap: '30px', overflowX: 'auto', paddingBottom: '10px' }} className="custom-scrollbar">
               {/* Col 1: Sales Activities */}
-              <div style={{ flex: '1 1 22%', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '80px' }}>
+              <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Sales Activities</p>
                 <QuickInput label="French Doors" description="Main Line" value={salesData.frenchDoors} onChange={(v) => setSalesData({...salesData, frenchDoors: v})} />
                 <QuickInput label="Panel Doors" description="Secondary" value={salesData.panelDoors} onChange={(v) => setSalesData({...salesData, panelDoors: v})} />
@@ -122,7 +122,7 @@ const AxiomBreakEven = () => {
               </div>
 
               {/* Col 2: Cost of Sales */}
-              <div style={{ flex: '1 1 22%', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '80px' }}>
+              <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Cost of Sales (Direct)</p>
                 <QuickInput label="Materials" description="Purchases" value={cogsData.materials} onChange={(v) => setCogsData({...cogsData, materials: v})} />
                 <QuickInput label="Direct Labour" description="Wages" value={cogsData.directLabour} onChange={(v) => setCogsData({...cogsData, directLabour: v})} />
@@ -130,16 +130,16 @@ const AxiomBreakEven = () => {
               </div>
 
               {/* Col 3: Operating Expenses */}
-              <div style={{ flex: '1 1 22%', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '80px' }}>
+              <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Operating Expenses</p>
                 <QuickInput label="Selling Salaries" description="S&M" value={expensesData.sellingSalaries} onChange={(v) => setExpensesData({...expensesData, sellingSalaries: v})} />
-                <QuickInput label="Advertising" description="Marketing" value={expensesData.advertising} onChange={(v) => setExpensesData({...expensesData, advertising: v})} />
+                <QuickInput label="Advertising" description="Marketing" value={expensesData.advertising} onChange={(v) => setExpensesData({...advertising, advertising: v})} />
                 <QuickInput label="Management" description="Admin" value={expensesData.managementSalaries} onChange={(v) => setExpensesData({...expensesData, managementSalaries: v})} />
                 <QuickInput label="Interest" description="Finance" value={expensesData.interest} onChange={(v) => setExpensesData({...expensesData, interest: v})} />
               </div>
 
               {/* Col 4: Growth Assumptions */}
-              <div style={{ flex: '1 1 22%', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '80px' }}>
+              <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Strategic Growth (5-Year)</p>
                 <QuickInput label="Rev Growth" description="Annual %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, revenueGrowth: v})} isPercent />
                 <QuickInput label="COGS Growth" description="Annual %" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, cogsGrowth: v})} isPercent />
