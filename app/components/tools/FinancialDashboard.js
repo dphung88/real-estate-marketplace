@@ -562,14 +562,16 @@ const FinancialDashboard = ({ activeTab }) => {
 
 // --- Sub-components ---
 const KpiCard = ({ title, value, trend, icon, color }) => (
-  <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '40px', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9' }}>
-    <div style={{ width: '48px', height: '48px', borderRadius: '16px', backgroundColor: color, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+  <div style={{ backgroundColor: 'white', padding: '24px', borderRadius: '40px', boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', border: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '20px' }}>
+    <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
       {icon}
     </div>
-    <p style={{ fontSize: '10px', fontWeight: '900', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>{title}</p>
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
-      <p style={{ fontSize: '24px', fontWeight: '900', color: '#0f172a', margin: 0 }}>{value}</p>
-      <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#10b981', marginBottom: '4px' }}>{trend}</span>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <p style={{ fontSize: '10px', fontWeight: '900', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '4px' }}>{title}</p>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px' }}>
+        <p style={{ fontSize: '24px', fontWeight: '900', color: '#0f172a', margin: 0 }}>{value}</p>
+        <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#10b981', marginBottom: '4px' }}>{trend}</span>
+      </div>
     </div>
   </div>
 );

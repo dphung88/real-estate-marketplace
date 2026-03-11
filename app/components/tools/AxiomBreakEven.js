@@ -277,11 +277,11 @@ const TabButton = ({ active, onClick, label, icon }) => (
 );
 
 const CompactMetric = ({ label, value, icon }) => (
-  <div className="contact-form-box" style={{ padding: '18px', display: 'flex', alignItems: 'center', gap: '12px' }}>
-    <div style={{ width: '36px', height: '36px', background: 'rgba(181, 148, 91, 0.1)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon}</div>
-    <div>
-      <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#999', fontWeight: '800' }}>{label}</p>
-      <h4 style={{ fontSize: '1.1rem', fontWeight: '800', color: '#1B1C36' }}>{value}</h4>
+  <div className="contact-form-box" style={{ padding: '18px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+    <div style={{ width: '44px', height: '44px', background: 'rgba(181, 148, 91, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <p style={{ fontSize: '0.6rem', textTransform: 'uppercase', color: '#999', fontWeight: '800', marginBottom: '2px' }}>{label}</p>
+      <h4 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#1B1C36', margin: 0 }}>{value}</h4>
     </div>
   </div>
 );

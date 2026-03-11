@@ -179,9 +179,9 @@ const FinanceDashboard = () => {
 };
 
 const SummaryCard = ({ icon, label, value, sub }) => (
-  <div className="bg-white p-6 rounded-[2.5rem] shadow-sm border border-gray-100 flex items-center gap-5">
-    <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-xl shadow-inner">{icon}</div>
-    <div>
+  <div className="bg-white p-6 rounded-[2.5rem] shadow-sm border border-gray-100 flex items-center gap-5 w-full">
+    <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-xl shadow-inner shrink-0">{icon}</div>
+    <div className="flex flex-col items-start">
       <p className="text-[10px] font-black uppercase text-gray-400 tracking-wider mb-1">{label}</p>
       <p className="text-xl font-black text-gray-900 leading-none mb-1">{value}</p>
       <p className="text-[10px] text-gray-400 font-medium">{sub}</p>

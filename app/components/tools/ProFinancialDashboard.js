@@ -193,7 +193,14 @@ const ProFinancialDashboard = () => {
   };
 
   const handleDownloadPDF = () => {
-    if (typeof window === 'undefined' || !window.html2pdf) return;
+    if (typeof window === 'undefined') return;
+    
+    // Check if html2pdf is available, if not, try to load it or notify user
+    if (!window.html2pdf) {
+      alert("PDF library not loaded. Please ensure you have internet connection.");
+      return;
+    }
+
     setIsExporting(true);
     console.log("Exporting PDF version 1.0.1...");
     const element = document.getElementById('pro-financial-report');
@@ -542,21 +549,23 @@ const ProFinancialDashboard = () => {
 };
 
 const KpiCard = ({ title, value, trend, icon }) => (
-  <div className="bg-[#1B1C36] p-8 rounded-[32px] flex flex-col items-center text-center transition-all hover:translate-y-[-4px] hover:shadow-xl shadow-lg border border-white/5">
-    <div className="mb-6 text-[#B5945B]">
-      {React.cloneElement(icon, { size: 40, strokeWidth: 1.5 })}
+  <div className="bg-[#1B1C36] p-6 rounded-[32px] flex items-center gap-6 transition-all hover:translate-y-[-4px] hover:shadow-xl shadow-lg border border-white/5">
+    <div className="text-[#B5945B] shrink-0 bg-white/5 p-4 rounded-2xl">
+      {React.cloneElement(icon, { size: 32, strokeWidth: 1.5 })}
     </div>
-    <h4 className="text-white text-[1.1rem] font-bold mb-3 tracking-tight">{title}</h4>
-    <p className="text-[#B5945B] text-[1.75rem] font-black m-0 leading-tight mb-2">{value}</p>
-    {trend && (
-      <span className={`text-[0.8rem] font-bold px-3 py-1 rounded-full ${
-        trend.includes('+') || trend === 'Strong' || trend === 'Healthy' 
-          ? 'bg-emerald-500/10 text-emerald-400' 
-          : 'bg-blue-500/10 text-blue-400'
-      }`}>
-        {trend}
-      </span>
-    )}
+    <div className="flex flex-col items-start text-left">
+      <h4 className="text-white/60 text-[0.85rem] font-bold mb-1 tracking-tight uppercase">{title}</h4>
+      <p className="text-[#B5945B] text-[1.5rem] font-black m-0 leading-tight mb-2">{value}</p>
+      {trend && (
+        <span className={`text-[0.7rem] font-bold px-2 py-0.5 rounded-full ${
+          trend.includes('+') || trend === 'Strong' || trend === 'Healthy' 
+            ? 'bg-emerald-500/10 text-emerald-400' 
+            : 'bg-blue-500/10 text-blue-400'
+        }`}>
+          {trend}
+        </span>
+      )}
+    </div>
   </div>
 );
 
