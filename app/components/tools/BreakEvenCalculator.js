@@ -7,7 +7,7 @@ import {
 } from 'recharts';
 import { 
   Calculator, DollarSign, Package, TrendingUp, Info, 
-  ChevronRight, ArrowRight, ShieldCheck, AlertCircle
+  ChevronRight, ArrowRight, ShieldCheck, AlertCircle, ChevronUp, ChevronDown
 } from 'lucide-react';
 
 const BreakEvenCalculator = () => {
@@ -17,6 +17,7 @@ const BreakEvenCalculator = () => {
   const [targetProfit, setTargetProfit] = useState(5000);
   const [maxUnits, setMaxUnits] = useState(50);
   const [chartData, setChartData] = useState([]);
+  const [isInputExpanded, setIsInputExpanded] = useState(true);
   
   // Calculations
   const contributionMargin = sellingPricePerUnit - variableCostPerUnit;
@@ -50,92 +51,86 @@ const BreakEvenCalculator = () => {
 
   return (
     <div className="axiom-finance-hub" style={{ fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* Left: Input Panel */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="contact-form-box" style={{ padding: '30px', background: '#FFF' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: '800', marginBottom: '30px', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <Calculator size={20} color="#B5945B" />
-              QUICK PARAMETERS
-            </h3>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      
+      {/* 1. SYNCED INPUT PANEL (HORIZONTAL LAYOUT) */}
+      <div className="contact-form-box mb-8" style={{ padding: '0', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
+        <button 
+          onClick={() => setIsInputExpanded(!isInputExpanded)}
+          style={{ width: '100%', padding: '14px 28px', background: '#1B1C36', border: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <Calculator size={18} color="#B5945B" />
+            <span style={{ color: '#E8E4D8', fontWeight: '700', fontSize: '0.95rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Quick Parameters Input</span>
+          </div>
+          {isInputExpanded ? <ChevronUp color="#B5945B" size={20} /> : <ChevronDown color="#B5945B" size={20} />}
+        </button>
+
+        {isInputExpanded && (
+          <div style={{ padding: '40px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
+            <div style={{ display: 'flex', flexWrap: 'nowrap', gap: '40px', overflowX: 'auto', paddingBottom: '10px' }} className="custom-scrollbar">
+              
+              {/* Col 1: Operational Costs */}
+              <div style={{ flex: '1 0 30%', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1' }}>Operational Costs</p>
-                <QuickInput 
-                  label="Fixed Costs" 
-                  description="Total Monthly"
-                  value={fixedCosts} 
-                  onChange={setFixedCosts} 
-                />
-                <QuickInput 
-                  label="Variable Cost" 
-                  description="Per Unit"
-                  value={variableCostPerUnit} 
-                  onChange={setVariableCostPerUnit} 
-                />
+                <QuickInput label="Fixed Costs" description="Monthly Total" value={fixedCosts} onChange={setFixedCosts} />
+                <QuickInput label="Variable Cost" description="Per Unit" value={variableCostPerUnit} onChange={setVariableCostPerUnit} />
               </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Col 2: Revenue & Targets */}
+              <div style={{ flex: '1 0 30%', minWidth: '250px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1' }}>Revenue & Targets</p>
-                <QuickInput 
-                  label="Selling Price" 
-                  description="Per Unit"
-                  value={sellingPricePerUnit} 
-                  onChange={setSellingPricePerUnit} 
-                />
-                <div style={{ paddingTop: '15px', marginTop: '5px', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
-                  <QuickInput 
-                    label="Target Profit" 
-                    description="Desired Goal"
-                    value={targetProfit} 
-                    onChange={setTargetProfit} 
-                    highlight
-                  />
+                <QuickInput label="Selling Price" description="Per Unit" value={sellingPricePerUnit} onChange={setSellingPricePerUnit} />
+                <QuickInput label="Target Profit" description="Goal" value={targetProfit} onChange={setTargetProfit} highlight />
+              </div>
+
+              {/* Col 3: Profitability Insight */}
+              <div style={{ flex: '1 0 30%', minWidth: '280px', display: 'flex', flexDirection: 'column' }}>
+                <p className="input-header" style={{ fontSize: '0.85rem', fontWeight: '900', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '20px', paddingLeft: '8px', borderLeft: '3px solid #B5945B', lineHeight: '1' }}>Profitability Insight</p>
+                <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <ShieldCheck size={18} color="#B5945B" />
+                    <h4 style={{ color: '#B5945B', fontSize: '0.75rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
+                      MARGIN RATIO
+                    </h4>
+                  </div>
+                  <div className="flex justify-between items-end">
+                    <span style={{ fontSize: '2.2rem', fontWeight: '950', color: '#FFF', letterSpacing: '-1px' }}>{contributionMarginRatio.toFixed(1)}%</span>
+                  </div>
+                  <p style={{ fontSize: '0.8rem', marginTop: '12px', opacity: 0.8, lineHeight: '1.6', margin: 0 }}>
+                    You retain <strong>{formatUSD(contributionMargin/sellingPricePerUnit*1)}</strong> from every dollar in sales to cover fixed costs and net profit.
+                  </p>
                 </div>
               </div>
+
             </div>
           </div>
+        )}
+      </div>
 
-          <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px' }}>
-            <div className="flex items-center gap-2 mb-3">
-              <ShieldCheck size={18} color="#B5945B" />
-              <h4 style={{ color: '#B5945B', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
-                PROFITABILITY MARGIN
-              </h4>
-            </div>
-            <div className="flex justify-between items-end">
-              <span style={{ fontSize: '2rem', fontWeight: '900', color: '#FFF' }}>{contributionMarginRatio.toFixed(1)}%</span>
-              <span style={{ fontSize: '0.85rem', opacity: 0.8, marginBottom: '8px' }}>CM Ratio</span>
-            </div>
-            <p style={{ fontSize: '0.85rem', marginTop: '10px', opacity: 0.7, lineHeight: '1.5' }}>
-              For every dollar in sales, you keep {formatUSD(contributionMargin/sellingPricePerUnit*1)} to cover fixed costs and profit.
+      {/* 2. RESULTS & CHART */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Results Column */}
+        <div className="lg:col-span-4 space-y-6">
+          <CompactMetric label="Break-Even Point" value={`${breakEvenUnits.toLocaleString()} Units`} icon={<TrendingUp size={20} color="#B5945B" />} />
+          <CompactMetric label="Target Sales" value={`${targetUnits.toLocaleString()} Units`} icon={<Target size={20} color="#B5945B" />} />
+          
+          <div className="contact-info-box" style={{ padding: '24px 32px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px' }}>
+            <h4 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0, marginBottom: '12px' }}>
+              CALCULATION SUMMARY
+            </h4>
+            <p style={{ fontSize: '1rem', lineHeight: '1.7', color: '#E8E4D8', margin: 0 }}>
+              To achieve your <strong>{formatUSD(targetProfit)}</strong> profit goal, you need total revenue of <strong>{formatUSD(targetRevenue)}</strong>. 
+              Break-even revenue is <strong>{formatUSD(breakEvenRevenue)}</strong>.
             </p>
           </div>
         </div>
 
-        {/* Right: Results & Chart */}
+        {/* Chart Column */}
         <div className="lg:col-span-8 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <ResultCard 
-              label="Break-Even Point" 
-              units={breakEvenUnits} 
-              revenue={breakEvenRevenue}
-              type="primary"
-            />
-            <ResultCard 
-              label="Target Profit Point" 
-              units={targetUnits} 
-              revenue={targetRevenue}
-              type="accent"
-            />
-          </div>
-
           <div className="contact-form-box" style={{ padding: '30px' }}>
             <div className="flex justify-between items-center mb-6">
               <h3 style={{ fontSize: '1.2rem', fontWeight: '800', color: '#1B1C36' }}>
-                Cost vs. Revenue Analysis
+                Quick Cost vs. Revenue Analysis
               </h3>
               <div className="flex gap-4">
                 <div className="flex items-center gap-2">
@@ -149,7 +144,7 @@ const BreakEvenCalculator = () => {
               </div>
             </div>
 
-            <div style={{ height: '350px', width: '100%' }}>
+            <div style={{ height: '380px', width: '100%' }}>
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={chartData}>
                   <defs>
@@ -159,8 +154,8 @@ const BreakEvenCalculator = () => {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
-                  <XAxis dataKey="units" fontSize={10} fontWeight="700" label={{ value: 'Units Sold', position: 'insideBottom', offset: -5, fontSize: 10, fontWeight: 700 }} />
-                  <YAxis tickFormatter={(v) => `$${v/1000}k`} fontSize={10} fontWeight="700" />
+                  <XAxis dataKey="units" fontSize={10} fontWeight="800" label={{ value: 'Units Sold', position: 'insideBottom', offset: -5, fontSize: 10, fontWeight: 800 }} />
+                  <YAxis tickFormatter={(v) => `$${v/1000}k`} fontSize={10} fontWeight="800" />
                   <Tooltip 
                     formatter={(v) => formatUSD(v)} 
                     contentStyle={{ borderRadius: '12px', border: 'none', background: '#1B1C36', color: '#E8E4D8', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }} 
@@ -214,8 +209,8 @@ const QuickInput = ({ label, description, value, onChange, highlight }) => {
         <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500', textAlign: 'right' }}>{description}</span>
       </div>
       <div style={{ position: 'relative', width: '100%' }}>
-        <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
-          <DollarSign size={16} />
+        <div style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
+          <DollarSign size={14} />
         </div>
         <input 
           type="text" 
@@ -223,11 +218,11 @@ const QuickInput = ({ label, description, value, onChange, highlight }) => {
           onChange={handleInputChange}
           style={{ 
             width: '100%', 
-            padding: '12px 16px 12px 40px', 
+            padding: '12px 16px 12px 35px', 
             fontSize: '1rem', 
             fontWeight: '800', 
             background: '#FFFFFF', 
-            border: highlight ? '2px solid #B5945B' : '1.5px solid rgba(27, 28, 54, 0.1)', 
+            border: '1.5px solid rgba(27, 28, 54, 0.1)', 
             borderRadius: '12px',
             outline: 'none',
             color: '#1B1C36',
@@ -248,6 +243,16 @@ const QuickInput = ({ label, description, value, onChange, highlight }) => {
   );
 };
 
+const CompactMetric = ({ label, value, icon }) => (
+  <div className="contact-form-box" style={{ padding: '24px 20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+    <div style={{ width: '48px', height: '48px', background: 'rgba(181, 148, 91, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+      <p style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#999', fontWeight: '900', marginBottom: '4px', letterSpacing: '0.5px' }}>{label}</p>
+      <h4 style={{ fontSize: '1.6rem', fontWeight: '950', color: '#1B1C36', margin: 0, letterSpacing: '-0.5px' }}>{value}</h4>
+    </div>
+  </div>
+);
+
 const ResultCard = ({ label, units, revenue, type }) => (
   <div className="contact-form-box" style={{ 
     padding: '24px', 
@@ -265,18 +270,6 @@ const ResultCard = ({ label, units, revenue, type }) => (
       <span>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(revenue)} Revenue</span>
     </div>
   </div>
-);
-
-const BuildingIcon = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><path d="M9 22v-4h6v4"></path><path d="M8 6h.01"></path><path d="M16 6h.01"></path><path d="M12 6h.01"></path><path d="M12 10h.01"></path><path d="M12 14h.01"></path><path d="M16 10h.01"></path><path d="M16 14h.01"></path><path d="M8 10h.01"></path><path d="M8 14h.01"></path></svg>
-);
-
-const TagIcon = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-);
-
-const TargetIcon = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
 );
 
 export default BreakEvenCalculator;
