@@ -7,7 +7,7 @@ import {
 } from 'recharts';
 import { 
   Calculator, TrendingUp, DollarSign, Users, Info, ChevronDown, ChevronUp, Calendar, 
-  Table as TableIcon, Activity
+  Table as TableIcon, Activity, Package, Building, Tag, Target, ArrowRight
 } from 'lucide-react';
 
 const AxiomBreakEven = () => {
@@ -89,7 +89,7 @@ const AxiomBreakEven = () => {
       return { year, revenue: rev, grossProfit: gp, netProfit: np, expenses: exp };
     });
     setForecast(projection);
-  }, [salesData, cogsData, expensesData, growthAssumptions]);
+  }, [salesData, cogsData, expensesData, growthAssumptions, priceAdjustment, costAdjustment]);
 
   const formatUSD = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(v);
 
@@ -100,54 +100,54 @@ const AxiomBreakEven = () => {
       <div className="contact-form-box mb-8" style={{ padding: '0', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
         <button 
           onClick={() => setIsInputExpanded(!isInputExpanded)}
-          style={{ width: '100%', padding: '18px 25px', background: '#1B1C36', border: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
+          style={{ width: '100%', padding: '22px 25px', background: '#1B1C36', border: 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: 'pointer' }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <Calculator size={18} color="#B5945B" />
-            <span style={{ color: '#E8E4D8', fontWeight: '700', fontSize: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Pro Financial Input (Excel Sync)</span>
+            <Calculator size={20} color="#B5945B" />
+            <span style={{ color: '#E8E4D8', fontWeight: '800', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1.5px' }}>Strategic Operational Input</span>
           </div>
-          {isInputExpanded ? <ChevronUp color="#B5945B" size={20} /> : <ChevronDown color="#B5945B" size={20} />}
+          {isInputExpanded ? <ChevronUp color="#B5945B" size={24} /> : <ChevronDown color="#B5945B" size={24} />}
         </button>
 
         {isInputExpanded && (
-          <div style={{ padding: '30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div style={{ padding: '40px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10">
               {/* Col 1: Sales Activities */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <p className="input-header">Sales Activities</p>
-                <MiniInput label="French Doors ($)" value={salesData.frenchDoors} onChange={(v) => setSalesData({...salesData, frenchDoors: v})} />
-                <MiniInput label="Panel Doors ($)" value={salesData.panelDoors} onChange={(v) => setSalesData({...salesData, panelDoors: v})} />
-                <MiniInput label="Windows ($)" value={salesData.windows} onChange={(v) => setSalesData({...salesData, windows: v})} />
-                <MiniInput label="New Products ($)" value={salesData.newProducts} onChange={(v) => setSalesData({...salesData, newProducts: v})} />
+                <QuickInput label="French Doors" description="Main Line" value={salesData.frenchDoors} onChange={(v) => setSalesData({...salesData, frenchDoors: v})} />
+                <QuickInput label="Panel Doors" description="Secondary" value={salesData.panelDoors} onChange={(v) => setSalesData({...salesData, panelDoors: v})} />
+                <QuickInput label="Windows" description="Accessory" value={salesData.windows} onChange={(v) => setSalesData({...salesData, windows: v})} />
+                <QuickInput label="New Products" description="R&D" value={salesData.newProducts} onChange={(v) => setSalesData({...salesData, newProducts: v})} />
               </div>
 
               {/* Col 2: Cost of Sales */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <p className="input-header">Cost of Sales (Direct)</p>
-                <MiniInput label="Material Purchases ($)" value={cogsData.materials} onChange={(v) => setCogsData({...cogsData, materials: v})} />
-                <MiniInput label="Direct Labour ($)" value={cogsData.directLabour} onChange={(v) => setCogsData({...cogsData, directLabour: v})} />
-                <MiniInput label="Freight & Duty ($)" value={cogsData.freightDuty} onChange={(v) => setCogsData({...cogsData, freightDuty: v})} />
+                <QuickInput label="Materials" description="Purchases" value={cogsData.materials} onChange={(v) => setCogsData({...cogsData, materials: v})} />
+                <QuickInput label="Direct Labour" description="Wages" value={cogsData.directLabour} onChange={(v) => setCogsData({...cogsData, directLabour: v})} />
+                <QuickInput label="Freight & Duty" description="Shipping" value={cogsData.freightDuty} onChange={(v) => setCogsData({...cogsData, freightDuty: v})} />
               </div>
 
               {/* Col 3: Operating Expenses */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <p className="input-header">Operating Expenses</p>
-                <MiniInput label="Selling Salaries ($)" value={expensesData.sellingSalaries} onChange={(v) => setExpensesData({...expensesData, sellingSalaries: v})} />
-                <MiniInput label="Advertising ($)" value={expensesData.advertising} onChange={(v) => setExpensesData({...expensesData, advertising: v})} />
-                <MiniInput label="Management Salaries ($)" value={expensesData.managementSalaries} onChange={(v) => setExpensesData({...expensesData, managementSalaries: v})} />
-                <MiniInput label="Interest ($)" value={expensesData.interest} onChange={(v) => setExpensesData({...expensesData, interest: v})} />
+                <QuickInput label="Selling Salaries" description="S&M" value={expensesData.sellingSalaries} onChange={(v) => setExpensesData({...expensesData, sellingSalaries: v})} />
+                <QuickInput label="Advertising" description="Marketing" value={expensesData.advertising} onChange={(v) => setExpensesData({...expensesData, advertising: v})} />
+                <QuickInput label="Management" description="Admin" value={expensesData.managementSalaries} onChange={(v) => setExpensesData({...expensesData, managementSalaries: v})} />
+                <QuickInput label="Interest" description="Finance" value={expensesData.interest} onChange={(v) => setExpensesData({...expensesData, interest: v})} />
               </div>
 
               {/* Col 4: Growth Assumptions */}
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <p className="input-header">Strategic Growth (5-Year)</p>
-                <MiniInput label="Annual Revenue Growth (%)" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, revenueGrowth: v})} />
-                <MiniInput label="COGS Increase Rate (%)" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, cogsGrowth: v})} />
-                <MiniInput label="OpEx Inflation (%)" value={growthAssumptions.expenseInflation} onChange={(v) => setGrowthAssumptions({...growthAssumptions, expenseInflation: v})} />
+                <QuickInput label="Rev Growth" description="Annual %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, revenueGrowth: v})} isPercent />
+                <QuickInput label="COGS Growth" description="Annual %" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, cogsGrowth: v})} isPercent />
+                <QuickInput label="OpEx Inflation" description="Annual %" value={growthAssumptions.expenseInflation} onChange={(v) => setGrowthAssumptions({...growthAssumptions, expenseInflation: v})} isPercent />
               </div>
             </div>
             <style jsx>{`
-              .input-header { font-size: 0.75rem; font-weight: 800; color: #B5945B; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid rgba(181, 148, 91, 0.2); padding-bottom: 8px; margin-bottom: 15px; }
+              .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid rgba(181, 148, 91, 0.2); padding-bottom: 12px; margin-bottom: 25px; }
             `}</style>
           </div>
         )}
@@ -161,15 +161,15 @@ const AxiomBreakEven = () => {
       </div>
 
       {/* 3. DASHBOARD CONTENT */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Stats Column */}
-        <div className="lg:col-span-4 space-y-4">
+        <div className="lg:col-span-4 space-y-6">
           <CompactMetric label="Adjusted Revenue" value={formatUSD(totalSales)} icon={<TrendingUp size={20} color="#B5945B" />} />
           <CompactMetric label="Gross Profit" value={formatUSD(grossProfit)} icon={<DollarSign size={20} color="#B5945B" />} />
           <CompactMetric label="Net Income" value={formatUSD(netProfit)} icon={<Users size={20} color="#B5945B" />} />
           
           {activeTab === 'whatif' && (
-            <div className="contact-form-box" style={{ padding: '24px' }}>
+            <div className="contact-form-box animate-in fade-in duration-500" style={{ padding: '24px' }}>
               <h4 style={{ fontSize: '0.8rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', marginBottom: '20px' }}>What-If Controls</h4>
               <div className="space-y-6">
                 <div>
@@ -194,7 +194,9 @@ const AxiomBreakEven = () => {
                 </div>
                 <button 
                   onClick={() => { setPriceAdjustment(0); setCostAdjustment(0); }}
-                  style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #ddd', background: '#f5f5f5', fontSize: '0.8rem', fontWeight: '700', cursor: 'pointer' }}
+                  style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #ddd', background: '#f5f5f5', fontSize: '0.85rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.2s' }}
+                  onMouseOver={(e) => e.target.style.background = '#eee'}
+                  onMouseOut={(e) => e.target.style.background = '#f5f5f5'}
                 >
                   Reset Scenario
                 </button>
@@ -203,10 +205,10 @@ const AxiomBreakEven = () => {
           )}
 
           <div className="contact-info-box" style={{ padding: '24px 32px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px' }}>
-            <h4 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0, marginBottom: '8px' }}>
+            <h4 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0, marginBottom: '12px' }}>
               EXECUTIVE FINANCIAL INSIGHT
             </h4>
-            <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: '#E8E4D8', margin: 0 }}>
+            <p style={{ fontSize: '1rem', lineHeight: '1.7', color: '#E8E4D8', margin: 0 }}>
               Current Gross Margin is <strong>{((grossProfit/totalSales)*100).toFixed(1)}%</strong>. 
               {netProfit > 0 ? " Your operations are profitable. " : " You are currently operating at a loss. "}
               Strategic target should be reducing COGS to below 60% of sales.
@@ -217,32 +219,32 @@ const AxiomBreakEven = () => {
         {/* Chart Column */}
         <div className="lg:col-span-8 space-y-6">
           {activeTab === 'performance' && (
-             <div className="contact-form-box" style={{ padding: '30px', overflowX: 'auto' }}>
+             <div className="contact-form-box animate-in fade-in duration-500" style={{ padding: '30px', overflowX: 'auto' }}>
                 <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '20px', color: '#1B1C36' }}>
                   Detailed 5-Year Financial Outlook
                 </h3>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.95rem' }}>
                   <thead>
                     <tr style={{ borderBottom: '2px solid #B5945B', textAlign: 'left' }}>
-                      <th style={{ padding: '10px' }}>Year</th>
-                      <th style={{ padding: '10px' }}>Revenue</th>
-                      <th style={{ padding: '10px' }}>Gross Profit</th>
-                      <th style={{ padding: '10px' }}>Expenses</th>
-                      <th style={{ padding: '10px' }}>Net Profit</th>
-                      <th style={{ padding: '10px' }}>Margin %</th>
+                      <th style={{ padding: '12px 10px' }}>Year</th>
+                      <th style={{ padding: '12px 10px' }}>Revenue</th>
+                      <th style={{ padding: '12px 10px' }}>Gross Profit</th>
+                      <th style={{ padding: '12px 10px' }}>Expenses</th>
+                      <th style={{ padding: '12px 10px' }}>Net Profit</th>
+                      <th style={{ padding: '12px 10px' }}>Margin %</th>
                     </tr>
                   </thead>
                   <tbody>
                     {forecast.map((row) => (
                       <tr key={row.year} style={{ borderBottom: '1px solid rgba(0,0,0,0.05)' }}>
-                        <td style={{ padding: '10px', fontWeight: '700' }}>{row.year}</td>
-                        <td style={{ padding: '10px' }}>{formatUSD(row.revenue)}</td>
-                        <td style={{ padding: '10px' }}>{formatUSD(row.grossProfit)}</td>
-                        <td style={{ padding: '10px' }}>{formatUSD(row.expenses)}</td>
-                        <td style={{ padding: '10px', color: row.netProfit >= 0 ? '#10B981' : '#EF4444', fontWeight: '700' }}>
+                        <td style={{ padding: '12px 10px', fontWeight: '800', color: '#1B1C36' }}>{row.year}</td>
+                        <td style={{ padding: '12px 10px' }}>{formatUSD(row.revenue)}</td>
+                        <td style={{ padding: '12px 10px' }}>{formatUSD(row.grossProfit)}</td>
+                        <td style={{ padding: '12px 10px' }}>{formatUSD(row.expenses)}</td>
+                        <td style={{ padding: '12px 10px', color: row.netProfit >= 0 ? '#10B981' : '#EF4444', fontWeight: '800' }}>
                           {formatUSD(row.netProfit)}
                         </td>
-                        <td style={{ padding: '10px' }}>{((row.netProfit/row.revenue)*100).toFixed(1)}%</td>
+                        <td style={{ padding: '12px 10px' }}>{((row.netProfit/row.revenue)*100).toFixed(1)}%</td>
                       </tr>
                     ))}
                   </tbody>
@@ -250,11 +252,11 @@ const AxiomBreakEven = () => {
              </div>
           )}
 
-          <div className="contact-form-box" style={{ padding: '30px' }}>
+          <div className="contact-form-box animate-in fade-in duration-500" style={{ padding: '30px' }}>
             <h3 style={{ fontSize: '1.2rem', fontWeight: '800', marginBottom: '20px', color: '#1B1C36' }}>
               {activeTab === 'forecast' ? '5-Year Revenue & Profit Projection' : 'Revenue vs. Total Costs Analysis'}
             </h3>
-            <div style={{ height: '350px', width: '100%' }}>
+            <div style={{ height: '380px', width: '100%' }}>
               <ResponsiveContainer width="100%" height="100%">
                 {activeTab === 'forecast' ? (
                   <AreaChart data={forecast}>
@@ -265,9 +267,9 @@ const AxiomBreakEven = () => {
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
-                    <XAxis dataKey="year" fontSize={10} fontWeight="700" />
-                    <YAxis tickFormatter={(v) => `$${v/1000}k`} fontSize={10} fontWeight="700" />
-                    <Tooltip formatter={(v) => formatUSD(v)} contentStyle={{ borderRadius: '12px', border: 'none', background: '#1B1C36', color: '#E8E4D8' }} />
+                    <XAxis dataKey="year" fontSize={10} fontWeight="800" />
+                    <YAxis tickFormatter={(v) => `$${v/1000}k`} fontSize={10} fontWeight="800" />
+                    <Tooltip formatter={(v) => formatUSD(v)} contentStyle={{ borderRadius: '12px', border: 'none', background: '#1B1C36', color: '#E8E4D8', boxShadow: '0 10px 15px -3px rgba(0,0,0,0.1)' }} />
                     <Legend />
                     <Area type="monotone" dataKey="revenue" name="Total Revenue" stroke="#B5945B" strokeWidth={3} fill="url(#colorRev)" />
                     <Area type="monotone" dataKey="netProfit" name="Net Profit" stroke="#1B1C36" strokeWidth={2} fill="transparent" />
@@ -275,9 +277,9 @@ const AxiomBreakEven = () => {
                 ) : (
                   <BarChart data={forecast}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(0,0,0,0.05)" />
-                    <XAxis dataKey="year" />
-                    <YAxis tickFormatter={(v) => `$${v/1000}k`} />
-                    <Tooltip formatter={(v) => formatUSD(v)} />
+                    <XAxis dataKey="year" fontSize={10} fontWeight="800" />
+                    <YAxis tickFormatter={(v) => `$${v/1000}k`} fontSize={10} fontWeight="800" />
+                    <Tooltip formatter={(v) => formatUSD(v)} contentStyle={{ borderRadius: '12px', border: 'none', background: '#1B1C36', color: '#E8E4D8' }} />
                     <Legend />
                     <Bar dataKey="revenue" fill="#B5945B" name="Revenue" radius={[4, 4, 0, 0]} />
                     <Bar dataKey="expenses" fill="#1B1C36" name="Expenses" radius={[4, 4, 0, 0]} />
@@ -287,7 +289,7 @@ const AxiomBreakEven = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <MetricCard label="Gross Margin %" value={`${((grossProfit/totalSales)*100).toFixed(1)}%`} />
             <MetricCard label="Margin of Safety" value={`${marginOfSafety.toFixed(1)}%`} />
             <MetricCard label="BEP Revenue" value={formatUSD(breakEvenRevenue)} />
@@ -298,13 +300,45 @@ const AxiomBreakEven = () => {
   );
 };
 
-const MiniInput = ({ label, value, onChange }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-    <label style={{ fontSize: '0.85rem', fontWeight: '600', color: '#666' }}>{label}</label>
-    <input 
-      type="number" value={value} onChange={(e) => onChange(Number(e.target.value))}
-      style={{ width: '100%', padding: '10px 14px', fontSize: '0.95rem', fontWeight: '700', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px' }}
-    />
+const QuickInput = ({ label, description, value, onChange, isPercent }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <div className="flex items-baseline justify-between gap-4">
+      <label style={{ fontSize: '0.85rem', fontWeight: '900', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+        {label}
+      </label>
+      <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500', textAlign: 'right' }}>{description}</span>
+    </div>
+    <div style={{ position: 'relative', width: '100%' }}>
+      <div style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
+        {isPercent ? <span style={{ fontWeight: '900', fontSize: '1rem' }}>%</span> : <DollarSign size={14} />}
+      </div>
+      <input 
+        type="number" 
+        value={value} 
+        onChange={(e) => onChange(Number(e.target.value))}
+        style={{ 
+          width: '100%', 
+          padding: '12px 16px 12px 35px', 
+          fontSize: '1rem', 
+          fontWeight: '800', 
+          background: '#FFFFFF', 
+          border: '1.5px solid rgba(27, 28, 54, 0.1)', 
+          borderRadius: '12px',
+          outline: 'none',
+          color: '#1B1C36',
+          transition: 'all 0.3s ease',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
+        }}
+        onFocus={(e) => {
+          e.target.style.borderColor = '#B5945B';
+          e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
+        }}
+        onBlur={(e) => {
+          e.target.style.borderColor = 'rgba(27, 28, 54, 0.1)';
+          e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
+        }}
+      />
+    </div>
   </div>
 );
 
@@ -331,16 +365,16 @@ const CompactMetric = ({ label, value, icon }) => (
   <div className="contact-form-box" style={{ padding: '24px 20px', display: 'flex', alignItems: 'center', gap: '16px' }}>
     <div style={{ width: '48px', height: '48px', background: 'rgba(181, 148, 91, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-      <p style={{ fontSize: '0.85rem', textTransform: 'uppercase', color: '#999', fontWeight: '800', marginBottom: '4px' }}>{label}</p>
-      <h4 style={{ fontSize: '1.5rem', fontWeight: '900', color: '#1B1C36', margin: 0 }}>{value}</h4>
+      <p style={{ fontSize: '0.8rem', textTransform: 'uppercase', color: '#999', fontWeight: '900', marginBottom: '4px', letterSpacing: '0.5px' }}>{label}</p>
+      <h4 style={{ fontSize: '1.6rem', fontWeight: '950', color: '#1B1C36', margin: 0, letterSpacing: '-0.5px' }}>{value}</h4>
     </div>
   </div>
 );
 
 const MetricCard = ({ label, value }) => (
-  <div className="contact-form-box" style={{ padding: '20px', textAlign: 'center' }}>
-    <p style={{ fontSize: '0.85rem', textTransform: 'uppercase', color: '#B5945B', fontWeight: '800', marginBottom: '4px' }}>{label}</p>
-    <h4 style={{ fontSize: '1.5rem', fontWeight: '900' }}>{value}</h4>
+  <div className="contact-form-box" style={{ padding: '24px', textAlign: 'center' }}>
+    <p style={{ fontSize: '0.85rem', textTransform: 'uppercase', color: '#B5945B', fontWeight: '900', marginBottom: '8px', letterSpacing: '1px' }}>{label}</p>
+    <h4 style={{ fontSize: '1.7rem', fontWeight: '950', color: '#1B1C36' }}>{value}</h4>
   </div>
 );
 
