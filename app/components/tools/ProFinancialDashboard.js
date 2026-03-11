@@ -216,13 +216,7 @@ const ProFinancialDashboard = () => {
 
   const renderDashboard = () => (
     <div className="space-y-8">
-      {/* KPIs */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 w-full mb-4">
-        <KpiCard title="Projected Revenue" value={formatCurrency(calc.pnl[5].sales)} trend="+10%" icon={<BarChart3 />} />
-        <KpiCard title="Projected Net Income" value={formatCurrency(calc.pnl[5].netProfit)} trend="Stable" icon={<Wallet />} />
-        <KpiCard title="Current Ratio" value={calc.bs[2].currentRatio.toFixed(2)} trend="Healthy" icon={<Activity />} />
-        <KpiCard title="Personal Net Worth" value={formatCurrency(calc.netWorth)} trend="Strong" icon={<Users />} />
-      </div>
+      {/* KPIs DELETED TEMPORARILY FOR TESTING */}
 
       {/* Expert Financial Insight / Executive Summary */}
       <div className="flex flex-col md:flex-row gap-6">
