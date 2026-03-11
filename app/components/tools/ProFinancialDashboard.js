@@ -261,12 +261,18 @@ const ProFinancialDashboard = () => {
         <ChartContainer title="Revenue & Net Profit Projection">
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={calc.pnl}>
+              <defs>
+                <linearGradient id="colorRevPro" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#B5945B" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#B5945B" stopOpacity={0}/>
+                </linearGradient>
+              </defs>
               <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
               <XAxis dataKey="year" tickLine={false} axisLine={false} />
               <YAxis tickLine={false} axisLine={false} tickFormatter={(v) => `$${v/1000}k`} />
               <Tooltip formatter={(v) => formatCurrency(v)} />
-              <Area type="monotone" dataKey="sales" stroke={COLORS.blue} fillOpacity={0.1} fill={COLORS.blue} name="Revenue" />
-              <Area type="monotone" dataKey="netProfit" stroke={COLORS.green} fillOpacity={0.1} fill={COLORS.green} name="Net Profit" />
+              <Area type="monotone" dataKey="sales" stroke="#B5945B" strokeWidth={3} fillOpacity={1} fill="url(#colorRevPro)" name="Revenue" />
+              <Area type="monotone" dataKey="netProfit" stroke="#1B1C36" strokeWidth={2} fill="transparent" name="Net Profit" />
             </AreaChart>
           </ResponsiveContainer>
         </ChartContainer>
@@ -278,8 +284,8 @@ const ProFinancialDashboard = () => {
               <XAxis type="number" tickLine={false} axisLine={false} tickFormatter={(v) => `$${v/1000}k`} />
               <YAxis dataKey="year" type="category" tickLine={false} axisLine={false} />
               <Tooltip formatter={(v) => formatCurrency(v)} />
-              <Bar dataKey="totalAssets" fill={COLORS.blue} name="Total Assets" />
-              <Bar dataKey="totalLiabEq" fill={COLORS.purple} name="Liab + Equity" />
+              <Bar dataKey="totalAssets" fill="#B5945B" name="Total Assets" radius={[0, 4, 4, 0]} />
+              <Bar dataKey="totalLiabEq" fill="#1B1C36" name="Liab + Equity" radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </ChartContainer>
