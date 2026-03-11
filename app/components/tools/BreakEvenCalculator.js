@@ -60,7 +60,7 @@ const BreakEvenCalculator = () => {
               INPUT PARAMETERS
             </h3>
             
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <QuickInput 
                 label="Fixed Costs (Total)" 
                 description="Rent, salaries, insurance..."
@@ -82,7 +82,7 @@ const BreakEvenCalculator = () => {
                 onChange={setSellingPricePerUnit} 
                 icon={<TagIcon size={16} />}
               />
-              <div style={{ paddingTop: '24px', marginTop: '10px', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
+              <div style={{ paddingTop: '20px', marginTop: '5px', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
                 <QuickInput 
                   label="Target Desired Profit" 
                   description="Required net income goal"
@@ -189,14 +189,14 @@ const BreakEvenCalculator = () => {
 };
 
 const QuickInput = ({ label, description, value, onChange, icon, highlight }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '10px' }}>
-    <div className="flex flex-col gap-1">
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <div className="flex flex-col gap-0.5">
       <label style={{ fontSize: '0.9rem', fontWeight: '800', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px' }}>
         {label}
       </label>
       <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500' }}>{description}</span>
     </div>
-    <div style={{ position: 'relative', maxWidth: '400px' }}>
+    <div style={{ position: 'relative', width: '100%' }}>
       <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
         <DollarSign size={16} />
       </div>
