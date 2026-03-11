@@ -140,7 +140,7 @@ const AxiomBreakEven = () => {
 
               {/* Col 4: Growth Assumptions */}
               <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <p className="input-header">Strategic Growth (5-Year)</p>
+                <p className="input-header">Strategic Growth</p>
                 <QuickInput label="Rev Growth" description="Annual %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, revenueGrowth: v})} isPercent />
                 <QuickInput label="COGS Growth" description="Annual %" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions({...growthAssumptions, cogsGrowth: v})} isPercent />
                 <QuickInput label="OpEx Inflation" description="Annual %" value={growthAssumptions.expenseInflation} onChange={(v) => setGrowthAssumptions({...growthAssumptions, expenseInflation: v})} isPercent />
@@ -154,7 +154,7 @@ const AxiomBreakEven = () => {
       </div>
 
       {/* 2. NAVIGATION TABS */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', margin: '40px auto' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginTop: '32px', marginBottom: '32px' }}>
         <TabButton active={activeTab === 'forecast'} onClick={() => setActiveTab('forecast')} label="Strategic Forecast" icon={<Calendar size={16} />} />
         <TabButton active={activeTab === 'performance'} onClick={() => setActiveTab('performance')} label="Performance Analysis" icon={<Activity size={16} />} />
         <TabButton active={activeTab === 'whatif'} onClick={() => setActiveTab('whatif')} label="What-If Analysis" icon={<Calculator size={16} />} />
