@@ -60,7 +60,7 @@ const BreakEvenCalculator = () => {
               INPUT PARAMETERS
             </h3>
             
-            <div className="space-y-5">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
               <QuickInput 
                 label="Fixed Costs (Total)" 
                 description="Rent, salaries, insurance..."
@@ -82,7 +82,7 @@ const BreakEvenCalculator = () => {
                 onChange={setSellingPricePerUnit} 
                 icon={<TagIcon size={16} />}
               />
-              <div style={{ paddingTop: '10px', marginTop: '10px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+              <div style={{ paddingTop: '24px', marginTop: '10px', borderTop: '1px solid rgba(0,0,0,0.08)' }}>
                 <QuickInput 
                   label="Target Desired Profit" 
                   description="Required net income goal"
@@ -189,16 +189,16 @@ const BreakEvenCalculator = () => {
 };
 
 const QuickInput = ({ label, description, value, onChange, icon, highlight }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-    <div className="flex justify-between items-center">
-      <label style={{ fontSize: '0.85rem', fontWeight: '700', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px' }}>
+  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '10px' }}>
+    <div className="flex flex-col gap-1">
+      <label style={{ fontSize: '0.9rem', fontWeight: '800', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px' }}>
         {label}
       </label>
-      <span style={{ fontSize: '0.7rem', color: '#999', fontWeight: '500' }}>{description}</span>
+      <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500' }}>{description}</span>
     </div>
-    <div style={{ position: 'relative' }}>
-      <div style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
-        <DollarSign size={14} />
+    <div style={{ position: 'relative', maxWidth: '400px' }}>
+      <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
+        <DollarSign size={16} />
       </div>
       <input 
         type="number" 
@@ -206,18 +206,25 @@ const QuickInput = ({ label, description, value, onChange, icon, highlight }) =>
         onChange={(e) => onChange(Number(e.target.value))}
         style={{ 
           width: '100%', 
-          padding: '12px 14px 12px 35px', 
-          fontSize: '1rem', 
-          fontWeight: '700', 
-          background: '#F9F9F9', 
-          border: highlight ? '1.5px solid rgba(181, 148, 91, 0.4)' : '1px solid rgba(0,0,0,0.08)', 
+          padding: '14px 16px 14px 40px', 
+          fontSize: '1.1rem', 
+          fontWeight: '800', 
+          background: '#FFFFFF', 
+          border: highlight ? '2px solid #B5945B' : '1.5px solid rgba(27, 28, 54, 0.1)', 
           borderRadius: '12px',
           outline: 'none',
           color: '#1B1C36',
-          transition: 'all 0.2s'
+          transition: 'all 0.3s ease',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
         }}
-        onFocus={(e) => e.target.style.borderColor = '#B5945B'}
-        onBlur={(e) => e.target.style.borderColor = highlight ? 'rgba(181, 148, 91, 0.4)' : 'rgba(0,0,0,0.08)'}
+        onFocus={(e) => {
+          e.target.style.borderColor = '#B5945B';
+          e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
+        }}
+        onBlur={(e) => {
+          e.target.style.borderColor = highlight ? '#B5945B' : 'rgba(27, 28, 54, 0.1)';
+          e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
+        }}
       />
     </div>
   </div>
