@@ -224,34 +224,6 @@ const ProFinancialDashboard = () => {
         <KpiCard title="Personal Net Worth" value={formatCurrency(calc.netWorth)} trend="Strong" icon={<Users />} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <ChartContainer title="Revenue & Net Profit Projection">
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={calc.pnl}>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-              <XAxis dataKey="year" tickLine={false} axisLine={false} />
-              <YAxis tickLine={false} axisLine={false} tickFormatter={(v) => `$${v/1000}k`} />
-              <Tooltip formatter={(v) => formatCurrency(v)} />
-              <Area type="monotone" dataKey="sales" stroke={COLORS.blue} fillOpacity={0.1} fill={COLORS.blue} name="Revenue" />
-              <Area type="monotone" dataKey="netProfit" stroke={COLORS.green} fillOpacity={0.1} fill={COLORS.green} name="Net Profit" />
-            </AreaChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-
-        <ChartContainer title="Balance Sheet Structure">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={calc.bs} layout="vertical">
-              <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
-              <XAxis type="number" tickLine={false} axisLine={false} tickFormatter={(v) => `$${v/1000}k`} />
-              <YAxis dataKey="year" type="category" tickLine={false} axisLine={false} />
-              <Tooltip formatter={(v) => formatCurrency(v)} />
-              <Bar dataKey="totalAssets" fill={COLORS.blue} name="Total Assets" />
-              <Bar dataKey="totalLiabEq" fill={COLORS.purple} name="Liab + Equity" />
-            </BarChart>
-          </ResponsiveContainer>
-        </ChartContainer>
-      </div>
-
       {/* Expert Financial Insight / Executive Summary */}
       <div className="flex flex-col md:flex-row gap-6">
         <div className="flex-grow contact-info-box" style={{ padding: '30px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '24px' }}>
@@ -294,6 +266,34 @@ const ProFinancialDashboard = () => {
             <span>{isExporting ? 'Exporting...' : 'Download Appendix'}</span>
           </button>
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <ChartContainer title="Revenue & Net Profit Projection">
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart data={calc.pnl}>
+              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+              <XAxis dataKey="year" tickLine={false} axisLine={false} />
+              <YAxis tickLine={false} axisLine={false} tickFormatter={(v) => `$${v/1000}k`} />
+              <Tooltip formatter={(v) => formatCurrency(v)} />
+              <Area type="monotone" dataKey="sales" stroke={COLORS.blue} fillOpacity={0.1} fill={COLORS.blue} name="Revenue" />
+              <Area type="monotone" dataKey="netProfit" stroke={COLORS.green} fillOpacity={0.1} fill={COLORS.green} name="Net Profit" />
+            </AreaChart>
+          </ResponsiveContainer>
+        </ChartContainer>
+
+        <ChartContainer title="Balance Sheet Structure">
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={calc.bs} layout="vertical">
+              <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
+              <XAxis type="number" tickLine={false} axisLine={false} tickFormatter={(v) => `$${v/1000}k`} />
+              <YAxis dataKey="year" type="category" tickLine={false} axisLine={false} />
+              <Tooltip formatter={(v) => formatCurrency(v)} />
+              <Bar dataKey="totalAssets" fill={COLORS.blue} name="Total Assets" />
+              <Bar dataKey="totalLiabEq" fill={COLORS.purple} name="Liab + Equity" />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartContainer>
       </div>
     </div>
   );
