@@ -188,47 +188,62 @@ const BreakEvenCalculator = () => {
   );
 };
 
-const QuickInput = ({ label, description, value, onChange, icon, highlight }) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-    <div className="flex items-baseline justify-between gap-4">
-      <label style={{ fontSize: '0.9rem', fontWeight: '800', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
-        {label}
-      </label>
-      <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500', textAlign: 'right' }}>{description}</span>
-    </div>
-    <div style={{ position: 'relative', width: '100%' }}>
-      <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
-        <DollarSign size={16} />
+const QuickInput = ({ label, description, value, onChange, icon, highlight }) => {
+  const formatInputDisplay = (val) => {
+    if (val === 0 || val === '0') return '0';
+    if (!val) return '';
+    return new Intl.NumberFormat('en-US').format(val);
+  };
+
+  const handleInputChange = (e) => {
+    const rawValue = e.target.value.replace(/,/g, '');
+    if (rawValue === '' || !isNaN(rawValue)) {
+      onChange(rawValue === '' ? 0 : Number(rawValue));
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <div className="flex items-baseline justify-between gap-4">
+        <label style={{ fontSize: '0.9rem', fontWeight: '800', color: highlight ? '#B5945B' : '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+          {label}
+        </label>
+        <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500', textAlign: 'right' }}>{description}</span>
       </div>
-      <input 
-        type="number" 
-        value={value} 
-        onChange={(e) => onChange(Number(e.target.value))}
-        style={{ 
-          width: '100%', 
-          padding: '14px 16px 14px 40px', 
-          fontSize: '1.1rem', 
-          fontWeight: '800', 
-          background: '#FFFFFF', 
-          border: highlight ? '2px solid #B5945B' : '1.5px solid rgba(27, 28, 54, 0.1)', 
-          borderRadius: '12px',
-          outline: 'none',
-          color: '#1B1C36',
-          transition: 'all 0.3s ease',
-          boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
-        }}
-        onFocus={(e) => {
-          e.target.style.borderColor = '#B5945B';
-          e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
-        }}
-        onBlur={(e) => {
-          e.target.style.borderColor = highlight ? '#B5945B' : 'rgba(27, 28, 54, 0.1)';
-          e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
-        }}
-      />
+      <div style={{ position: 'relative', width: '100%' }}>
+        <div style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
+          <DollarSign size={16} />
+        </div>
+        <input 
+          type="text" 
+          value={formatInputDisplay(value)} 
+          onChange={handleInputChange}
+          style={{ 
+            width: '100%', 
+            padding: '14px 16px 14px 40px', 
+            fontSize: '1.1rem', 
+            fontWeight: '800', 
+            background: '#FFFFFF', 
+            border: highlight ? '2px solid #B5945B' : '1.5px solid rgba(27, 28, 54, 0.1)', 
+            borderRadius: '12px',
+            outline: 'none',
+            color: '#1B1C36',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
+          }}
+          onFocus={(e) => {
+            e.target.style.borderColor = '#B5945B';
+            e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = highlight ? '#B5945B' : 'rgba(27, 28, 54, 0.1)';
+            e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
+          }}
+        />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const ResultCard = ({ label, units, revenue, type }) => (
   <div className="contact-form-box" style={{ 
