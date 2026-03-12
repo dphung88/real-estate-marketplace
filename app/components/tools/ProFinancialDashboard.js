@@ -335,10 +335,10 @@ const ProFinancialDashboard = () => {
 
   const renderPersonalStatus = () => (
     <div className="contact-form-box p-12 bg-white border border-[#B5945B]/30 animate-in fade-in duration-500">
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '60px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '60px' }}>
         
         {/* Col 1: Personal Info & Assets */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <p className="input-header">Director & Assets</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             <div className="flex flex-col gap-4">
@@ -366,7 +366,7 @@ const ProFinancialDashboard = () => {
         </div>
 
         {/* Col 2: Liabilities */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <p className="input-header" style={{ borderLeftColor: '#ef4444', color: '#ef4444' }}>Liabilities</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {Object.entries(data.personal.liabilities).map(([k, v]) => (
@@ -383,7 +383,7 @@ const ProFinancialDashboard = () => {
         </div>
 
         {/* Col 3: Financial Backing Summary */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <p className="input-header">Executive Summary</p>
           <div className="bg-[#1B1C36] p-12 rounded-3xl border-2 border-[#B5945B] shadow-xl h-full flex flex-col justify-center">
             <div className="mb-12">
