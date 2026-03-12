@@ -336,7 +336,7 @@ const ProFinancialDashboard = () => {
   const renderPersonalStatus = () => (
     <div className="axiom-finance-hub">
       <div className="contact-form-box mb-8" style={{ padding: '30px', background: '#FFF', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
           
           {/* Col 1: Personal Assets */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
