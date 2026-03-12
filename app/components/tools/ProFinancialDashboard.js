@@ -334,31 +334,31 @@ const ProFinancialDashboard = () => {
   };
 
   const renderPersonalStatus = () => (
-    <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30 animate-in fade-in duration-500">
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+    <div className="contact-form-box p-12 bg-white border border-[#B5945B]/30 animate-in fade-in duration-500">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px' }}>
         
         {/* Col 1: Personal Info & Assets */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <p className="input-header">Director & Assets</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div className="flex flex-col gap-3">
-              <label className="text-[0.8rem] font-black uppercase tracking-widest text-[#B5945B] pl-1">Annual Salary</label>
+              <label className="text-[0.85rem] font-black uppercase tracking-widest text-[#B5945B] pl-1 mb-1">Annual Salary</label>
               <input 
                 type="text" value={formatInputDisplay(data.personal.salary)}
                 onChange={(e) => {
                   const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
                   setData(prev => ({...prev, personal: {...prev.personal, salary: cleanValue === '' ? 0 : Number(cleanValue)}}));
                 }}
-                style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
+                style={{ width: '100%', padding: '12px 16px', fontSize: '1rem', fontWeight: '600', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
               />
             </div>
             {Object.entries(data.personal.assets).map(([k, v]) => (
               <div key={k} className="flex flex-col gap-3">
-                <label className="text-[0.8rem] font-black uppercase tracking-widest text-slate-400 pl-1">{k}</label>
+                <label className="text-[0.85rem] font-black uppercase tracking-widest text-slate-400 pl-1 mb-1">{k}</label>
                 <input 
                   type="text" value={formatInputDisplay(v)}
                   onChange={(e) => updatePersonalValue('assets', k, e.target.value)}
-                  style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
+                  style={{ width: '100%', padding: '12px 16px', fontSize: '1rem', fontWeight: '600', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
                 />
               </div>
             ))}
@@ -366,16 +366,16 @@ const ProFinancialDashboard = () => {
         </div>
 
         {/* Col 2: Liabilities */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <p className="input-header" style={{ borderLeftColor: '#ef4444', color: '#ef4444' }}>Liabilities</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             {Object.entries(data.personal.liabilities).map(([k, v]) => (
               <div key={k} className="flex flex-col gap-3">
-                <label className="text-[0.8rem] font-black uppercase tracking-widest text-red-300 pl-1">{k}</label>
+                <label className="text-[0.85rem] font-black uppercase tracking-widest text-red-300 pl-1 mb-1">{k}</label>
                 <input 
                   type="text" value={formatInputDisplay(v)}
                   onChange={(e) => updatePersonalValue('liabilities', k, e.target.value)}
-                  style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
+                  style={{ width: '100%', padding: '12px 16px', fontSize: '1rem', fontWeight: '600', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
                 />
               </div>
             ))}
@@ -383,30 +383,30 @@ const ProFinancialDashboard = () => {
         </div>
 
         {/* Col 3: Financial Backing Summary */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
           <p className="input-header">Executive Summary</p>
-          <div className="bg-[#1B1C36] p-8 rounded-2xl border-2 border-[#B5945B] shadow-xl h-full flex flex-col justify-center">
-            <div className="flex justify-between items-center mb-6">
+          <div className="bg-[#1B1C36] p-10 rounded-2xl border-2 border-[#B5945B] shadow-xl h-full flex flex-col justify-center">
+            <div className="flex justify-between items-center mb-8">
               <div>
-                <span className="text-[#B5945B] text-[0.6rem] font-black uppercase tracking-[0.2em] block mb-1">Director Name</span>
-                <span className="text-white font-bold">{data.personal.name}</span>
+                <span className="text-[#B5945B] text-[0.65rem] font-black uppercase tracking-[0.25em] block mb-2">Director Name</span>
+                <span className="text-white text-xl font-bold">{data.personal.name}</span>
               </div>
-              <div className="h-10 w-10 bg-[#B5945B]/20 rounded-full flex items-center justify-center">
-                <Users size={20} className="text-[#B5945B]" />
+              <div className="h-12 w-12 bg-[#B5945B]/20 rounded-full flex items-center justify-center">
+                <Users size={24} className="text-[#B5945B]" />
               </div>
             </div>
-            <div className="mb-8">
-              <span className="text-[#B5945B] text-xs font-black uppercase tracking-[0.2em] block mb-2">Total Net Worth</span>
-              <h2 className="text-4xl font-black text-white">{formatCurrency(calc.netWorth)}</h2>
+            <div className="mb-10">
+              <span className="text-[#B5945B] text-xs font-black uppercase tracking-[0.25em] block mb-3">Total Net Worth</span>
+              <h2 className="text-5xl font-black text-white">{formatCurrency(calc.netWorth)}</h2>
             </div>
-            <div className="pt-6 border-t border-white/10 flex gap-4">
+            <div className="pt-8 border-t border-white/10 flex gap-6">
               <div className="flex-1">
-                <span className="text-white/40 text-[0.6rem] font-black uppercase tracking-widest block mb-1">Assets</span>
-                <span className="text-white font-bold text-sm">{formatCurrency(calc.personalAssets)}</span>
+                <span className="text-white/40 text-[0.65rem] font-black uppercase tracking-widest block mb-2">Assets</span>
+                <span className="text-white text-lg font-bold">{formatCurrency(calc.personalAssets)}</span>
               </div>
               <div className="flex-1">
-                <span className="text-white/40 text-[0.6rem] font-black uppercase tracking-widest block mb-1">Liabilities</span>
-                <span className="text-white font-bold text-sm">{formatCurrency(calc.personalLiab)}</span>
+                <span className="text-white/40 text-[0.65rem] font-black uppercase tracking-widest block mb-2">Liabilities</span>
+                <span className="text-white text-lg font-bold">{formatCurrency(calc.personalLiab)}</span>
               </div>
             </div>
           </div>
@@ -414,7 +414,7 @@ const ProFinancialDashboard = () => {
 
       </div>
       <style jsx>{`
-        .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-left: 8px; border-left: 3px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.2rem; }
+        .input-header { font-size: 0.9rem; font-weight: 950; color: #B5945B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; padding-left: 12px; border-left: 4px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.5rem; }
       `}</style>
     </div>
   );
