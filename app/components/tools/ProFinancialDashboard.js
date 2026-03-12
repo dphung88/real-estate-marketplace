@@ -397,11 +397,11 @@ const ProFinancialDashboard = () => {
   const renderTableData = (category, title, yearsList) => (
     <div className="mb-10">
       <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
-      <div className="overflow-x-auto custom-scrollbar">
-        <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+      <div className="overflow-x-auto custom-scrollbar -mx-4 md:mx-0 px-4 md:px-0">
+        <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '800px' }}>
           <thead>
             <tr>
-              <th style={{ width: '25%', paddingBottom: '12px' }}>
+              <th style={{ width: '30%', paddingBottom: '12px' }}>
                 <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px' }}>{title}</span>
               </th>
               {yearsList.map(y => (
@@ -412,7 +412,7 @@ const ProFinancialDashboard = () => {
           <tbody>
             {Object.entries(data[category]).map(([name, vals]) => (
               <tr key={name}>
-                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%' }}>{name}</td>
+                <td style={{ padding: '12px 0', fontSize: '0.95rem', md: '1rem', fontWeight: '400', color: '#666666', width: '30%' }}>{name}</td>
                 {vals.map((v, i) => (
                   <td key={i} style={{ padding: '6px 4px' }}>
                     <input 
@@ -426,7 +426,7 @@ const ProFinancialDashboard = () => {
                           return newData;
                         });
                       }} 
-                      style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
+                      style={{ width: '100%', padding: '8px 10px', fontSize: '0.9rem', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
                     />
                   </td>
                 ))}
@@ -441,7 +441,7 @@ const ProFinancialDashboard = () => {
   return (
     <div className="w-full axiom-finance-hub" style={{ color: '#1B1C36', fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
       <div className="max-w-7xl mx-auto">
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginBottom: '40px' }}>
+        <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-center gap-2.5 md:gap-4 mb-8 md:mb-10 px-4 md:px-0">
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'income', label: 'Income Statement', icon: FileText },
@@ -449,30 +449,31 @@ const ProFinancialDashboard = () => {
             { id: 'personal', label: 'Personal Status', icon: Users }
           ].map(tab => (
             <button
-              key={tab.id} onClick={() => setActiveTab(tab.id)}
+              key={tab.id} 
+              onClick={() => setActiveTab(tab.id)}
+              className="flex items-center justify-center gap-2 md:gap-2.5 px-3 md:px-7 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-xs md:text-base font-bold transition-all duration-300 w-[calc(50%-5px)] md:w-auto"
               style={{ 
-                display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', borderRadius: '14px',
-                fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.3s ease',
                 background: activeTab === tab.id ? '#B5945B' : '#FFFFFF',
                 color: activeTab === tab.id ? '#1B1C36' : '#666666',
                 border: activeTab === tab.id ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.05)',
                 boxShadow: activeTab === tab.id ? '0 4px 14px rgba(181, 148, 91, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
               }}
             >
-              <tab.icon size={18} /> {tab.label}
+              <tab.icon size={16} className="shrink-0 md:w-[18px] md:h-[18px]" /> 
+              <span className="whitespace-nowrap">{tab.label === 'Income Statement' && typeof window !== 'undefined' && window.innerWidth < 768 ? 'Income' : tab.label}</span>
             </button>
           ))}
         </div>
 
         <div id="pro-financial-report" className="animate-in fade-in duration-500 px-4 md:px-0">
           {activeTab === 'dashboard' && renderDashboard()}
-          {activeTab === 'income' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30">
+          {activeTab === 'income' && <div className="contact-form-box p-4 md:p-8 bg-white border border-[#B5945B]/30">
             {renderTableData('sales', 'Sales Activities', data.years)}
             {renderTableData('cogs', 'Cost of Sales (Direct)', data.years)}
             {renderTableData('salesExpenses', 'Sales Expenses', data.years)}
             {renderTableData('adminExpenses', 'Operating Expenses', data.years)}
           </div>}
-          {activeTab === 'balance' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30">
+          {activeTab === 'balance' && <div className="contact-form-box p-4 md:p-8 bg-white border border-[#B5945B]/30">
             {renderTableData('assets', 'Assets', ['2028', '2029', '2030'])}
             {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'])}
           </div>}
