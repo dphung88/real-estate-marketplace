@@ -368,13 +368,15 @@ const QuickInput = ({ label, value, onChange, isPercent }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-      <label style={{ fontSize: '0.75rem', fontWeight: '700', color: '#1B1C36', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-        {label}
-      </label>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <div className="flex items-baseline justify-between gap-4">
+        <label style={{ fontSize: '0.85rem', fontWeight: '900', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+          {label}
+        </label>
+      </div>
       <div style={{ position: 'relative', width: '100%' }}>
-        <div style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
-          {isPercent ? <span style={{ fontWeight: '900', fontSize: '0.8rem' }}>%</span> : <DollarSign size={12} />}
+        <div style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
+          {isPercent ? <span style={{ fontWeight: '900', fontSize: '1rem' }}>%</span> : <DollarSign size={14} />}
         </div>
         <input 
           type="text" 
@@ -382,23 +384,24 @@ const QuickInput = ({ label, value, onChange, isPercent }) => {
           onChange={handleInputChange}
           style={{ 
             width: '100%', 
-            padding: '8px 10px 8px 25px', 
-            fontSize: '0.9rem', 
-            fontWeight: '700', 
+            padding: '12px 16px 12px 35px', 
+            fontSize: '1rem', 
+            fontWeight: '800', 
             background: '#FFFFFF', 
-            border: '1px solid rgba(27, 28, 54, 0.1)', 
-            borderRadius: '8px',
+            border: '1.5px solid rgba(27, 28, 54, 0.1)', 
+            borderRadius: '12px',
             outline: 'none',
             color: '#1B1C36',
-            transition: 'all 0.2s ease',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
           }}
           onFocus={(e) => {
             e.target.style.borderColor = '#B5945B';
-            e.target.style.boxShadow = '0 0 0 2px rgba(181, 148, 91, 0.1)';
+            e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
           }}
           onBlur={(e) => {
             e.target.style.borderColor = 'rgba(27, 28, 54, 0.1)';
-            e.target.style.boxShadow = 'none';
+            e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
           }}
         />
       </div>
