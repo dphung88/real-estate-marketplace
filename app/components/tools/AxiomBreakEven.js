@@ -11,29 +11,53 @@ import {
 } from 'lucide-react';
 
 const AxiomBreakEven = () => {
-  // --- DETAILED STATE BASED ON EXCEL PLAN ---
-  // Revenue by Category
+  // --- DETAILED STATE BASED ON PRO FINANCIAL INCOME STATEMENT ---
+  
+  // 1. Sales Activities
   const [salesData, setSalesData] = useState({
-    frenchDoors: 571900,
-    panelDoors: 275400,
-    windows: 74100,
-    newProducts: 0
+    'French doors': 571900,
+    'Panel doors': 275400,
+    'Windows': 74100,
+    'New door model': 0
   });
 
-  // Cost of Sales (Direct Costs)
+  // 2. Cost of Sales (Direct Costs)
   const [cogsData, setCogsData] = useState({
-    materials: 491900,
-    directLabour: 80800,
-    freightDuty: 18600
+    'Opening Inventory': 173700,
+    'Material Purchases': 491900,
+    'Freight & Duty': 18600,
+    'Other Materials': 0,
+    'Closing Inventory': -147500,
+    'Direct Labour Wages': 80800,
+    'Repairs & Maint.': 4800,
+    'Services / Utilities': 6400,
+    'Depreciation (COGS)': 20200,
+    'Overhead': 18400,
+    'Other COGS': 12000
   });
 
-  // Operating Expenses (Fixed)
-  const [expensesData, setExpensesData] = useState({
-    sellingSalaries: 38200,
-    advertising: 9800,
-    managementSalaries: 32000,
-    officeExpenses: 12600,
-    interest: 29500
+  // 3. Sales Expenses
+  const [salesExpData, setSalesExpData] = useState({
+    'Selling Salaries': 38200,
+    'Traveling': 0,
+    'Advertising': 9800,
+    'Shipping & Delivery': 27400,
+    'Depreciation (Sales)': 0,
+    'Other Sales Exp.': 8000
+  });
+
+  // 4. Operating Expenses (Admin)
+  const [adminExpData, setAdminExpData] = useState({
+    'Management Salaries': 32000,
+    'Office Salaries': 34400,
+    'Professional Fees': 9900,
+    'Telecommunication': 7000,
+    'Office Expenses': 12600,
+    'Insurance & Taxes': 0,
+    'Bank Charges': 14300,
+    'Interest on L.T.D.': 29500,
+    'Bad Debts': 8700,
+    'Research & Dev.': 0
   });
 
   // Growth Assumptions for 5-Year Plan
@@ -43,7 +67,6 @@ const AxiomBreakEven = () => {
     expenseInflation: 5 // %
   });
 
-  const [maxUnits, setMaxUnits] = useState(1500);
   const [isInputExpanded, setIsInputExpanded] = useState(true);
   const [activeTab, setActiveTab] = useState('forecast');
   
@@ -58,7 +81,10 @@ const AxiomBreakEven = () => {
   const rawCogs = Object.values(cogsData).reduce((a, b) => a + b, 0);
   const totalCogs = rawCogs * (1 + costAdjustment / 100);
   
-  const totalExpenses = Object.values(expensesData).reduce((a, b) => a + b, 0);
+  const totalSalesExp = Object.values(salesExpData).reduce((a, b) => a + b, 0);
+  const totalAdminExp = Object.values(adminExpData).reduce((a, b) => a + b, 0);
+  const totalExpenses = totalSalesExp + totalAdminExp;
+  
   const grossProfit = totalSales - totalCogs;
   const netProfit = grossProfit - totalExpenses;
   
@@ -66,16 +92,13 @@ const AxiomBreakEven = () => {
   const marginOfSafety = totalSales > 0 ? ((totalSales - (totalExpenses / (grossProfit / totalSales))) / totalSales) * 100 : 0;
   
   // For Break-even: Assume weighted average
-  const avgSellingPrice = 1000; 
-  const avgVariableCost = (totalCogs / totalSales) * avgSellingPrice;
-  const yearlyFixedCosts = totalExpenses;
-  const breakEvenRevenue = (yearlyFixedCosts / (grossProfit / totalSales));
+  const breakEvenRevenue = (grossProfit > 0) ? (totalExpenses / (grossProfit / totalSales)) : 0;
 
   // --- 5-YEAR PROJECTION LOGIC ---
   const [forecast, setForecast] = useState([]);
   
   useEffect(() => {
-    const years = ['2024', '2025', '2026', '2027', '2028', '2029'];
+    const years = ['2026', '2027', '2028', '2029', '2030', '2031'];
     const projection = years.map((year, i) => {
       const revGrowthFactor = Math.pow(1 + (growthAssumptions.revenueGrowth / 100), i);
       const cogsGrowthFactor = Math.pow(1 + (growthAssumptions.cogsGrowth / 100), i);
@@ -89,14 +112,14 @@ const AxiomBreakEven = () => {
       return { year, revenue: rev, grossProfit: gp, netProfit: np, expenses: exp };
     });
     setForecast(projection);
-  }, [salesData, cogsData, expensesData, growthAssumptions, priceAdjustment, costAdjustment]);
+  }, [salesData, cogsData, salesExpData, adminExpData, growthAssumptions, priceAdjustment, costAdjustment]);
 
   const formatUSD = (v) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(v);
 
   return (
     <div className="axiom-finance-hub" style={{ fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
       
-      {/* 1. COMPREHENSIVE INPUT PANEL (3 COLUMNS) */}
+      {/* 1. COMPREHENSIVE INPUT PANEL (4 COLUMNS) */}
       <div className="contact-form-box mb-8" style={{ padding: '0', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
         <button 
           onClick={() => setIsInputExpanded(!isInputExpanded)}
@@ -110,44 +133,74 @@ const AxiomBreakEven = () => {
         </button>
 
         {isInputExpanded && (
-          <div style={{ padding: '40px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
-            <div style={{ display: 'flex', flexWrap: 'nowrap', gap: '30px', overflowX: 'auto', paddingBottom: '10px' }} className="custom-scrollbar">
+          <div style={{ padding: '30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '30px' }}>
+              
               {/* Col 1: Sales Activities */}
-              <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Sales Activities</p>
-                <QuickInput label="French Doors" description="Main Line" value={salesData.frenchDoors} onChange={(v) => setSalesData(prev => ({...prev, frenchDoors: v}))} />
-                <QuickInput label="Panel Doors" description="Secondary" value={salesData.panelDoors} onChange={(v) => setSalesData(prev => ({...prev, panelDoors: v}))} />
-                <QuickInput label="Windows" description="Accessory" value={salesData.windows} onChange={(v) => setSalesData(prev => ({...prev, windows: v}))} />
-                <QuickInput label="New Products" description="R&D" value={salesData.newProducts} onChange={(v) => setSalesData(prev => ({...prev, newProducts: v}))} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                  {Object.entries(salesData).map(([key, value]) => (
+                    <QuickInput key={key} label={key} value={value} onChange={(v) => setSalesData(prev => ({...prev, [key]: v}))} />
+                  ))}
+                </div>
               </div>
 
               {/* Col 2: Cost of Sales */}
-              <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Cost of Sales (Direct)</p>
-                <QuickInput label="Materials" description="Purchases" value={cogsData.materials} onChange={(v) => setCogsData(prev => ({...prev, materials: v}))} />
-                <QuickInput label="Direct Labour" description="Wages" value={cogsData.directLabour} onChange={(v) => setCogsData(prev => ({...prev, directLabour: v}))} />
-                <QuickInput label="Freight & Duty" description="Shipping" value={cogsData.freightDuty} onChange={(v) => setCogsData(prev => ({...prev, freightDuty: v}))} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                  {Object.entries(cogsData).map(([key, value]) => (
+                    <QuickInput key={key} label={key} value={value} onChange={(v) => setCogsData(prev => ({...prev, [key]: v}))} />
+                  ))}
+                </div>
               </div>
 
-              {/* Col 3: Operating Expenses */}
-              <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {/* Col 3: Sales Expenses */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <p className="input-header">Sales Expenses</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                  {Object.entries(salesExpData).map(([key, value]) => (
+                    <QuickInput key={key} label={key} value={value} onChange={(v) => setSalesExpData(prev => ({...prev, [key]: v}))} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Col 4: Operating Expenses */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Operating Expenses</p>
-                <QuickInput label="Selling Salaries" description="S&M" value={expensesData.sellingSalaries} onChange={(v) => setExpensesData(prev => ({...prev, sellingSalaries: v}))} />
-                <QuickInput label="Advertising" description="Marketing" value={expensesData.advertising} onChange={(v) => setExpensesData(prev => ({...prev, advertising: v}))} />
-                <QuickInput label="Management" description="Admin" value={expensesData.managementSalaries} onChange={(v) => setExpensesData(prev => ({...prev, managementSalaries: v}))} />
-                <QuickInput label="Interest" description="Finance" value={expensesData.interest} onChange={(v) => setExpensesData(prev => ({...prev, interest: v}))} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                  {Object.entries(adminExpData).map(([key, value]) => (
+                    <QuickInput key={key} label={key} value={value} onChange={(v) => setAdminExpData(prev => ({...prev, [key]: v}))} />
+                  ))}
+                </div>
               </div>
 
-              {/* Col 4: Growth Assumptions */}
-              <div style={{ flex: '1 0 22%', minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <p className="input-header">Strategic Growth (5-Year)</p>
-                <QuickInput label="Rev Growth" description="Annual %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions(prev => ({...prev, revenueGrowth: v}))} isPercent />
-                <QuickInput label="COGS Growth" description="Annual %" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions(prev => ({...prev, cogsGrowth: v}))} isPercent />
-                <QuickInput label="OpEx Inflation" description="Annual %" value={growthAssumptions.expenseInflation} onChange={(v) => setGrowthAssumptions(prev => ({...prev, expenseInflation: v}))} isPercent />
-              </div>
             </div>
+
+            {/* Growth Assumptions Row */}
+            <div style={{ marginTop: '40px', paddingTop: '30px', borderTop: '1px solid rgba(181, 148, 91, 0.2)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+               <div style={{ flex: 1 }}>
+                  <p className="input-header" style={{ marginBottom: '15px' }}>Growth Assumptions</p>
+                  <div className="flex flex-wrap gap-6">
+                    <div style={{ minWidth: '180px' }}>
+                      <QuickInput label="Rev Growth %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions(prev => ({...prev, revenueGrowth: v}))} isPercent />
+                    </div>
+                    <div style={{ minWidth: '180px' }}>
+                      <QuickInput label="COGS Growth %" value={growthAssumptions.cogsGrowth} onChange={(v) => setGrowthAssumptions(prev => ({...prev, cogsGrowth: v}))} isPercent />
+                    </div>
+                    <div style={{ minWidth: '180px' }}>
+                      <QuickInput label="OpEx Inflation %" value={growthAssumptions.expenseInflation} onChange={(v) => setGrowthAssumptions(prev => ({...prev, expenseInflation: v}))} isPercent />
+                    </div>
+                  </div>
+               </div>
+            </div>
+
             <style jsx>{`
               .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 8px; border-left: 3px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.2rem; }
+              .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+              .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+              .custom-scrollbar::-webkit-scrollbar-thumb { background: #B5945B; border-radius: 10px; }
             `}</style>
           </div>
         )}
@@ -209,9 +262,9 @@ const AxiomBreakEven = () => {
               EXECUTIVE FINANCIAL INSIGHT
             </h4>
             <p style={{ fontSize: '1rem', lineHeight: '1.7', color: '#E8E4D8', margin: 0 }}>
-              Current Gross Margin is <strong>{((grossProfit/totalSales)*100).toFixed(1)}%</strong>. 
+              Current Gross Margin is <strong>{totalSales > 0 ? ((grossProfit/totalSales)*100).toFixed(1) : 0}%</strong>. 
               {netProfit > 0 ? " Your operations are profitable. " : " You are currently operating at a loss. "}
-              Strategic target should be reducing COGS to below 60% of sales.
+              Strategic target should be reducing COGS and OpEx to maximize net yield.
             </p>
           </div>
         </div>
@@ -244,7 +297,7 @@ const AxiomBreakEven = () => {
                         <td style={{ padding: '12px 10px', color: row.netProfit >= 0 ? '#10B981' : '#EF4444', fontWeight: '800' }}>
                           {formatUSD(row.netProfit)}
                         </td>
-                        <td style={{ padding: '12px 10px' }}>{((row.netProfit/row.revenue)*100).toFixed(1)}%</td>
+                        <td style={{ padding: '12px 10px' }}>{row.revenue > 0 ? ((row.netProfit/row.revenue)*100).toFixed(1) : 0}%</td>
                       </tr>
                     ))}
                   </tbody>
@@ -290,7 +343,7 @@ const AxiomBreakEven = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <MetricCard label="Gross Margin %" value={`${((grossProfit/totalSales)*100).toFixed(1)}%`} />
+            <MetricCard label="Gross Margin %" value={`${totalSales > 0 ? ((grossProfit/totalSales)*100).toFixed(1) : 0}%`} />
             <MetricCard label="Margin of Safety" value={`${marginOfSafety.toFixed(1)}%`} />
             <MetricCard label="BEP Revenue" value={formatUSD(breakEvenRevenue)} />
           </div>
@@ -300,7 +353,7 @@ const AxiomBreakEven = () => {
   );
 };
 
-const QuickInput = ({ label, description, value, onChange, isPercent }) => {
+const QuickInput = ({ label, value, onChange, isPercent }) => {
   const formatInputDisplay = (val) => {
     if (val === 0 || val === '0') return '0';
     if (!val) return '';
@@ -308,23 +361,20 @@ const QuickInput = ({ label, description, value, onChange, isPercent }) => {
   };
 
   const handleInputChange = (e) => {
-    const rawValue = e.target.value.replace(/,/g, '');
-    if (rawValue === '' || !isNaN(rawValue)) {
-      onChange(rawValue === '' ? 0 : Number(rawValue));
+    const rawValue = e.target.value.replace(/,/g, '').replace(/[^\d.-]/g, '');
+    if (rawValue === '' || rawValue === '-' || !isNaN(rawValue)) {
+      onChange(rawValue === '' || rawValue === '-' ? 0 : Number(rawValue));
     }
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      <div className="flex items-baseline justify-between gap-4">
-        <label style={{ fontSize: '0.85rem', fontWeight: '900', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
-          {label}
-        </label>
-        <span style={{ fontSize: '0.75rem', color: '#888', fontWeight: '500', textAlign: 'right' }}>{description}</span>
-      </div>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+      <label style={{ fontSize: '0.75rem', fontWeight: '700', color: '#1B1C36', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+        {label}
+      </label>
       <div style={{ position: 'relative', width: '100%' }}>
-        <div style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
-          {isPercent ? <span style={{ fontWeight: '900', fontSize: '1rem' }}>%</span> : <DollarSign size={14} />}
+        <div style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
+          {isPercent ? <span style={{ fontWeight: '900', fontSize: '0.8rem' }}>%</span> : <DollarSign size={12} />}
         </div>
         <input 
           type="text" 
@@ -332,24 +382,23 @@ const QuickInput = ({ label, description, value, onChange, isPercent }) => {
           onChange={handleInputChange}
           style={{ 
             width: '100%', 
-            padding: '12px 16px 12px 35px', 
-            fontSize: '1rem', 
-            fontWeight: '800', 
+            padding: '8px 10px 8px 25px', 
+            fontSize: '0.9rem', 
+            fontWeight: '700', 
             background: '#FFFFFF', 
-            border: '1.5px solid rgba(27, 28, 54, 0.1)', 
-            borderRadius: '12px',
+            border: '1px solid rgba(27, 28, 54, 0.1)', 
+            borderRadius: '8px',
             outline: 'none',
             color: '#1B1C36',
-            transition: 'all 0.3s ease',
-            boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
+            transition: 'all 0.2s ease',
           }}
           onFocus={(e) => {
             e.target.style.borderColor = '#B5945B';
-            e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
+            e.target.style.boxShadow = '0 0 0 2px rgba(181, 148, 91, 0.1)';
           }}
           onBlur={(e) => {
             e.target.style.borderColor = 'rgba(27, 28, 54, 0.1)';
-            e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
+            e.target.style.boxShadow = 'none';
           }}
         />
       </div>
