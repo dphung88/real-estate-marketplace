@@ -398,7 +398,8 @@ const ProFinancialDashboard = () => {
     <div className="mb-10">
       <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
       <div className="overflow-x-auto custom-scrollbar">
-        <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+        {/* Desktop Table: Vẫn dùng table chuẩn để đảm bảo desktop không bao giờ lỗi */}
+        <table className="hidden md:table w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
           <thead>
             <tr>
               <th style={{ width: '25%', paddingBottom: '12px' }}>
@@ -434,6 +435,39 @@ const ProFinancialDashboard = () => {
             ))}
           </tbody>
         </table>
+
+        {/* Mobile View: Xếp dọc hoàn toàn từng mục */}
+        <div className="md:hidden space-y-8">
+          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', display: 'block', marginBottom: '15px' }}>{title}</span>
+          {Object.entries(data[category]).map(([name, vals]) => (
+            <div key={name} style={{ borderLeft: '3px solid #B5945B', paddingLeft: '12px', marginBottom: '25px' }}>
+              <p style={{ fontSize: '1rem', fontWeight: '800', color: '#1B1C36', marginBottom: '15px' }}>{name}</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {vals.map((v, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '15px' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: '800', color: '#94a3b8', minWidth: '45px' }}>{yearsList[i]}</span>
+                    <div style={{ position: 'relative', flex: 1 }}>
+                      <span style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B', fontSize: '0.8rem' }}>$</span>
+                      <input 
+                        type="text" value={formatInputDisplay(v)} 
+                        onChange={(e) => {
+                          const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
+                          const numValue = cleanValue === '' || cleanValue === '-' ? 0 : Number(cleanValue);
+                          setData(prev => {
+                            const newData = JSON.parse(JSON.stringify(prev));
+                            newData[category][name][i] = numValue;
+                            return newData;
+                          });
+                        }} 
+                        style={{ width: '100%', padding: '10px 12px 10px 22px', fontSize: '1rem', fontWeight: '600', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
