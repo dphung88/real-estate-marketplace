@@ -335,42 +335,53 @@ const ProFinancialDashboard = () => {
 
   const renderPersonalStatus = () => (
     <div className="axiom-finance-hub">
-      <div className="contact-form-box mb-8" style={{ padding: '40px', background: '#FFF', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
+      <div className="contact-form-box mb-8" style={{ padding: '30px', background: '#FFF', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
           
-          {/* Col 1: Operational Costs */}
+          {/* Col 1: Personal Assets */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <p className="input-header">Personal Assets</p>
-            <QuickInput label="Annual Salary" value={data.personal.salary} onChange={(v) => setData(prev => ({...prev, personal: {...prev.personal, salary: v}}))} />
-            {Object.entries(data.personal.assets).map(([k, v]) => (
-              <QuickInput key={k} label={k} value={v} onChange={(val) => updatePersonalValue('assets', k, val)} />
-            ))}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <QuickInput label="Annual Salary" value={data.personal.salary} onChange={(v) => setData(prev => ({...prev, personal: {...prev.personal, salary: v}}))} />
+              {Object.entries(data.personal.assets).map(([k, v]) => (
+                <QuickInput key={k} label={k} value={v} onChange={(val) => updatePersonalValue('assets', k, val)} />
+              ))}
+            </div>
           </div>
 
-          {/* Col 2: Revenue & Targets */}
+          {/* Col 2: Personal Liabilities */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <p className="input-header" style={{ borderLeftColor: '#ef4444', color: '#ef4444' }}>Personal Liabilities</p>
-            {Object.entries(data.personal.liabilities).map(([k, v]) => (
-              <QuickInput key={k} label={k} value={v} onChange={(val) => updatePersonalValue('liabilities', k, val)} />
-            ))}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {Object.entries(data.personal.liabilities).map(([k, v]) => (
+                <QuickInput key={k} label={k} value={v} onChange={(val) => updatePersonalValue('liabilities', k, val)} />
+              ))}
+            </div>
           </div>
 
-          {/* Col 3: Profitability Insight */}
+          {/* Col 3: Net Worth Insight */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <p className="input-header">Net Worth Insight</p>
-            <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck size={18} color="#B5945B" />
-                <h4 style={{ color: '#B5945B', fontSize: '0.75rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
+            <div className="contact-info-box" style={{ padding: '30px 24px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px', height: '100%', minHeight: '300px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div className="flex items-center gap-2 mb-4">
+                <ShieldCheck size={20} color="#B5945B" />
+                <h4 style={{ color: '#B5945B', fontSize: '0.8rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
                   TOTAL NET WORTH
                 </h4>
               </div>
-              <div className="flex justify-between items-end">
-                <span style={{ fontSize: '2.2rem', fontWeight: '950', color: '#FFF', letterSpacing: '-1px' }}>{formatCurrency(calc.netWorth)}</span>
+              <div className="flex justify-between items-end mb-6">
+                <span className="text-white font-black leading-none" style={{ fontSize: 'min(3rem, 10vw)' }}>{formatCurrency(calc.netWorth)}</span>
               </div>
-              <p style={{ fontSize: '0.8rem', marginTop: '12px', opacity: 0.8, lineHeight: '1.6', margin: 0 }}>
-                Your personal financial backing consists of <strong>{formatCurrency(calc.personalAssets)}</strong> in assets offset by <strong>{formatCurrency(calc.personalLiab)}</strong> in liabilities.
-              </p>
+              <div className="space-y-4 pt-6 border-t border-white/10">
+                <div className="flex justify-between items-center text-sm">
+                  <span className="opacity-60 uppercase font-bold tracking-widest text-[0.65rem]">Total Assets</span>
+                  <span className="font-black text-[#10b981]">{formatCurrency(calc.personalAssets)}</span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="opacity-60 uppercase font-bold tracking-widest text-[0.65rem]">Total Liabilities</span>
+                  <span className="font-black text-[#ef4444]">({formatCurrency(calc.personalLiab)})</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -453,7 +464,7 @@ const ProFinancialDashboard = () => {
           ))}
         </div>
 
-        <div id="pro-financial-report" className="animate-in fade-in duration-500">
+        <div id="pro-financial-report" className="animate-in fade-in duration-500 px-4 md:px-0">
           {activeTab === 'dashboard' && renderDashboard()}
           {activeTab === 'income' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30">
             {renderTableData('sales', 'Sales Activities', data.years)}
