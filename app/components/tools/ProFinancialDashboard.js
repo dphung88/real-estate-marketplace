@@ -397,9 +397,7 @@ const ProFinancialDashboard = () => {
   const renderTableData = (category, title, yearsList) => (
     <div className="mb-10">
       <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
-      
-      {/* Desktop Table View */}
-      <div className="hidden md:block overflow-x-auto custom-scrollbar">
+      <div className="overflow-x-auto custom-scrollbar">
         <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
           <thead>
             <tr>
@@ -437,78 +435,44 @@ const ProFinancialDashboard = () => {
           </tbody>
         </table>
       </div>
-
-      {/* Mobile Card/List View */}
-      <div className="md:hidden space-y-6">
-        <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '16px' }}>{title}</p>
-        {Object.entries(data[category]).map(([name, vals]) => (
-          <div key={name} className="bg-gray-50/50 p-4 rounded-xl border border-gray-100">
-            <p style={{ fontSize: '0.9rem', fontWeight: '700', color: '#1B1C36', marginBottom: '12px', borderLeft: '3px solid #B5945B', paddingLeft: '10px' }}>{name}</p>
-            <div className="grid grid-cols-2 gap-3">
-              {yearsList.map((year, i) => (
-                <div key={year} className="flex flex-col gap-1.5">
-                  <span style={{ fontSize: '0.7rem', fontWeight: '800', color: '#94a3b8', textTransform: 'uppercase' }}>{year}</span>
-                  <div style={{ position: 'relative' }}>
-                    <div style={{ position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B', fontSize: '0.8rem' }}>$</div>
-                    <input 
-                      type="text" value={formatInputDisplay(vals[i])} 
-                      onChange={(e) => {
-                        const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
-                        const numValue = cleanValue === '' || cleanValue === '-' ? 0 : Number(cleanValue);
-                        setData(prev => {
-                          const newData = JSON.parse(JSON.stringify(prev));
-                          newData[category][name][i] = numValue;
-                          return newData;
-                        });
-                      }} 
-                      style={{ width: '100%', padding: '8px 8px 8px 20px', fontSize: '0.9rem', fontWeight: '600', background: '#FFF', border: '1.5px solid rgba(0,0,0,0.05)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36' }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 
   return (
     <div className="w-full axiom-finance-hub" style={{ color: '#1B1C36', fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-wrap md:flex-nowrap justify-center gap-3 md:gap-4 mb-8 md:mb-10 px-4 md:px-0">
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginBottom: '40px' }}>
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-            { id: 'income', label: 'Income', icon: FileText },
-            { id: 'balance', label: 'Balance', icon: CreditCard },
-            { id: 'personal', label: 'Personal', icon: Users }
+            { id: 'income', label: 'Income Statement', icon: FileText },
+            { id: 'balance', label: 'Balance Sheet', icon: CreditCard },
+            { id: 'personal', label: 'Personal Status', icon: Users }
           ].map(tab => (
             <button
-              key={tab.id} 
-              onClick={() => setActiveTab(tab.id)}
-              className="flex items-center justify-center gap-2 md:gap-2.5 px-3 md:px-7 py-3 md:py-3.5 rounded-xl md:rounded-2xl text-xs md:text-base font-bold transition-all duration-300 w-[calc(50%-6px)] md:w-auto"
+              key={tab.id} onClick={() => setActiveTab(tab.id)}
               style={{ 
+                display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', borderRadius: '14px',
+                fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.3s ease',
                 background: activeTab === tab.id ? '#B5945B' : '#FFFFFF',
                 color: activeTab === tab.id ? '#1B1C36' : '#666666',
                 border: activeTab === tab.id ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.05)',
                 boxShadow: activeTab === tab.id ? '0 4px 14px rgba(181, 148, 91, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
               }}
             >
-              <tab.icon size={18} className="shrink-0" /> 
-              <span className="whitespace-nowrap">{tab.label === 'Income' && typeof window !== 'undefined' && window.innerWidth >= 768 ? 'Income Statement' : tab.label === 'Balance' && typeof window !== 'undefined' && window.innerWidth >= 768 ? 'Balance Sheet' : tab.label === 'Personal' && typeof window !== 'undefined' && window.innerWidth >= 768 ? 'Personal Status' : tab.label}</span>
+              <tab.icon size={18} /> {tab.label}
             </button>
           ))}
         </div>
 
         <div id="pro-financial-report" className="animate-in fade-in duration-500 px-4 md:px-0">
           {activeTab === 'dashboard' && renderDashboard()}
-          {activeTab === 'income' && <div className="contact-form-box p-4 md:p-8 bg-white border border-[#B5945B]/30">
+          {activeTab === 'income' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30">
             {renderTableData('sales', 'Sales Activities', data.years)}
             {renderTableData('cogs', 'Cost of Sales (Direct)', data.years)}
             {renderTableData('salesExpenses', 'Sales Expenses', data.years)}
             {renderTableData('adminExpenses', 'Operating Expenses', data.years)}
           </div>}
-          {activeTab === 'balance' && <div className="contact-form-box p-4 md:p-8 bg-white border border-[#B5945B]/30">
+          {activeTab === 'balance' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30">
             {renderTableData('assets', 'Assets', ['2028', '2029', '2030'])}
             {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'])}
           </div>}
