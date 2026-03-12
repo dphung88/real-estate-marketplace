@@ -318,6 +318,112 @@ const ProFinancialDashboard = () => {
     </div>
   );
 
+  const updatePersonalValue = (type, key, value) => {
+    const cleanValue = String(value).replace(/[^\d.-]/g, '');
+    const numValue = cleanValue === '' || cleanValue === '-' ? 0 : Number(cleanValue);
+    setData(prev => ({
+      ...prev,
+      personal: {
+        ...prev.personal,
+        [type]: {
+          ...prev.personal[type],
+          [key]: numValue
+        }
+      }
+    }));
+  };
+
+  const renderPersonalStatus = () => (
+    <div className="contact-form-box p-10 bg-white border border-[#B5945B]/30 animate-in fade-in duration-500">
+      <div className="flex items-center justify-between mb-8 border-b-2 border-[#B5945B] pb-6">
+        <div>
+          <h3 className="text-xl font-black text-[#1B1C36] uppercase tracking-tight">Personal Financial Status</h3>
+          <p className="text-sm text-slate-500 font-medium mt-1">Detailed analysis of director's backing and net worth</p>
+        </div>
+        <div className="bg-[#1B1C36] px-6 py-3 rounded-xl border border-[#B5945B]">
+          <span className="text-[#B5945B] text-xs font-black uppercase tracking-widest block mb-1">Director Name</span>
+          <span className="text-white font-bold">{data.personal.name}</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {/* Assets Section */}
+        <div>
+          <div className="flex items-center gap-3 mb-6 border-l-4 border-[#B5945B] pl-4">
+            <Wallet size={20} className="text-[#B5945B]" />
+            <h4 className="font-black text-[#1B1C36] uppercase tracking-wider">Personal Assets</h4>
+          </div>
+          <div className="space-y-5">
+            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+               <label className="text-[0.7rem] font-black uppercase tracking-widest text-[#B5945B] mb-2 block">Annual Salary</label>
+               <input 
+                 type="text" value={formatInputDisplay(data.personal.salary)}
+                 onChange={(e) => {
+                   const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
+                   setData(prev => ({...prev, personal: {...prev.personal, salary: cleanValue === '' ? 0 : Number(cleanValue)}}));
+                 }}
+                 className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 font-bold text-[#1B1C36] focus:border-[#B5945B] outline-none transition-all"
+               />
+            </div>
+            {Object.entries(data.personal.assets).map(([k, v]) => (
+              <div key={k} className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <label className="text-[0.7rem] font-black uppercase tracking-widest text-slate-400 mb-2 block">{k}</label>
+                <input 
+                  type="text" value={formatInputDisplay(v)}
+                  onChange={(e) => updatePersonalValue('assets', k, e.target.value)}
+                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 font-bold text-[#1B1C36] focus:border-[#B5945B] outline-none transition-all"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Liabilities Section */}
+        <div>
+          <div className="flex items-center gap-3 mb-6 border-l-4 border-red-400 pl-4">
+            <CreditCard size={20} className="text-red-400" />
+            <h4 className="font-black text-[#1B1C36] uppercase tracking-wider">Personal Liabilities</h4>
+          </div>
+          <div className="space-y-5">
+            {Object.entries(data.personal.liabilities).map(([k, v]) => (
+              <div key={k} className="bg-red-50/30 p-4 rounded-xl border border-red-100/50">
+                <label className="text-[0.7rem] font-black uppercase tracking-widest text-red-300 mb-2 block">{k}</label>
+                <input 
+                  type="text" value={formatInputDisplay(v)}
+                  onChange={(e) => updatePersonalValue('liabilities', k, e.target.value)}
+                  className="w-full bg-white border border-red-100 rounded-lg px-4 py-3 font-bold text-red-600 focus:border-red-400 outline-none transition-all"
+                />
+              </div>
+            ))}
+            
+            {/* Net Worth Summary */}
+            <div className="mt-12 bg-[#1B1C36] p-8 rounded-2xl border-2 border-[#B5945B] shadow-xl animate-pulse-slow">
+               <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-[#B5945B] text-xs font-black uppercase tracking-[0.2em] block mb-2">Total Personal Backing</span>
+                    <h2 className="text-3xl font-black text-white">{formatCurrency(calc.netWorth)}</h2>
+                  </div>
+                  <div className="h-16 w-16 bg-[#B5945B]/20 rounded-full flex items-center justify-center">
+                    <Users size={32} className="text-[#B5945B]" />
+                  </div>
+               </div>
+               <div className="mt-6 pt-6 border-t border-white/10 flex gap-4">
+                  <div className="flex-1">
+                    <span className="text-white/40 text-[0.6rem] font-black uppercase tracking-widest block mb-1">Total Assets</span>
+                    <span className="text-white font-bold text-sm">{formatCurrency(calc.personalAssets)}</span>
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-white/40 text-[0.6rem] font-black uppercase tracking-widest block mb-1">Total Liabilities</span>
+                    <span className="text-white font-bold text-sm">{formatCurrency(calc.personalLiab)}</span>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   const renderTableData = (category, title, yearsList) => (
     <div className="mb-10">
       <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
@@ -400,34 +506,18 @@ const ProFinancialDashboard = () => {
             {renderTableData('assets', 'Assets', ['2028', '2029', '2030'])}
             {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'])}
           </div>}
-          {activeTab === 'personal' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30 overflow-x-auto">
-             <table className="w-full text-left" style={{ minWidth: '800px' }}>
-                <thead>
-                  <tr style={{ borderBottom: '2px solid #B5945B' }}>
-                    <th className="py-4 font-black uppercase text-xs tracking-widest text-[#B5945B]">Personal Status</th>
-                    <th className="py-4 font-black text-center text-sm">Details</th>
-                    <th className="py-4 font-black text-right text-sm">Value</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td className="py-4 font-bold">Director Name</td><td className="text-center">{data.personal.name}</td><td className="text-right">-</td></tr>
-                  <tr><td className="py-4 font-bold">Annual Salary</td><td className="text-center">Base</td><td className="text-right font-black">{formatCurrency(data.personal.salary)}</td></tr>
-                  {Object.entries(data.personal.assets).map(([k, v]) => (
-                    <tr key={k}><td className="py-3 text-slate-500">{k}</td><td className="text-center text-slate-400">Asset</td><td className="text-right font-bold">{formatCurrency(v)}</td></tr>
-                  ))}
-                  {Object.entries(data.personal.liabilities).map(([k, v]) => (
-                    <tr key={k}><td className="py-3 text-slate-500">{k}</td><td className="text-center text-red-300">Liability</td><td className="text-right font-bold text-red-600">({formatCurrency(v)})</td></tr>
-                  ))}
-                  <tr style={{ borderTop: '2px solid #B5945B' }}>
-                    <td className="py-6 font-black text-lg">NET WORTH</td>
-                    <td></td>
-                    <td className="text-right py-6 font-black text-xl text-[#1B1C36]">{formatCurrency(calc.netWorth)}</td>
-                  </tr>
-                </tbody>
-             </table>
-          </div>}
+          {activeTab === 'personal' && renderPersonalStatus()}
         </div>
       </div>
+      <style jsx global>{`
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.95; transform: scale(1.005); }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+      `}</style>
     </div>
   );
 };
