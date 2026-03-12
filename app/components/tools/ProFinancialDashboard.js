@@ -397,18 +397,24 @@ const ProFinancialDashboard = () => {
   const renderTableData = (category, title, yearsList) => (
     <div className="mb-10">
       <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
-      <p style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '20px' }}>{title}</p>
-      
-      <div className="axiom-finance-table-wrapper">
-        {Object.entries(data[category]).map(([name, vals]) => (
-          <div key={name} className="finance-row">
-            <div className="finance-label">{name}</div>
-            <div className="finance-values">
-              {vals.map((v, i) => (
-                <div key={i} className="finance-value-group">
-                  <span className="finance-year-label">{yearsList[i]}</span>
-                  <div style={{ position: 'relative', flex: 1 }}>
-                    <span style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B', fontSize: '0.85rem' }}>$</span>
+      <div className="overflow-x-auto custom-scrollbar">
+        <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+          <thead>
+            <tr>
+              <th style={{ width: '25%', paddingBottom: '12px' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px' }}>{title}</span>
+              </th>
+              {yearsList.map(y => (
+                <th key={y} style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>{y}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(data[category]).map(([name, vals]) => (
+              <tr key={name}>
+                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%' }}>{name}</td>
+                {vals.map((v, i) => (
+                  <td key={i} style={{ padding: '6px 4px' }}>
                     <input 
                       type="text" value={formatInputDisplay(v)} 
                       onChange={(e) => {
@@ -420,42 +426,22 @@ const ProFinancialDashboard = () => {
                           return newData;
                         });
                       }} 
-                      className="finance-input"
+                      style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
                     />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-
-      <style jsx>{`
-        .axiom-finance-table-wrapper { display: flex; flexDirection: column; gap: 10px; }
-        .finance-row { display: flex; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 10px 0; align-items: center; }
-        .finance-label { width: 25%; font-size: 1rem; color: #666; padding-right: 15px; }
-        .finance-values { display: flex; flex: 1; gap: 8px; }
-        .finance-value-group { flex: 1; }
-        .finance-year-label { display: none; }
-        .finance-input { width: 100%; padding: 8px 12px 8px 25px; fontSize: 0.95rem; fontWeight: 500; background: #F9F9F9; border: 1px solid rgba(0,0,0,0.1); borderRadius: 8px; textAlign: right; color: '#1B1C36'; outline: none; transition: all 0.2s; }
-        .finance-input:focus { border-color: #B5945B; background: #FFF; box-shadow: 0 0 0 2px rgba(181, 148, 91, 0.1); }
-
-        @media (max-width: 768px) {
-          .finance-row { flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px 0; }
-          .finance-label { width: 100%; font-weight: 800; color: #1B1C36; padding-right: 0; border-left: 3px solid #B5945B; padding-left: 10px; margin-bottom: 5px; }
-          .finance-values { flex-direction: column; width: 100%; gap: 12px; }
-          .finance-value-group { display: flex; align-items: center; gap: 15px; width: 100%; }
-          .finance-year-label { display: block; width: 60px; font-size: 0.8rem; font-weight: 800; color: #94a3b8; }
-          .finance-input { font-size: 1rem; padding: 10px 15px 10px 25px; }
-        }
-      `}</style>
     </div>
   );
 
   return (
     <div className="w-full axiom-finance-hub" style={{ color: '#1B1C36', fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
       <div className="max-w-7xl mx-auto">
-        <div className="axiom-tabs-container">
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginBottom: '40px' }}>
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'income', label: 'Income Statement', icon: FileText },
@@ -464,25 +450,19 @@ const ProFinancialDashboard = () => {
           ].map(tab => (
             <button
               key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`axiom-tab-btn ${activeTab === tab.id ? 'active' : ''}`}
+              style={{ 
+                display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', borderRadius: '14px',
+                fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.3s ease',
+                background: activeTab === tab.id ? '#B5945B' : '#FFFFFF',
+                color: activeTab === tab.id ? '#1B1C36' : '#666666',
+                border: activeTab === tab.id ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.05)',
+                boxShadow: activeTab === tab.id ? '0 4px 14px rgba(181, 148, 91, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
+              }}
             >
-              <tab.icon size={18} /> 
-              <span className="tab-label-text">{tab.label}</span>
+              <tab.icon size={18} /> {tab.label}
             </button>
           ))}
         </div>
-
-        <style jsx>{`
-          .axiom-tabs-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 40px; }
-          .axiom-tab-btn { display: flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 14px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; background: #FFFFFF; color: #666666; border: 1.5px solid rgba(0,0,0,0.05); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-          .axiom-tab-btn.active { background: #B5945B; color: #1B1C36; border-color: #B5945B; box-shadow: 0 4px 14px rgba(181, 148, 91, 0.25); }
-
-          @media (max-width: 768px) {
-            .axiom-tabs-container { gap: 8px; padding: 0 16px; }
-            .axiom-tab-btn { flex: 1; min-width: calc(50% - 8px); padding: 12px 10px; justify-content: center; border-radius: 10px; font-size: 0.85rem; }
-            .tab-label-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-          }
-        `}</style>
 
         <div id="pro-financial-report" className="animate-in fade-in duration-500 px-4 md:px-0">
           {activeTab === 'dashboard' && renderDashboard()}
