@@ -229,8 +229,8 @@ const ProFinancialDashboard = () => {
         </div>
       </div>
 
-      {/* 2. KPI Result Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* 2. KPI Result Cards - 3 Columns Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <CompactKpiCard 
           label="Estimated Revenue (2031)" 
           value={formatCurrency(calc.pnl[5].sales)} 
