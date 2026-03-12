@@ -475,7 +475,7 @@ const ProFinancialDashboard = () => {
   return (
     <div className="w-full axiom-finance-hub" style={{ color: '#1B1C36', fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
       <div className="max-w-7xl mx-auto">
-        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginBottom: '40px' }}>
+        <div className="axiom-tabs-container">
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
             { id: 'income', label: 'Income Statement', icon: FileText },
@@ -484,19 +484,30 @@ const ProFinancialDashboard = () => {
           ].map(tab => (
             <button
               key={tab.id} onClick={() => setActiveTab(tab.id)}
-              style={{ 
-                display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', borderRadius: '14px',
-                fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.3s ease',
-                background: activeTab === tab.id ? '#B5945B' : '#FFFFFF',
-                color: activeTab === tab.id ? '#1B1C36' : '#666666',
-                border: activeTab === tab.id ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.05)',
-                boxShadow: activeTab === tab.id ? '0 4px 14px rgba(181, 148, 91, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
-              }}
+              className={`axiom-tab-btn ${activeTab === tab.id ? 'active' : ''}`}
             >
-              <tab.icon size={18} /> {tab.label}
+              <tab.icon size={18} /> 
+              <span className="tab-label-text">
+                {tab.id === 'income' ? (typeof window !== 'undefined' && window.innerWidth < 768 ? 'Income' : 'Income Statement') : 
+                 tab.id === 'balance' ? (typeof window !== 'undefined' && window.innerWidth < 768 ? 'Balance' : 'Balance Sheet') : 
+                 tab.id === 'personal' ? (typeof window !== 'undefined' && window.innerWidth < 768 ? 'Personal' : 'Personal Status') : 
+                 tab.label}
+              </span>
             </button>
           ))}
         </div>
+
+        <style jsx>{`
+          .axiom-tabs-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 40px; }
+          .axiom-tab-btn { display: flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 14px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; background: #FFFFFF; color: #666666; border: 1.5px solid rgba(0,0,0,0.05); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+          .axiom-tab-btn.active { background: #B5945B; color: #1B1C36; border-color: #B5945B; box-shadow: 0 4px 14px rgba(181, 148, 91, 0.25); }
+
+          @media (max-width: 768px) {
+            .axiom-tabs-container { gap: 8px; padding: 0 10px; }
+            .axiom-tab-btn { flex: 1; min-width: calc(50% - 10px); padding: 12px 10px; justify-content: center; border-radius: 12px; font-size: 0.85rem; }
+            .tab-label-text { white-space: nowrap; }
+          }
+        `}</style>
 
         <div id="pro-financial-report" className="animate-in fade-in duration-500 px-4 md:px-0">
           {activeTab === 'dashboard' && renderDashboard()}
