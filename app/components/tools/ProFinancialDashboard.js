@@ -374,11 +374,11 @@ const ProFinancialDashboard = () => {
               </div>
               <div className="space-y-4 pt-6 border-t border-white/10">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="opacity-60 uppercase font-bold tracking-widest text-[0.65rem]">Total Assets</span>
+                  <span className="opacity-60 uppercase font-bold tracking-widest text-[0.65rem] mr-4">Total Assets</span>
                   <span className="font-black text-[#10b981]">{formatCurrency(calc.personalAssets)}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="opacity-60 uppercase font-bold tracking-widest text-[0.65rem]">Total Liabilities</span>
+                  <span className="opacity-60 uppercase font-bold tracking-widest text-[0.65rem] mr-4">Total Liabilities</span>
                   <span className="font-black text-[#ef4444]">({formatCurrency(calc.personalLiab)})</span>
                 </div>
               </div>
