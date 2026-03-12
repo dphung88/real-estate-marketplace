@@ -334,36 +334,23 @@ const ProFinancialDashboard = () => {
   };
 
   const renderPersonalStatus = () => (
-    <div className="contact-form-box p-10 bg-white border border-[#B5945B]/30 animate-in fade-in duration-500">
-      <div className="flex items-center justify-between mb-8 border-b-2 border-[#B5945B] pb-6">
-        <div>
-          <h3 className="text-xl font-black text-[#1B1C36] uppercase tracking-tight">Personal Financial Status</h3>
-          <p className="text-sm text-slate-500 font-medium mt-1">Detailed analysis of director's backing and net worth</p>
-        </div>
-        <div className="bg-[#1B1C36] px-6 py-3 rounded-xl border border-[#B5945B]">
-          <span className="text-[#B5945B] text-xs font-black uppercase tracking-widest block mb-1">Director Name</span>
-          <span className="text-white font-bold">{data.personal.name}</span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        {/* Assets Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-6 border-l-4 border-[#B5945B] pl-4">
-            <Wallet size={20} className="text-[#B5945B]" />
-            <h4 className="font-black text-[#1B1C36] uppercase tracking-wider">Personal Assets</h4>
-          </div>
-          <div className="space-y-5">
+    <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30 animate-in fade-in duration-500">
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+        
+        {/* Col 1: Personal Info & Assets */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <p className="input-header">Director & Assets</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-               <label className="text-[0.7rem] font-black uppercase tracking-widest text-[#B5945B] mb-2 block">Annual Salary</label>
-               <input 
-                 type="text" value={formatInputDisplay(data.personal.salary)}
-                 onChange={(e) => {
-                   const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
-                   setData(prev => ({...prev, personal: {...prev.personal, salary: cleanValue === '' ? 0 : Number(cleanValue)}}));
-                 }}
-                 className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 font-bold text-[#1B1C36] focus:border-[#B5945B] outline-none transition-all"
-               />
+              <label className="text-[0.7rem] font-black uppercase tracking-widest text-[#B5945B] mb-2 block">Annual Salary</label>
+              <input 
+                type="text" value={formatInputDisplay(data.personal.salary)}
+                onChange={(e) => {
+                  const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
+                  setData(prev => ({...prev, personal: {...prev.personal, salary: cleanValue === '' ? 0 : Number(cleanValue)}}));
+                }}
+                className="w-full bg-white border border-slate-200 rounded-lg px-4 py-2 font-bold text-[#1B1C36] focus:border-[#B5945B] outline-none"
+              />
             </div>
             {Object.entries(data.personal.assets).map(([k, v]) => (
               <div key={k} className="bg-slate-50 p-4 rounded-xl border border-slate-100">
@@ -371,56 +358,64 @@ const ProFinancialDashboard = () => {
                 <input 
                   type="text" value={formatInputDisplay(v)}
                   onChange={(e) => updatePersonalValue('assets', k, e.target.value)}
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-3 font-bold text-[#1B1C36] focus:border-[#B5945B] outline-none transition-all"
+                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-2 font-bold text-[#1B1C36] focus:border-[#B5945B] outline-none"
                 />
               </div>
             ))}
           </div>
         </div>
 
-        {/* Liabilities Section */}
-        <div>
-          <div className="flex items-center gap-3 mb-6 border-l-4 border-red-400 pl-4">
-            <CreditCard size={20} className="text-red-400" />
-            <h4 className="font-black text-[#1B1C36] uppercase tracking-wider">Personal Liabilities</h4>
-          </div>
-          <div className="space-y-5">
+        {/* Col 2: Liabilities */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <p className="input-header" style={{ borderLeftColor: '#ef4444', color: '#ef4444' }}>Liabilities</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {Object.entries(data.personal.liabilities).map(([k, v]) => (
               <div key={k} className="bg-red-50/30 p-4 rounded-xl border border-red-100/50">
                 <label className="text-[0.7rem] font-black uppercase tracking-widest text-red-300 mb-2 block">{k}</label>
                 <input 
                   type="text" value={formatInputDisplay(v)}
                   onChange={(e) => updatePersonalValue('liabilities', k, e.target.value)}
-                  className="w-full bg-white border border-red-100 rounded-lg px-4 py-3 font-bold text-red-600 focus:border-red-400 outline-none transition-all"
+                  className="w-full bg-white border border-red-100 rounded-lg px-4 py-2 font-bold text-red-600 focus:border-red-400 outline-none"
                 />
               </div>
             ))}
-            
-            {/* Net Worth Summary */}
-            <div className="mt-12 bg-[#1B1C36] p-8 rounded-2xl border-2 border-[#B5945B] shadow-xl animate-pulse-slow">
-               <div className="flex justify-between items-center">
-                  <div>
-                    <span className="text-[#B5945B] text-xs font-black uppercase tracking-[0.2em] block mb-2">Total Personal Backing</span>
-                    <h2 className="text-3xl font-black text-white">{formatCurrency(calc.netWorth)}</h2>
-                  </div>
-                  <div className="h-16 w-16 bg-[#B5945B]/20 rounded-full flex items-center justify-center">
-                    <Users size={32} className="text-[#B5945B]" />
-                  </div>
-               </div>
-               <div className="mt-6 pt-6 border-t border-white/10 flex gap-4">
-                  <div className="flex-1">
-                    <span className="text-white/40 text-[0.6rem] font-black uppercase tracking-widest block mb-1">Total Assets</span>
-                    <span className="text-white font-bold text-sm">{formatCurrency(calc.personalAssets)}</span>
-                  </div>
-                  <div className="flex-1">
-                    <span className="text-white/40 text-[0.6rem] font-black uppercase tracking-widest block mb-1">Total Liabilities</span>
-                    <span className="text-white font-bold text-sm">{formatCurrency(calc.personalLiab)}</span>
-                  </div>
-               </div>
+          </div>
+        </div>
+
+        {/* Col 3: Financial Backing Summary */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <p className="input-header">Executive Summary</p>
+          <div className="bg-[#1B1C36] p-8 rounded-2xl border-2 border-[#B5945B] shadow-xl h-full flex flex-col justify-center">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <span className="text-[#B5945B] text-[0.6rem] font-black uppercase tracking-[0.2em] block mb-1">Director Name</span>
+                <span className="text-white font-bold">{data.personal.name}</span>
+              </div>
+              <div className="h-10 w-10 bg-[#B5945B]/20 rounded-full flex items-center justify-center">
+                <Users size={20} className="text-[#B5945B]" />
+              </div>
+            </div>
+            <div className="mb-8">
+              <span className="text-[#B5945B] text-xs font-black uppercase tracking-[0.2em] block mb-2">Total Net Worth</span>
+              <h2 className="text-4xl font-black text-white">{formatCurrency(calc.netWorth)}</h2>
+            </div>
+            <div className="pt-6 border-t border-white/10 flex gap-4">
+              <div className="flex-1">
+                <span className="text-white/40 text-[0.6rem] font-black uppercase tracking-widest block mb-1">Assets</span>
+                <span className="text-white font-bold text-sm">{formatCurrency(calc.personalAssets)}</span>
+              </div>
+              <div className="flex-1">
+                <span className="text-white/40 text-[0.6rem] font-black uppercase tracking-widest block mb-1">Liabilities</span>
+                <span className="text-white font-bold text-sm">{formatCurrency(calc.personalLiab)}</span>
+              </div>
             </div>
           </div>
         </div>
+
       </div>
+      <style jsx>{`
+        .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; padding-left: 8px; border-left: 3px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.2rem; }
+      `}</style>
     </div>
   );
 
@@ -509,15 +504,6 @@ const ProFinancialDashboard = () => {
           {activeTab === 'personal' && renderPersonalStatus()}
         </div>
       </div>
-      <style jsx global>{`
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.95; transform: scale(1.005); }
-        }
-        .animate-pulse-slow {
-          animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-      `}</style>
     </div>
   );
 };
