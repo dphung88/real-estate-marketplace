@@ -5,10 +5,11 @@ import {
   TrendingUp, Wallet, PieChart, BarChart3, Users, 
   Target, ArrowUpRight, ArrowDownRight, 
   Save, Download, Info, LayoutDashboard,
-  Calendar, Building, FileText, Activity, CreditCard, ChevronDown, ChevronUp
+  Calendar, Building, FileText, Activity, CreditCard, ChevronDown, ChevronUp,
+  DollarSign, Percent, BarChart, Scale
 } from 'lucide-react';
 import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
+  BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
   ResponsiveContainer, AreaChart, Area, Cell, Pie
 } from 'recharts';
 
@@ -137,12 +138,12 @@ const ProFinancialDashboard = () => {
       const adminExp = Object.values(data.adminExpenses).reduce((sum, v) => sum + (Number(v[i]) || 0), 0);
       const totalExp = salesExp + adminExp;
       const netProfit = gp - totalExp;
-      const margin = sales > 0 ? (netProfit / sales) * 100 : 0;
-      return { year: years[i], sales, cogs, gp, totalExp, netProfit, margin };
+      const margin = sales > 0 ? (gp / sales) * 100 : 0;
+      const netMargin = sales > 0 ? (netProfit / sales) * 100 : 0;
+      return { year: years[i], sales, cogs, gp, totalExp, netProfit, margin, netMargin };
     });
 
-    // Balance Sheet Calcs (Last 3 years: 2028, 2029, 2030 mapped to indices 2, 3, 4 of the main data arrays for visual sync)
-    // Wait, the BS initial data arrays only have 3 elements. Let's map them properly to 2028-2030.
+    // Balance Sheet Calcs
     const bsYears = ['2028', '2029', '2030'];
     const bs = bsYears.map((_, i) => {
       const currentAssets = data.assets['Cash'][i] + data.assets['Accounts Receivable'][i] + data.assets['Inventory'][i] + data.assets['Prepaid Expenses'][i] + data.assets['Other Current Assets'][i];
@@ -173,96 +174,40 @@ const ProFinancialDashboard = () => {
 
   const formatCurrency = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
 
-  const updateArrayValue = (category, item, index, newValue) => {
-    // Remove non-numeric characters except minus sign
-    const cleanValue = String(newValue).replace(/[^\d.-]/g, '');
-    const numValue = cleanValue === '' || cleanValue === '-' ? 0 : Number(cleanValue);
-    
-    setData(prev => {
-      const newData = { ...prev };
-      newData[category][item][index] = numValue;
-      return newData;
-    });
-  };
-
-  // Format number for display with commas
-  const formatInputDisplay = (val) => {
-    if (val === 0 || val === '0') return '0';
-    if (!val) return '';
-    return new Intl.NumberFormat('en-US').format(val);
-  };
-
   const handleDownloadPDF = () => {
     if (typeof window === 'undefined') return;
-    
-    // Check if html2pdf is available
     if (!window.html2pdf) {
-      // Try to find the script tag if it hasn't executed yet
       const script = document.querySelector('script[src*="html2pdf"]');
-      if (script) {
-        alert("Thư viện PDF đang được tải, vui lòng thử lại sau vài giây.");
-      } else {
-        alert("Không tìm thấy thư viện PDF. Vui lòng kiểm tra kết nối mạng.");
-      }
+      if (script) alert("Thư viện PDF đang được tải, vui lòng thử lại sau vài giây.");
+      else alert("Không tìm thấy thư viện PDF. Vui lòng kiểm tra kết nối mạng.");
       return;
     }
-
     setIsExporting(true);
-    
-    // Create a title for the PDF based on the current view
-    const titleMap = {
-      'dashboard': 'Executive Financial Dashboard',
-      'income': 'Income Statement (PNL)',
-      'balance': 'Balance Sheet',
-      'personal': 'Personal Financial Status'
-    };
-    
-    const fileName = `Axiom_${titleMap[activeTab] || 'Financial_Report'}_${new Date().toISOString().split('T')[0]}.pdf`;
-
+    const titleMap = { 'dashboard': 'Dashboard', 'income': 'PNL', 'balance': 'Balance_Sheet', 'personal': 'Personal' };
+    const fileName = `Axiom_${titleMap[activeTab] || 'Report'}_${new Date().toISOString().split('T')[0]}.pdf`;
     const element = document.getElementById('pro-financial-report');
-    
     const opt = {
-      margin: [10, 10],
-      filename: fileName,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { 
-        scale: 2, 
-        useCORS: true, 
-        letterRendering: true,
-        scrollX: 0,
-        scrollY: 0
-      },
+      margin: [10, 10], filename: fileName, image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2, useCORS: true, letterRendering: true, scrollX: 0, scrollY: 0 },
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
       pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
-
-    window.html2pdf()
-      .set(opt)
-      .from(element)
-      .save()
-      .then(() => {
-        setIsExporting(false);
-      })
-      .catch(err => {
-        console.error("PDF Export Error:", err);
-        setIsExporting(false);
-        alert("Có lỗi xảy ra khi xuất PDF. Vui lòng thử lại.");
-      });
+    window.html2pdf().set(opt).from(element).save().then(() => setIsExporting(false)).catch(err => {
+      console.error(err); setIsExporting(false); alert("Lỗi khi xuất PDF.");
+    });
   };
 
   const renderDashboard = () => (
     <div className="space-y-8">
-      {/* Expert Financial Insight / Executive Summary */}
+      {/* 1. Executive Summary & Download */}
       <div className="flex flex-col gap-4 w-full">
         <div style={{ padding: '24px 32px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px' }}>
-          <div className="flex items-center gap-2 mb-2">
-            <h3 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
-              EXECUTIVE FINANCIAL INSIGHT
-            </h3>
-          </div>
+          <h3 style={{ color: '#B5945B', fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px' }}>
+            EXECUTIVE FINANCIAL INSIGHT
+          </h3>
           <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: '#E8E4D8', margin: 0 }}>
             The company demonstrates strong revenue growth, primarily driven by <strong>French doors</strong>. 
-            The debt-to-equity ratio of <strong>{calc.bs[2].debtEquity.toFixed(2)}</strong> indicates a leveraged but manageable position.
+            The current ratio of <strong>{calc.bs[2].currentRatio.toFixed(2)}</strong> indicates a healthy liquidity position.
             Personal guarantees are backed by a strong net worth of <strong>{formatCurrency(calc.netWorth)}</strong>.
             Strategic focus should remain on maintaining the current growth trajectory while optimizing operational overhead.
           </p>
@@ -272,19 +217,10 @@ const ProFinancialDashboard = () => {
           <button 
             onClick={handleDownloadPDF} 
             disabled={isExporting} 
-            className="hover:bg-[#a1824b] transition-colors"
             style={{ 
-              background: '#B5945B', 
-              color: '#1B1C36', 
-              fontWeight: '700', 
-              padding: '12px 24px', 
-              borderRadius: '12px', 
-              border: 'none',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              fontSize: '0.95rem',
-              cursor: isExporting ? 'not-allowed' : 'pointer'
+              background: '#B5945B', color: '#1B1C36', fontWeight: '700', 
+              padding: '12px 24px', borderRadius: '12px', border: 'none',
+              display: 'flex', alignItems: 'center', gap: '8px', cursor: isExporting ? 'not-allowed' : 'pointer'
             }}
           >
             <Download size={18} /> 
@@ -293,7 +229,48 @@ const ProFinancialDashboard = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-2">
+      {/* 2. KPI Result Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <CompactKpiCard 
+          label="Estimated Revenue (2031)" 
+          value={formatCurrency(calc.pnl[5].sales)} 
+          icon={<TrendingUp size={20} color="#B5945B" />} 
+          trend={`${((calc.pnl[5].sales/calc.pnl[0].sales - 1)*100).toFixed(1)}% total growth`}
+        />
+        <CompactKpiCard 
+          label="Gross Profit Margin" 
+          value={`${calc.pnl[5].margin.toFixed(1)}%`} 
+          icon={<Percent size={20} color="#B5945B" />} 
+          trend={`$${(calc.pnl[5].gp/1000).toFixed(0)}k gross yield`}
+        />
+        <CompactKpiCard 
+          label="Net Profit (2031)" 
+          value={formatCurrency(calc.pnl[5].netProfit)} 
+          icon={<DollarSign size={20} color="#B5945B" />} 
+          trend={`${calc.pnl[5].netMargin.toFixed(1)}% net margin`}
+        />
+        <CompactKpiCard 
+          label="Liquidity Ratio" 
+          value={calc.bs[2].currentRatio.toFixed(2)} 
+          icon={<Activity size={20} color="#B5945B" />} 
+          trend="Current assets / liabilities"
+        />
+        <CompactKpiCard 
+          label="Solvency (D/E)" 
+          value={calc.bs[2].debtEquity.toFixed(2)} 
+          icon={<Scale size={20} color="#B5945B" />} 
+          trend="Total debt / Equity"
+        />
+        <CompactKpiCard 
+          label="Personal Net Worth" 
+          value={formatCurrency(calc.netWorth)} 
+          icon={<Users size={20} color="#B5945B" />} 
+          trend="Director's backing"
+        />
+      </div>
+
+      {/* 3. Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <ChartContainer title="Revenue & Net Profit Projection">
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={calc.pnl}>
@@ -313,232 +290,81 @@ const ProFinancialDashboard = () => {
           </ResponsiveContainer>
         </ChartContainer>
 
-        <ChartContainer title="Balance Sheet Structure">
+        <ChartContainer title="Balance Sheet Structure (Assets vs Liab)">
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={calc.bs} layout="vertical">
+            <RechartsBarChart data={calc.bs} layout="vertical">
               <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
               <XAxis type="number" tickLine={false} axisLine={false} tickFormatter={(v) => `$${v/1000}k`} />
               <YAxis dataKey="year" type="category" tickLine={false} axisLine={false} />
               <Tooltip formatter={(v) => formatCurrency(v)} />
               <Bar dataKey="totalAssets" fill="#B5945B" name="Total Assets" radius={[0, 4, 4, 0]} />
               <Bar dataKey="totalLiabEq" fill="#1B1C36" name="Liab + Equity" radius={[0, 4, 4, 0]} />
-            </BarChart>
+            </RechartsBarChart>
           </ResponsiveContainer>
         </ChartContainer>
       </div>
     </div>
   );
 
-  const renderTableData = (category, title, yearsList, sectionKey) => {
-    return (
-      <div className="mb-10">
-        {/* Separator line ABOVE the entire table group */}
-        <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
-        
-        <div className="overflow-x-auto custom-scrollbar">
-          <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
-            <thead>
-              <tr>
-                <th style={{ width: '25%', paddingBottom: '12px' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
-                    {title}
-                  </span>
-                </th>
-                {yearsList.map(y => (
-                  <th key={y} style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>
-                    {y}
-                  </th>
+  // Helper components
+  const CompactKpiCard = ({ label, value, icon, trend }) => (
+    <div className="contact-form-box" style={{ padding: '24px 20px', display: 'flex', alignItems: 'center', gap: '16px', background: '#FFF' }}>
+      <div style={{ width: '48px', height: '48px', background: 'rgba(181, 148, 91, 0.1)', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{icon}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <p style={{ fontSize: '0.75rem', textTransform: 'uppercase', color: '#999', fontWeight: '800', marginBottom: '4px', letterSpacing: '0.5px' }}>{label}</p>
+        <h4 style={{ fontSize: '1.5rem', fontWeight: '950', color: '#1B1C36', margin: 0, letterSpacing: '-0.5px' }}>{value}</h4>
+        <p style={{ fontSize: '0.7rem', color: '#B5945B', fontWeight: '700', marginTop: '2px' }}>{trend}</p>
+      </div>
+    </div>
+  );
+
+  const renderTableData = (category, title, yearsList) => (
+    <div className="mb-10">
+      <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
+      <div className="overflow-x-auto custom-scrollbar">
+        <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+          <thead>
+            <tr>
+              <th style={{ width: '25%', paddingBottom: '12px' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px' }}>{title}</span>
+              </th>
+              {yearsList.map(y => (
+                <th key={y} style={{ paddingBottom: '12px', textAlign: 'center', fontSize: '0.9rem', color: '#1B1C36', fontWeight: '800' }}>{y}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {Object.entries(data[category]).map(([name, vals]) => (
+              <tr key={name}>
+                <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%' }}>{name}</td>
+                {vals.map((v, i) => (
+                  <td key={i} style={{ padding: '6px 4px' }}>
+                    <input 
+                      type="text" value={formatInputDisplay(v)} 
+                      onChange={(e) => {
+                        const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
+                        const numValue = cleanValue === '' || cleanValue === '-' ? 0 : Number(cleanValue);
+                        setData(prev => {
+                          const newData = JSON.parse(JSON.stringify(prev));
+                          newData[category][name][i] = numValue;
+                          return newData;
+                        });
+                      }} 
+                      style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
+                    />
+                  </td>
                 ))}
               </tr>
-            </thead>
-            <tbody>
-              {Object.entries(data[category]).map(([name, vals], rowIndex) => (
-                <tr key={name}>
-                  <td style={{ padding: '12px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', width: '25%', letterSpacing: '0.2px' }}>
-                    {name}
-                  </td>
-                  {vals.map((v, i) => (
-                    <td key={i} style={{ padding: '6px 4px' }}>
-                      <input 
-                        type="text" 
-                        value={formatInputDisplay(v)} 
-                        onFocus={(e) => { e.target.value = v; }}
-                        onBlur={(e) => { e.target.value = formatInputDisplay(v); }}
-                        onChange={(e) => updateArrayValue(category, name, i, e.target.value)} 
-                        style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none', fontFamily: 'inherit' }}
-                      />
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  };
-
-  const renderIncomeStatement = () => (
-    <div className="max-w-7xl mx-auto">
-      <div className="contact-form-box mb-8" style={{ padding: '30px', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)', background: '#FFF' }}>
-        {renderTableData('sales', 'Sales Activities', data.years, 'sales')}
-        {renderTableData('cogs', 'Cost of Sales (Direct)', data.years, 'cogs')}
-        {renderTableData('salesExpenses', 'Sales Expenses', data.years, 'salesExpenses')}
-        {renderTableData('adminExpenses', 'Operating Expenses', data.years, 'adminExpenses')}
-      </div>
-    </div>
-  );
-
-  const renderBalanceSheet = () => (
-    <div className="max-w-7xl mx-auto">
-      <div className="contact-form-box mb-8" style={{ padding: '30px', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)', background: '#FFF' }}>
-        {renderTableData('assets', 'Assets', ['2028', '2029', '2030'], 'assets')}
-        {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'], 'liabilities')}
-      </div>
-    </div>
-  );
-
-  const renderPersonal = () => (
-    <div className="max-w-7xl mx-auto">
-      <div className="contact-form-box mb-8" style={{ padding: '30px', overflow: 'hidden', border: '1px solid rgba(181, 148, 91, 0.3)', background: '#FFF' }}>
-        
-        {/* Table-style Layout for Personal Status with Full Width Distribution */}
-        <div className="overflow-x-auto custom-scrollbar">
-          <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '1000px' }}>
-            <thead>
-              <tr>
-                <th style={{ width: '20%', paddingBottom: '20px' }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px' }}>
-                    Personal Status
-                  </span>
-                </th>
-                <th style={{ width: '15%', paddingBottom: '20px', textAlign: 'center', fontSize: '0.95rem', color: '#1B1C36', fontWeight: '800' }}>Director Info</th>
-                <th style={{ width: '25%', paddingBottom: '20px', textAlign: 'center', fontSize: '0.95rem', color: '#1B1C36', fontWeight: '800' }}>Personal Assets</th>
-                <th style={{ width: '25%', paddingBottom: '20px', textAlign: 'center', fontSize: '0.95rem', color: '#1B1C36', fontWeight: '800' }}>Personal Liabilities</th>
-                <th style={{ width: '15%', paddingBottom: '20px', textAlign: 'center', fontSize: '0.95rem', color: '#1B1C36', fontWeight: '800' }}>Summary</th>
-              </tr>
-            </thead>
-            <tbody>
-              
-              {/* Row 1: Liquid Assets */}
-              <tr className="group transition-colors hover:bg-black/[0.02] border-t border-black/5">
-                <td style={{ padding: '20px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', letterSpacing: '0.2px', verticalAlign: 'top' }}>
-                  Liquid Assets & Short-term
-                </td>
-                <td className="px-6 py-5 align-top text-left border-l border-black/5">
-                  <div className="flex flex-col items-start">
-                    <span className="text-[1.05rem] font-bold text-[#1B1C36]">{data.personal.name}</span>
-                  </div>
-                </td>
-                <td className="px-8 py-5 align-top border-l border-black/5 text-left">
-                  <div className="flex flex-col items-start w-full">
-                    <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Cash</span>
-                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets.Cash)}</span>
-                  </div>
-                </td>
-                <td className="px-8 py-5 align-top border-l border-black/5 text-left">
-                  <div className="flex flex-col items-start w-full">
-                    <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Credit Cards</span>
-                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.liabilities['Credit Cards'])}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-5 text-left border-l border-black/5 bg-[#F9F9F9]/50">
-                  <div className="flex flex-col items-start">
-                    <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Total Assets</span>
-                    <span className="text-[1.1rem] font-bold text-[#1B1C36]">&nbsp;{formatCurrency(calc.personalAssets)}</span>
-                  </div>
-                </td>
-              </tr>
-
-              {/* Row 2: Investments & Loans */}
-              <tr className="group transition-colors hover:bg-black/[0.02] border-t border-black/5">
-                <td style={{ padding: '20px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', letterSpacing: '0.2px', verticalAlign: 'top' }}>
-                  Investments & Loans
-                </td>
-                <td className="px-6 py-5 align-top text-left border-l border-black/5">
-                  <div className="flex flex-col items-start">
-                    <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Annual Salary</span>
-                    <span className="text-[1.05rem] font-bold text-[#1B1C36]">{formatCurrency(data.personal.salary)}</span>
-                  </div>
-                </td>
-                <td className="px-8 py-5 align-top border-l border-black/5">
-                  <div className="flex flex-col gap-6 w-full text-left">
-                    <div className="flex flex-col items-start">
-                      <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">RRSP</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets.RRSP)}</span>
-                    </div>
-                    <div className="flex flex-col items-start">
-                      <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Stocks/Bonds</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets['Stocks/Bonds'])}</span>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-8 py-5 align-top border-l border-black/5 text-left">
-                  <div className="flex flex-col items-start w-full">
-                    <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Bank Loans</span>
-                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.liabilities['Bank Loans'])}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-5 text-left border-l border-black/5 bg-[#F9F9F9]/50 align-top">
-                  <div className="flex flex-col items-start">
-                    <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Total Liabilities</span>
-                    <span className="text-[1.1rem] font-bold text-[#1B1C36]">&nbsp;{formatCurrency(calc.personalLiab)}</span>
-                  </div>
-                </td>
-              </tr>
-
-              {/* Row 3: Fixed Assets */}
-              <tr className="group transition-colors hover:bg-black/[0.02] border-t border-black/5">
-                <td style={{ padding: '20px 0', fontSize: '1rem', fontWeight: '400', color: '#666666', letterSpacing: '0.2px', borderBottom: 'none', verticalAlign: 'top' }}>
-                  Fixed Assets & Mortgages
-                </td>
-                <td className="px-6 py-5 border-l border-black/5"></td>
-                <td className="px-8 py-5 border-l border-black/5 text-left">
-                  <div className="flex flex-col gap-6 w-full">
-                    <div className="flex flex-col items-start">
-                      <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Real Estate</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets['Real Estate'])}</span>
-                    </div>
-                    <div className="flex flex-col items-start">
-                      <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Automobiles</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets.Automobiles)}</span>
-                    </div>
-                    <div className="flex flex-col items-start">
-                      <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Household/Personal</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets['Household/Personal'])}</span>
-                    </div>
-                    <div className="flex flex-col items-start">
-                      <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Life Insurance</span>
-                      <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.assets['Life Insurance'])}</span>
-                    </div>
-                  </div>
-                </td>
-                <td className="px-8 py-5 align-top border-l border-black/5 text-left">
-                  <div className="flex flex-col items-start w-full">
-                    <span className="text-[1rem] text-[#1B1C36] font-medium mb-1">Mortgages</span>
-                    <span className="font-bold text-[#1B1C36] text-[1.05rem]">&nbsp;${formatInputDisplay(data.personal.liabilities.Mortgages)}</span>
-                  </div>
-                </td>
-                <td className="px-6 py-5 text-left border-l border-black/5 align-bottom">
-                  <div className="pt-4 border-t border-[var(--color-accent)]/30 mt-auto flex flex-col items-start">
-                    <span className="text-[1.1rem] text-[#1B1C36] font-medium mb-1 uppercase">NET WORTH</span>
-                    <span className="text-[1.25rem] font-bold text-[#1B1C36]">&nbsp;{formatCurrency(calc.netWorth)}</span>
-                  </div>
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 
   return (
-    <div className="w-full font-sans axiom-finance-hub" style={{ color: '#1B1C36', fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
+    <div className="w-full axiom-finance-hub" style={{ color: '#1B1C36', fontFamily: "Aptos, 'Segoe UI', 'Helvetica Neue', sans-serif" }}>
       <div className="max-w-7xl mx-auto">
-        
-        {/* Tabs */}
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', marginBottom: '40px' }}>
           {[
             { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -547,18 +373,14 @@ const ProFinancialDashboard = () => {
             { id: 'personal', label: 'Personal Status', icon: Users }
           ].map(tab => (
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              key={tab.id} onClick={() => setActiveTab(tab.id)}
               style={{ 
-                display: 'flex', alignItems: 'center', gap: '10px', 
-                padding: '14px 28px', borderRadius: '14px',
-                fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', 
-                transition: 'all 0.3s ease',
+                display: 'flex', alignItems: 'center', gap: '10px', padding: '14px 28px', borderRadius: '14px',
+                fontSize: '0.95rem', fontWeight: '700', cursor: 'pointer', transition: 'all 0.3s ease',
                 background: activeTab === tab.id ? '#B5945B' : '#FFFFFF',
                 color: activeTab === tab.id ? '#1B1C36' : '#666666',
                 border: activeTab === tab.id ? '1.5px solid #B5945B' : '1.5px solid rgba(0,0,0,0.05)',
                 boxShadow: activeTab === tab.id ? '0 4px 14px rgba(181, 148, 91, 0.25)' : '0 2px 8px rgba(0,0,0,0.02)',
-                whiteSpace: 'nowrap'
               }}
             >
               <tab.icon size={18} /> {tab.label}
@@ -566,41 +388,61 @@ const ProFinancialDashboard = () => {
           ))}
         </div>
 
-        {/* Content Area */}
         <div id="pro-financial-report" className="animate-in fade-in duration-500">
           {activeTab === 'dashboard' && renderDashboard()}
-          {activeTab === 'income' && renderIncomeStatement()}
-          {activeTab === 'balance' && renderBalanceSheet()}
-          {activeTab === 'personal' && renderPersonal()}
+          {activeTab === 'income' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30">
+            {renderTableData('sales', 'Sales Activities', data.years)}
+            {renderTableData('cogs', 'Cost of Sales (Direct)', data.years)}
+            {renderTableData('salesExpenses', 'Sales Expenses', data.years)}
+            {renderTableData('adminExpenses', 'Operating Expenses', data.years)}
+          </div>}
+          {activeTab === 'balance' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30">
+            {renderTableData('assets', 'Assets', ['2028', '2029', '2030'])}
+            {renderTableData('liabilities', 'Liabilities & Equity', ['2028', '2029', '2030'])}
+          </div>}
+          {activeTab === 'personal' && <div className="contact-form-box p-8 bg-white border border-[#B5945B]/30 overflow-x-auto">
+             <table className="w-full text-left" style={{ minWidth: '800px' }}>
+                <thead>
+                  <tr style={{ borderBottom: '2px solid #B5945B' }}>
+                    <th className="py-4 font-black uppercase text-xs tracking-widest text-[#B5945B]">Personal Status</th>
+                    <th className="py-4 font-black text-center text-sm">Details</th>
+                    <th className="py-4 font-black text-right text-sm">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td className="py-4 font-bold">Director Name</td><td className="text-center">{data.personal.name}</td><td className="text-right">-</td></tr>
+                  <tr><td className="py-4 font-bold">Annual Salary</td><td className="text-center">Base</td><td className="text-right font-black">{formatCurrency(data.personal.salary)}</td></tr>
+                  {Object.entries(data.personal.assets).map(([k, v]) => (
+                    <tr key={k}><td className="py-3 text-slate-500">{k}</td><td className="text-center text-slate-400">Asset</td><td className="text-right font-bold">{formatCurrency(v)}</td></tr>
+                  ))}
+                  {Object.entries(data.personal.liabilities).map(([k, v]) => (
+                    <tr key={k}><td className="py-3 text-slate-500">{k}</td><td className="text-center text-red-300">Liability</td><td className="text-right font-bold text-red-600">({formatCurrency(v)})</td></tr>
+                  ))}
+                  <tr style={{ borderTop: '2px solid #B5945B' }}>
+                    <td className="py-6 font-black text-lg">NET WORTH</td>
+                    <td></td>
+                    <td className="text-right py-6 font-black text-xl text-[#1B1C36]">{formatCurrency(calc.netWorth)}</td>
+                  </tr>
+                </tbody>
+             </table>
+          </div>}
         </div>
-
       </div>
     </div>
   );
 };
 
-const KpiCard = ({ title, value, trend, icon }) => (
-  <div className="flex flex-col items-start text-left bg-transparent">
-    <div className="text-[#1B1C36] mb-1 pb-1" style={{ borderBottom: '2px solid #1B1C36', display: 'inline-flex' }}>
-      {React.cloneElement(icon, { size: 28, strokeWidth: 1.5 })}
-    </div>
-    <h4 className="text-[#1B1C36] text-[1.15rem] font-bold leading-snug mt-1 mb-0 tracking-tight">{title}</h4>
-    <div className="text-[#1B1C36] text-[1.05rem] font-medium leading-snug">
-      {value}
-    </div>
-    {trend && (
-      <div className="text-[#1B1C36] text-[1.05rem] font-medium leading-snug">
-        {trend}
-      </div>
-    )}
-  </div>
-);
-
 const ChartContainer = ({ title, children }) => (
-  <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-    <h3 className="text-lg font-bold text-slate-800 mb-6">{title}</h3>
+  <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+    <h3 className="text-lg font-black text-[#1B1C36] mb-8 uppercase tracking-tight" style={{ borderLeft: '4px solid #B5945B', paddingLeft: '15px' }}>{title}</h3>
     {children}
   </div>
 );
+
+const formatInputDisplay = (val) => {
+  if (val === 0 || val === '0') return '0';
+  if (!val) return '';
+  return new Intl.NumberFormat('en-US').format(val);
+};
 
 export default ProFinancialDashboard;
