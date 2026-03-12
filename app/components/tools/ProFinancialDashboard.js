@@ -195,23 +195,59 @@ const ProFinancialDashboard = () => {
   const handleDownloadPDF = () => {
     if (typeof window === 'undefined') return;
     
-    // Check if html2pdf is available, if not, try to load it or notify user
+    // Check if html2pdf is available
     if (!window.html2pdf) {
-      alert("PDF library not loaded. Please ensure you have internet connection.");
+      // Try to find the script tag if it hasn't executed yet
+      const script = document.querySelector('script[src*="html2pdf"]');
+      if (script) {
+        alert("Thư viện PDF đang được tải, vui lòng thử lại sau vài giây.");
+      } else {
+        alert("Không tìm thấy thư viện PDF. Vui lòng kiểm tra kết nối mạng.");
+      }
       return;
     }
 
     setIsExporting(true);
-    console.log("Exporting PDF version 1.0.1...");
-    const element = document.getElementById('pro-financial-report');
-    const opt = {
-      margin: 10,
-      filename: `Financial_Appendix_${activeTab}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
+    
+    // Create a title for the PDF based on the current view
+    const titleMap = {
+      'dashboard': 'Executive Financial Dashboard',
+      'income': 'Income Statement (PNL)',
+      'balance': 'Balance Sheet',
+      'personal': 'Personal Financial Status'
     };
-    window.html2pdf().set(opt).from(element).save().then(() => setIsExporting(false));
+    
+    const fileName = `Axiom_${titleMap[activeTab] || 'Financial_Report'}_${new Date().toISOString().split('T')[0]}.pdf`;
+
+    const element = document.getElementById('pro-financial-report');
+    
+    const opt = {
+      margin: [10, 10],
+      filename: fileName,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { 
+        scale: 2, 
+        useCORS: true, 
+        letterRendering: true,
+        scrollX: 0,
+        scrollY: 0
+      },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+      pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    window.html2pdf()
+      .set(opt)
+      .from(element)
+      .save()
+      .then(() => {
+        setIsExporting(false);
+      })
+      .catch(err => {
+        console.error("PDF Export Error:", err);
+        setIsExporting(false);
+        alert("Có lỗi xảy ra khi xuất PDF. Vui lòng thử lại.");
+      });
   };
 
   const renderDashboard = () => (
