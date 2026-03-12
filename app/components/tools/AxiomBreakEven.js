@@ -139,7 +139,7 @@ const AxiomBreakEven = () => {
               {/* Col 1: Sales Activities */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Sales Activities</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
                   {Object.entries(salesData).map(([key, value]) => (
                     <QuickInput key={key} label={key} value={value} onChange={(v) => setSalesData(prev => ({...prev, [key]: v}))} />
                   ))}
@@ -149,7 +149,7 @@ const AxiomBreakEven = () => {
               {/* Col 2: Cost of Sales */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Cost of Sales (Direct)</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
                   {Object.entries(cogsData).map(([key, value]) => (
                     <QuickInput key={key} label={key} value={value} onChange={(v) => setCogsData(prev => ({...prev, [key]: v}))} />
                   ))}
@@ -159,7 +159,7 @@ const AxiomBreakEven = () => {
               {/* Col 3: Sales Expenses */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Sales Expenses</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
                   {Object.entries(salesExpData).map(([key, value]) => (
                     <QuickInput key={key} label={key} value={value} onChange={(v) => setSalesExpData(prev => ({...prev, [key]: v}))} />
                   ))}
@@ -169,7 +169,7 @@ const AxiomBreakEven = () => {
               {/* Col 4: Operating Expenses */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <p className="input-header">Operating Expenses</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
                   {Object.entries(adminExpData).map(([key, value]) => (
                     <QuickInput key={key} label={key} value={value} onChange={(v) => setAdminExpData(prev => ({...prev, [key]: v}))} />
                   ))}
@@ -182,7 +182,7 @@ const AxiomBreakEven = () => {
             <div style={{ marginTop: '40px', paddingTop: '30px', borderTop: '1px solid rgba(181, 148, 91, 0.2)', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
                <div style={{ flex: 1 }}>
                   <p className="input-header" style={{ marginBottom: '15px' }}>Growth Assumptions</p>
-                  <div className="flex flex-wrap gap-6">
+                  <div className="flex flex-wrap gap-x-12 gap-y-8">
                     <div style={{ minWidth: '180px' }}>
                       <QuickInput label="Rev Growth %" value={growthAssumptions.revenueGrowth} onChange={(v) => setGrowthAssumptions(prev => ({...prev, revenueGrowth: v}))} isPercent />
                     </div>
@@ -368,7 +368,7 @@ const QuickInput = ({ label, value, onChange, isPercent }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '8px' }}>
       <div className="flex items-baseline justify-between gap-4">
         <label style={{ fontSize: '0.85rem', fontWeight: '900', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
           {label}
