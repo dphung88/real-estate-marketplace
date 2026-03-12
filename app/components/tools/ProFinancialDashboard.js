@@ -6,7 +6,7 @@ import {
   Target, ArrowUpRight, ArrowDownRight, 
   Save, Download, Info, LayoutDashboard,
   Calendar, Building, FileText, Activity, CreditCard, ChevronDown, ChevronUp,
-  DollarSign, Percent, BarChart, Scale
+  DollarSign, Percent, BarChart, Scale, ShieldCheck
 } from 'lucide-react';
 import { 
   BarChart as RechartsBarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, 
@@ -146,13 +146,13 @@ const ProFinancialDashboard = () => {
     // Balance Sheet Calcs
     const bsYears = ['2028', '2029', '2030'];
     const bs = bsYears.map((_, i) => {
-      const currentAssets = data.assets['Cash'][i] + data.assets['Accounts Receivable'][i] + data.assets['Inventory'][i] + data.assets['Prepaid Expenses'][i] + data.assets['Other Current Assets'][i];
-      const fixedAssets = data.assets['Land'][i] + data.assets['Building'][i] + data.assets['Furniture & Fixtures'][i] + data.assets['Equipment & Machinery'][i] + data.assets['Other Fixed Assets'][i] + data.assets['Research & Dev. Asset'][i];
+      const currentAssets = (data.assets['Cash'][i] || 0) + (data.assets['Accounts Receivable'][i] || 0) + (data.assets['Inventory'][i] || 0) + (data.assets['Prepaid Expenses'][i] || 0) + (data.assets['Other Current Assets'][i] || 0);
+      const fixedAssets = (data.assets['Land'][i] || 0) + (data.assets['Building'][i] || 0) + (data.assets['Furniture & Fixtures'][i] || 0) + (data.assets['Equipment & Machinery'][i] || 0) + (data.assets['Other Fixed Assets'][i] || 0) + (data.assets['Research & Dev. Asset'][i] || 0);
       const totalAssets = currentAssets + fixedAssets;
 
-      const currentLiab = data.liabilities['Bank Loan'][i] + data.liabilities['Accounts Payable'][i] + data.liabilities['Accruals'][i] + data.liabilities['Current Portion of L.T.D.'][i] + data.liabilities['Income Taxes Payable'][i];
-      const longTermLiab = data.liabilities['Term Debt'][i] + data.liabilities['Shareholders Advances'][i] + data.liabilities['Other Non-Current'][i];
-      const equity = data.liabilities['Common Shares'][i] + data.liabilities['Retained Earnings'][i];
+      const currentLiab = (data.liabilities['Bank Loan'][i] || 0) + (data.liabilities['Accounts Payable'][i] || 0) + (data.liabilities['Accruals'][i] || 0) + (data.liabilities['Current Portion of L.T.D.'][i] || 0) + (data.liabilities['Income Taxes Payable'][i] || 0);
+      const longTermLiab = (data.liabilities['Term Debt'][i] || 0) + (data.liabilities['Shareholders Advances'][i] || 0) + (data.liabilities['Other Non-Current'][i] || 0);
+      const equity = (data.liabilities['Common Shares'][i] || 0) + (data.liabilities['Retained Earnings'][i] || 0);
       const totalLiabEq = currentLiab + longTermLiab + equity;
 
       return {
@@ -165,8 +165,8 @@ const ProFinancialDashboard = () => {
     });
 
     // Personal Calcs
-    const personalAssets = Object.values(data.personal.assets).reduce((a, b) => a + b, 0);
-    const personalLiab = Object.values(data.personal.liabilities).reduce((a, b) => a + b, 0);
+    const personalAssets = (data.personal.salary || 0) + Object.values(data.personal.assets).reduce((a, b) => a + (Number(b) || 0), 0);
+    const personalLiab = Object.values(data.personal.liabilities).reduce((a, b) => a + (Number(b) || 0), 0);
     const netWorth = personalAssets - personalLiab;
 
     return { pnl, bs, personalAssets, personalLiab, netWorth };
@@ -334,91 +334,52 @@ const ProFinancialDashboard = () => {
   };
 
   const renderPersonalStatus = () => (
-    <div className="contact-form-box p-12 bg-white border border-[#B5945B]/30 animate-in fade-in duration-500">
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '60px' }}>
-        
-        {/* Col 1: Personal Info & Assets */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <p className="input-header">Director & Assets</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-            <div className="flex flex-col gap-4">
-              <label className="text-[0.85rem] font-black uppercase tracking-widest text-[#B5945B] pl-1">Annual Salary</label>
-              <input 
-                type="text" value={formatInputDisplay(data.personal.salary)}
-                onChange={(e) => {
-                  const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
-                  setData(prev => ({...prev, personal: {...prev.personal, salary: cleanValue === '' ? 0 : Number(cleanValue)}}));
-                }}
-                style={{ width: '100%', padding: '12px 16px', fontSize: '1rem', fontWeight: '600', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
-              />
-            </div>
+    <div className="axiom-finance-hub">
+      <div className="contact-form-box mb-8" style={{ padding: '40px', background: '#FFF', border: '1px solid rgba(181, 148, 91, 0.3)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
+          
+          {/* Col 1: Operational Costs */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <p className="input-header">Personal Assets</p>
+            <QuickInput label="Annual Salary" value={data.personal.salary} onChange={(v) => setData(prev => ({...prev, personal: {...prev.personal, salary: v}}))} />
             {Object.entries(data.personal.assets).map(([k, v]) => (
-              <div key={k} className="flex flex-col gap-4">
-                <label className="text-[0.85rem] font-black uppercase tracking-widest text-slate-400 pl-1">{k}</label>
-                <input 
-                  type="text" value={formatInputDisplay(v)}
-                  onChange={(e) => updatePersonalValue('assets', k, e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', fontSize: '1rem', fontWeight: '600', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
-                />
-              </div>
+              <QuickInput key={k} label={k} value={v} onChange={(val) => updatePersonalValue('assets', k, val)} />
             ))}
           </div>
-        </div>
 
-        {/* Col 2: Liabilities */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <p className="input-header" style={{ borderLeftColor: '#ef4444', color: '#ef4444' }}>Liabilities</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+          {/* Col 2: Revenue & Targets */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <p className="input-header" style={{ borderLeftColor: '#ef4444', color: '#ef4444' }}>Personal Liabilities</p>
             {Object.entries(data.personal.liabilities).map(([k, v]) => (
-              <div key={k} className="flex flex-col gap-4">
-                <label className="text-[0.85rem] font-black uppercase tracking-widest text-red-300 pl-1">{k}</label>
-                <input 
-                  type="text" value={formatInputDisplay(v)}
-                  onChange={(e) => updatePersonalValue('liabilities', k, e.target.value)}
-                  style={{ width: '100%', padding: '12px 16px', fontSize: '1rem', fontWeight: '600', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '10px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
-                />
-              </div>
+              <QuickInput key={k} label={k} value={v} onChange={(val) => updatePersonalValue('liabilities', k, val)} />
             ))}
           </div>
-        </div>
 
-        {/* Col 3: Financial Backing Summary */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-          <p className="input-header">Executive Summary</p>
-          <div className="bg-[#1B1C36] p-12 rounded-3xl border-2 border-[#B5945B] shadow-xl h-full flex flex-col justify-center">
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="h-10 w-10 bg-[#B5945B]/20 rounded-full flex items-center justify-center">
-                  <Activity size={20} className="text-[#B5945B]" />
-                </div>
-                <span className="text-[#B5945B] text-xs font-black uppercase tracking-[0.25em]">Personal Backing</span>
-              </div>
-              <span className="text-white/50 text-[0.7rem] font-black uppercase tracking-[0.2em] block mb-2">Total Net Worth</span>
-              <h2 className="text-5xl font-black text-white">{formatCurrency(calc.netWorth)}</h2>
-            </div>
-            <div className="pt-10 border-t border-white/10 flex flex-col gap-8">
-              <div className="flex justify-between items-end">
-                <div>
-                  <span className="text-white/40 text-[0.65rem] font-black uppercase tracking-widest block mb-1">Total Assets</span>
-                  <span className="text-white text-xl font-bold">{formatCurrency(calc.personalAssets)}</span>
-                </div>
-                <ArrowUpRight size={24} className="text-green-400 mb-1" />
+          {/* Col 3: Profitability Insight */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <p className="input-header">Net Worth Insight</p>
+            <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <div className="flex items-center gap-2 mb-2">
+                <ShieldCheck size={18} color="#B5945B" />
+                <h4 style={{ color: '#B5945B', fontSize: '0.75rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
+                  TOTAL NET WORTH
+                </h4>
               </div>
               <div className="flex justify-between items-end">
-                <div>
-                  <span className="text-white/40 text-[0.65rem] font-black uppercase tracking-widest block mb-1">Total Liabilities</span>
-                  <span className="text-white text-xl font-bold">{formatCurrency(calc.personalLiab)}</span>
-                </div>
-                <ArrowDownRight size={24} className="text-red-400 mb-1" />
+                <span style={{ fontSize: '2.2rem', fontWeight: '950', color: '#FFF', letterSpacing: '-1px' }}>{formatCurrency(calc.netWorth)}</span>
               </div>
+              <p style={{ fontSize: '0.8rem', marginTop: '12px', opacity: 0.8, lineHeight: '1.6', margin: 0 }}>
+                Your personal financial backing consists of <strong>{formatCurrency(calc.personalAssets)}</strong> in assets offset by <strong>{formatCurrency(calc.personalLiab)}</strong> in liabilities.
+              </p>
             </div>
           </div>
-        </div>
 
+        </div>
+        
+        <style jsx>{`
+          .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 8px; border-left: 3px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.2rem; }
+        `}</style>
       </div>
-      <style jsx>{`
-        .input-header { font-size: 0.95rem; font-weight: 950; color: #B5945B; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; padding-left: 15px; border-left: 5px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 2rem; }
-      `}</style>
     </div>
   );
 
@@ -506,6 +467,56 @@ const ProFinancialDashboard = () => {
           </div>}
           {activeTab === 'personal' && renderPersonalStatus()}
         </div>
+      </div>
+    </div>
+  );
+};
+
+const QuickInput = ({ label, value, onChange }) => {
+  const handleInputChange = (e) => {
+    const rawValue = e.target.value.replace(/,/g, '').replace(/[^\d.-]/g, '');
+    if (rawValue === '' || rawValue === '-' || !isNaN(rawValue)) {
+      onChange(rawValue === '' || rawValue === '-' ? 0 : Number(rawValue));
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      <div className="flex items-baseline justify-between gap-4">
+        <label style={{ fontSize: '0.85rem', fontWeight: '900', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
+          {label}
+        </label>
+      </div>
+      <div style={{ position: 'relative', width: '100%' }}>
+        <div style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#B5945B' }}>
+          <DollarSign size={14} />
+        </div>
+        <input 
+          type="text" 
+          value={formatInputDisplay(value)} 
+          onChange={handleInputChange}
+          style={{ 
+            width: '100%', 
+            padding: '12px 16px 12px 35px', 
+            fontSize: '1rem', 
+            fontWeight: '800', 
+            background: '#FFFFFF', 
+            border: '1.5px solid rgba(27, 28, 54, 0.1)', 
+            borderRadius: '12px',
+            outline: 'none',
+            color: '#1B1C36',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
+          }}
+          onFocus={(e) => {
+            e.target.style.borderColor = '#B5945B';
+            e.target.style.boxShadow = '0 4px 12px rgba(181, 148, 91, 0.15)';
+          }}
+          onBlur={(e) => {
+            e.target.style.borderColor = 'rgba(27, 28, 54, 0.1)';
+            e.target.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
+          }}
+        />
       </div>
     </div>
   );
