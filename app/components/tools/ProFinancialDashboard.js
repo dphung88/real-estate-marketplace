@@ -340,25 +340,25 @@ const ProFinancialDashboard = () => {
         {/* Col 1: Personal Info & Assets */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <p className="input-header">Director & Assets</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-              <label className="text-[0.7rem] font-black uppercase tracking-widest text-[#B5945B] mb-2 block">Annual Salary</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div className="flex flex-col gap-1">
+              <label className="text-[0.7rem] font-black uppercase tracking-widest text-[#B5945B] pl-1">Annual Salary</label>
               <input 
                 type="text" value={formatInputDisplay(data.personal.salary)}
                 onChange={(e) => {
                   const cleanValue = e.target.value.replace(/[^\d.-]/g, '');
                   setData(prev => ({...prev, personal: {...prev.personal, salary: cleanValue === '' ? 0 : Number(cleanValue)}}));
                 }}
-                className="w-full bg-white border border-slate-200 rounded-lg px-4 py-2 font-bold text-[#1B1C36] focus:border-[#B5945B] outline-none"
+                style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
               />
             </div>
             {Object.entries(data.personal.assets).map(([k, v]) => (
-              <div key={k} className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                <label className="text-[0.7rem] font-black uppercase tracking-widest text-slate-400 mb-2 block">{k}</label>
+              <div key={k} className="flex flex-col gap-1">
+                <label className="text-[0.7rem] font-black uppercase tracking-widest text-slate-400 pl-1">{k}</label>
                 <input 
                   type="text" value={formatInputDisplay(v)}
                   onChange={(e) => updatePersonalValue('assets', k, e.target.value)}
-                  className="w-full bg-white border border-slate-200 rounded-lg px-4 py-2 font-bold text-[#1B1C36] focus:border-[#B5945B] outline-none"
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
                 />
               </div>
             ))}
@@ -368,14 +368,14 @@ const ProFinancialDashboard = () => {
         {/* Col 2: Liabilities */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <p className="input-header" style={{ borderLeftColor: '#ef4444', color: '#ef4444' }}>Liabilities</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {Object.entries(data.personal.liabilities).map(([k, v]) => (
-              <div key={k} className="bg-red-50/30 p-4 rounded-xl border border-red-100/50">
-                <label className="text-[0.7rem] font-black uppercase tracking-widest text-red-300 mb-2 block">{k}</label>
+              <div key={k} className="flex flex-col gap-1">
+                <label className="text-[0.7rem] font-black uppercase tracking-widest text-red-300 pl-1">{k}</label>
                 <input 
                   type="text" value={formatInputDisplay(v)}
                   onChange={(e) => updatePersonalValue('liabilities', k, e.target.value)}
-                  className="w-full bg-white border border-red-100 rounded-lg px-4 py-2 font-bold text-red-600 focus:border-red-400 outline-none"
+                  style={{ width: '100%', padding: '8px 12px', fontSize: '0.95rem', fontWeight: '500', background: '#F9F9F9', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '8px', textAlign: 'right', color: '#1B1C36', outline: 'none' }}
                 />
               </div>
             ))}
@@ -414,7 +414,7 @@ const ProFinancialDashboard = () => {
 
       </div>
       <style jsx>{`
-        .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; padding-left: 8px; border-left: 3px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.2rem; }
+        .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; padding-left: 8px; border-left: 3px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.2rem; }
       `}</style>
     </div>
   );
