@@ -368,7 +368,7 @@ const QuickInput = ({ label, value, onChange, isPercent }) => {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
       <div className="flex items-baseline justify-between gap-4">
         <label style={{ fontSize: '0.85rem', fontWeight: '900', color: '#1B1C36', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
           {label}
