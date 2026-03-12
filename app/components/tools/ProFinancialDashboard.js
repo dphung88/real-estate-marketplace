@@ -340,9 +340,9 @@ const ProFinancialDashboard = () => {
         {/* Col 1: Personal Info & Assets */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <p className="input-header">Director & Assets</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            <div className="flex flex-col gap-2">
-              <label className="text-[0.7rem] font-black uppercase tracking-widest text-[#B5945B] pl-1">Annual Salary</label>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div className="flex flex-col gap-3">
+              <label className="text-[0.8rem] font-black uppercase tracking-widest text-[#B5945B] pl-1">Annual Salary</label>
               <input 
                 type="text" value={formatInputDisplay(data.personal.salary)}
                 onChange={(e) => {
@@ -353,8 +353,8 @@ const ProFinancialDashboard = () => {
               />
             </div>
             {Object.entries(data.personal.assets).map(([k, v]) => (
-              <div key={k} className="flex flex-col gap-2">
-                <label className="text-[0.7rem] font-black uppercase tracking-widest text-slate-400 pl-1">{k}</label>
+              <div key={k} className="flex flex-col gap-3">
+                <label className="text-[0.8rem] font-black uppercase tracking-widest text-slate-400 pl-1">{k}</label>
                 <input 
                   type="text" value={formatInputDisplay(v)}
                   onChange={(e) => updatePersonalValue('assets', k, e.target.value)}
@@ -368,10 +368,10 @@ const ProFinancialDashboard = () => {
         {/* Col 2: Liabilities */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <p className="input-header" style={{ borderLeftColor: '#ef4444', color: '#ef4444' }}>Liabilities</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {Object.entries(data.personal.liabilities).map(([k, v]) => (
-              <div key={k} className="flex flex-col gap-2">
-                <label className="text-[0.7rem] font-black uppercase tracking-widest text-red-300 pl-1">{k}</label>
+              <div key={k} className="flex flex-col gap-3">
+                <label className="text-[0.8rem] font-black uppercase tracking-widest text-red-300 pl-1">{k}</label>
                 <input 
                   type="text" value={formatInputDisplay(v)}
                   onChange={(e) => updatePersonalValue('liabilities', k, e.target.value)}
