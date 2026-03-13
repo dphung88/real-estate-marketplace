@@ -9,6 +9,7 @@ import BreakEvenCalculator from '../../components/tools/BreakEvenCalculator';
 import LeadCaptureModal from '../../components/tools/LeadCaptureModal';
 import { Calculator, FileText, BarChart2, Zap } from 'lucide-react';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 export default function BreakEvenPage() {
   const [activeTab, setActiveTab] = useState('pro');
@@ -26,18 +27,21 @@ export default function BreakEvenPage() {
       <Navbar />
       
       {/* Page Hero */}
-      <section className="page-hero">
-        <div className="page-hero-bg">
-          <img 
+      <section className="page-hero" style={{position: 'relative', overflow: 'hidden'}}>
+        <div className="page-hero-bg" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
+          <Image 
             src="https://images.unsplash.com/photo-1454165833767-027ffea9e7a7?q=80&w=2070&auto=format&fit=crop" 
             alt="Financial Analysis" 
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            priority
           />
+          <div className="page-hero-overlay"></div>
         </div>
-        <div className="page-hero-overlay"></div>
-        <div className="page-hero-content container">
+        <div className="page-hero-content container" style={{position: 'relative', zIndex: 2}}>
           <h1>
             <Calculator size={42} style={{ color: 'var(--color-accent)', marginRight: '15px', verticalAlign: 'middle', display: 'inline-block' }} />
-            Financial Analysis Hub
+            Financial Tools
           </h1>
           <p>
             Professional-grade break-even analysis and performance tracking tools 
