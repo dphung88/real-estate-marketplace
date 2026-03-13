@@ -69,6 +69,7 @@ const AxiomBreakEven = () => {
 
   const [isInputExpanded, setIsInputExpanded] = useState(true);
   const [activeTab, setActiveTab] = useState('forecast');
+  const [mobileInputTab, setMobileInputTab] = useState('sales');
   
   // What-if Scenario adjustments
   const [priceAdjustment, setPriceAdjustment] = useState(0); // % change
@@ -133,13 +134,54 @@ const AxiomBreakEven = () => {
         </button>
 
         {isInputExpanded && (
-          <div style={{ padding: '30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '30px' }}>
+          <div style={{ padding: '20px 30px 30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
+            
+            {/* Mobile Sub-Tabs (Visible only on mobile) */}
+            <div className="mobile-only-flex mb-6" style={{ overflowX: 'auto', paddingBottom: '10px', gap: '10px', borderBottom: '1px solid #eee' }}>
+              <button 
+                onClick={() => setMobileInputTab('sales')}
+                style={{ 
+                  padding: '10px 16px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '800', whiteSpace: 'nowrap',
+                  background: mobileInputTab === 'sales' ? '#1B1C36' : '#f5f5f5',
+                  color: mobileInputTab === 'sales' ? '#B5945B' : '#666',
+                  border: 'none', cursor: 'pointer'
+                }}
+              >Sales</button>
+              <button 
+                onClick={() => setMobileInputTab('cogs')}
+                style={{ 
+                  padding: '10px 16px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '800', whiteSpace: 'nowrap',
+                  background: mobileInputTab === 'cogs' ? '#1B1C36' : '#f5f5f5',
+                  color: mobileInputTab === 'cogs' ? '#B5945B' : '#666',
+                  border: 'none', cursor: 'pointer'
+                }}
+              >COGS</button>
+              <button 
+                onClick={() => setMobileInputTab('salesExp')}
+                style={{ 
+                  padding: '10px 16px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '800', whiteSpace: 'nowrap',
+                  background: mobileInputTab === 'salesExp' ? '#1B1C36' : '#f5f5f5',
+                  color: mobileInputTab === 'salesExp' ? '#B5945B' : '#666',
+                  border: 'none', cursor: 'pointer'
+                }}
+              >Sales Exp</button>
+              <button 
+                onClick={() => setMobileInputTab('adminExp')}
+                style={{ 
+                  padding: '10px 16px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '800', whiteSpace: 'nowrap',
+                  background: mobileInputTab === 'adminExp' ? '#1B1C36' : '#f5f5f5',
+                  color: mobileInputTab === 'adminExp' ? '#B5945B' : '#666',
+                  border: 'none', cursor: 'pointer'
+                }}
+              >Operating</button>
+            </div>
+
+            <div className="input-grid-container">
               
               {/* Col 1: Sales Activities */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div className={`input-col ${mobileInputTab === 'sales' ? 'mobile-active' : 'mobile-hidden'}`}>
                 <p className="input-header">Sales Activities</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
                   {Object.entries(salesData).map(([key, value]) => (
                     <QuickInput key={key} label={key} value={value} onChange={(v) => setSalesData(prev => ({...prev, [key]: v}))} />
                   ))}
@@ -147,9 +189,9 @@ const AxiomBreakEven = () => {
               </div>
 
               {/* Col 2: Cost of Sales */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div className={`input-col ${mobileInputTab === 'cogs' ? 'mobile-active' : 'mobile-hidden'}`}>
                 <p className="input-header">Cost of Sales (Direct)</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
                   {Object.entries(cogsData).map(([key, value]) => (
                     <QuickInput key={key} label={key} value={value} onChange={(v) => setCogsData(prev => ({...prev, [key]: v}))} />
                   ))}
@@ -157,9 +199,9 @@ const AxiomBreakEven = () => {
               </div>
 
               {/* Col 3: Sales Expenses */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div className={`input-col ${mobileInputTab === 'salesExp' ? 'mobile-active' : 'mobile-hidden'}`}>
                 <p className="input-header">Sales Expenses</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
                   {Object.entries(salesExpData).map(([key, value]) => (
                     <QuickInput key={key} label={key} value={value} onChange={(v) => setSalesExpData(prev => ({...prev, [key]: v}))} />
                   ))}
@@ -167,9 +209,9 @@ const AxiomBreakEven = () => {
               </div>
 
               {/* Col 4: Operating Expenses */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div className={`input-col ${mobileInputTab === 'adminExp' ? 'mobile-active' : 'mobile-hidden'}`}>
                 <p className="input-header">Operating Expenses</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }} className="custom-scrollbar">
                   {Object.entries(adminExpData).map(([key, value]) => (
                     <QuickInput key={key} label={key} value={value} onChange={(v) => setAdminExpData(prev => ({...prev, [key]: v}))} />
                   ))}
@@ -201,6 +243,21 @@ const AxiomBreakEven = () => {
               .custom-scrollbar::-webkit-scrollbar { width: 4px; }
               .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
               .custom-scrollbar::-webkit-scrollbar-thumb { background: #B5945B; border-radius: 10px; }
+              
+              .input-grid-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 30px;
+              }
+
+              .mobile-only-flex { display: none; }
+
+              @media (max-width: 768px) {
+                .mobile-only-flex { display: flex; }
+                .input-grid-container { display: block; }
+                .mobile-hidden { display: none; }
+                .mobile-active { display: block; }
+              }
             `}</style>
           </div>
         )}

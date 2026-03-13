@@ -18,6 +18,7 @@ const BreakEvenCalculator = () => {
   const [maxUnits, setMaxUnits] = useState(50);
   const [chartData, setChartData] = useState([]);
   const [isInputExpanded, setIsInputExpanded] = useState(true);
+  const [mobileInputTab, setMobileInputTab] = useState('costs');
   
   // Calculations
   const contributionMargin = sellingPricePerUnit - variableCostPerUnit;
@@ -66,29 +67,61 @@ const BreakEvenCalculator = () => {
         </button>
 
         {isInputExpanded && (
-          <div style={{ padding: '30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '30px' }}>
+          <div style={{ padding: '20px 30px 30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
+            
+            {/* Mobile Sub-Tabs */}
+            <div className="mobile-only-flex mb-6" style={{ overflowX: 'auto', paddingBottom: '10px', gap: '10px', borderBottom: '1px solid #eee' }}>
+              <button 
+                onClick={() => setMobileInputTab('costs')}
+                style={{ 
+                  padding: '10px 16px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '800', whiteSpace: 'nowrap',
+                  background: mobileInputTab === 'costs' ? '#1B1C36' : '#f5f5f5',
+                  color: mobileInputTab === 'costs' ? '#B5945B' : '#666',
+                  border: 'none', cursor: 'pointer'
+                }}
+              >Costs</button>
+              <button 
+                onClick={() => setMobileInputTab('revenue')}
+                style={{ 
+                  padding: '10px 16px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '800', whiteSpace: 'nowrap',
+                  background: mobileInputTab === 'revenue' ? '#1B1C36' : '#f5f5f5',
+                  color: mobileInputTab === 'revenue' ? '#B5945B' : '#666',
+                  border: 'none', cursor: 'pointer'
+                }}
+              >Revenue</button>
+              <button 
+                onClick={() => setMobileInputTab('insight')}
+                style={{ 
+                  padding: '10px 16px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '800', whiteSpace: 'nowrap',
+                  background: mobileInputTab === 'insight' ? '#1B1C36' : '#f5f5f5',
+                  color: mobileInputTab === 'insight' ? '#B5945B' : '#666',
+                  border: 'none', cursor: 'pointer'
+                }}
+              >Insight</button>
+            </div>
+
+            <div className="input-grid-container">
               
               {/* Col 1: Operational Costs */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div className={`input-col ${mobileInputTab === 'costs' ? 'mobile-active' : 'mobile-hidden'}`}>
                 <p className="input-header">Operational Costs</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <QuickInput label="Fixed Costs" description="Monthly Total" value={fixedCosts} onChange={setFixedCosts} />
                   <QuickInput label="Variable Cost" description="Per Unit" value={variableCostPerUnit} onChange={setVariableCostPerUnit} />
                 </div>
               </div>
 
               {/* Col 2: Revenue & Targets */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div className={`input-col ${mobileInputTab === 'revenue' ? 'mobile-active' : 'mobile-hidden'}`}>
                 <p className="input-header">Revenue & Targets</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                   <QuickInput label="Selling Price" description="Per Unit" value={sellingPricePerUnit} onChange={setSellingPricePerUnit} />
                   <QuickInput label="Target Profit" description="Goal" value={targetProfit} onChange={setTargetProfit} highlight />
                 </div>
               </div>
 
               {/* Col 3: Profitability Insight */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div className={`input-col ${mobileInputTab === 'insight' ? 'mobile-active' : 'mobile-hidden'}`}>
                 <p className="input-header">Profitability Insight</p>
                 <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                   <div className="flex items-center gap-2 mb-2">
@@ -110,6 +143,21 @@ const BreakEvenCalculator = () => {
             
             <style jsx>{`
               .input-header { font-size: 0.85rem; font-weight: 900; color: #B5945B; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; padding-left: 8px; border-left: 3px solid #B5945B; line-height: 1.2; display: flex; align-items: center; min-height: 1.2rem; }
+              
+              .input-grid-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 30px;
+              }
+
+              .mobile-only-flex { display: none; }
+
+              @media (max-width: 768px) {
+                .mobile-only-flex { display: flex; }
+                .input-grid-container { display: block; }
+                .mobile-hidden { display: none; }
+                .mobile-active { display: block; }
+              }
             `}</style>
           </div>
         )}
