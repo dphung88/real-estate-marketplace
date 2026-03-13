@@ -137,7 +137,7 @@ const AxiomBreakEven = () => {
           <div style={{ padding: '20px 30px 30px', background: '#FFF' }} className="animate-in slide-in-from-top duration-300">
             
             {/* Mobile Sub-Tabs (Visible only on mobile) */}
-            <div className="mobile-only-flex mb-6" style={{ overflowX: 'auto', paddingBottom: '10px', gap: '10px', borderBottom: '1px solid #eee' }}>
+            <div className="mobile-only-flex mb-6" style={{ overflowX: 'auto', paddingBottom: '15px', gap: '10px' }}>
               <button 
                 onClick={() => setMobileInputTab('sales')}
                 style={{ 
