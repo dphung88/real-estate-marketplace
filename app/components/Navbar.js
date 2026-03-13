@@ -56,8 +56,10 @@ export default function Navbar() {
             <Link href="/contact" className={navClass('/contact')}>Contact</Link>
           </li>
           <li>
-            <button 
-              onClick={() => {
+            <a 
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
                 if (typeof window !== 'undefined') {
                   const isAccepted = localStorage.getItem('axiom_tool_access') === 'true';
                   if (isAccepted) {
@@ -68,10 +70,9 @@ export default function Navbar() {
                 }
               }}
               className={navClass('/tools/break-even')}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', outline: 'none' }}
             >
               Financial Tools
-            </button>
+            </a>
           </li>
         </ul>
       </div>
