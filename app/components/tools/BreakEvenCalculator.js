@@ -121,20 +121,20 @@ const BreakEvenCalculator = () => {
               </div>
 
               {/* Col 3: Profitability Insight */}
-              <div className={`input-col ${mobileInputTab === 'insight' ? 'mobile-active' : 'mobile-hidden'}`}>
+              <div className={`input-col ${mobileInputTab === 'insight' ? 'mobile-active' : 'mobile-hidden'}`} style={{ display: 'flex', flexDirection: 'column' }}>
                 <p className="input-header">Profitability Insight</p>
-                <div className="contact-info-box" style={{ padding: '24px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                  <div className="flex items-center gap-2 mb-2">
+                <div className="contact-info-box" style={{ padding: '32px 28px', background: '#1B1C36', color: '#E8E4D8', borderRadius: '16px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '220px' }}>
+                  <div className="flex items-center gap-2 mb-4">
                     <ShieldCheck size={18} color="#B5945B" />
                     <h4 style={{ color: '#B5945B', fontSize: '0.75rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>
                       MARGIN RATIO
                     </h4>
                   </div>
-                  <div className="flex justify-between items-end">
-                    <span style={{ fontSize: 'min(2.2rem, 8vw)', fontWeight: '950', color: '#FFF', letterSpacing: '-1px' }}>{contributionMarginRatio.toFixed(1)}%</span>
+                  <div className="flex justify-between items-end mb-2">
+                    <span style={{ fontSize: 'min(2.8rem, 10vw)', fontWeight: '950', color: '#FFF', letterSpacing: '-1px', lineHeight: '1.1' }}>{contributionMarginRatio.toFixed(1)}%</span>
                   </div>
-                  <p style={{ fontSize: '0.8rem', marginTop: '12px', opacity: 0.9, lineHeight: '1.6', color: '#E8E4D8', margin: 0 }}>
-                    You retain <strong>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(contributionMarginRatio/100)}</strong> from every dollar in sales to cover fixed costs and net profit.
+                  <p style={{ fontSize: '0.8rem', marginTop: '12px', opacity: 0.8, lineHeight: '1.6', margin: 0 }}>
+                    You retain <strong>{formatUSD(contributionMargin/sellingPricePerUnit*1)}</strong> from every dollar in sales to cover fixed costs and net profit.
                   </p>
                 </div>
               </div>
