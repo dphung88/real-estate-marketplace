@@ -408,7 +408,7 @@ const ProFinancialDashboard = () => {
       <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
       <div className="overflow-x-auto custom-scrollbar">
         {/* Desktop Table: Vẫn dùng table chuẩn để đảm bảo desktop không bao giờ lỗi */}
-        <div className="desktop-table-container">
+        <div className="desktop-table-container" style={{ display: isMobile ? 'none' : 'block' }}>
         <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
           <thead>
             <tr>
@@ -448,7 +448,7 @@ const ProFinancialDashboard = () => {
         </div>
 
         {/* Mobile View: Xếp dọc hoàn toàn từng mục */}
-        <div className="mobile-view-container space-y-8">
+        <div className="mobile-view-container space-y-8" style={{ display: isMobile ? 'block' : 'none' }}>
           <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', display: 'block', marginBottom: '15px' }}>{title}</span>
           {Object.entries(data[category]).map(([name, vals]) => (
             <div key={name} style={{ borderLeft: '3px solid #B5945B', paddingLeft: '12px', marginBottom: '25px' }}>
