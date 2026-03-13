@@ -29,9 +29,9 @@ export default function BreakEvenPage() {
       {/* Slim Hero Header (Same as Contact Page) */}
       <section className="page-header">
         <div className="container">
-          <h1>
-            <Calculator size={32} style={{ color: 'var(--color-accent)', marginRight: '12px', verticalAlign: 'middle', display: 'inline-block' }} />
-            Financial Tools
+          <h1 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px' }}>
+            <Calculator size={38} style={{ color: 'var(--color-accent)', flexShrink: 0 }} />
+            <span>Financial Tools</span>
           </h1>
           <p>Professional-grade break-even analysis and strategic performance tracking.</p>
         </div>
