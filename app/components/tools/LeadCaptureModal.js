@@ -9,10 +9,12 @@ const LeadCaptureModal = ({ onAccept }) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Check if user has already submitted phone
-    const isAccepted = localStorage.getItem('axiom_tool_access');
-    if (!isAccepted) {
-      setIsOpen(true);
+    if (typeof window !== 'undefined') {
+      // Check if user has already submitted phone
+      const isAccepted = localStorage.getItem('axiom_tool_access');
+      if (!isAccepted) {
+        setIsOpen(true);
+      }
     }
   }, []);
 
@@ -23,9 +25,11 @@ const LeadCaptureModal = ({ onAccept }) => {
       return;
     }
     
-    // Save to localStorage
-    localStorage.setItem('axiom_tool_access', 'true');
-    localStorage.setItem('user_phone', phone);
+    if (typeof window !== 'undefined') {
+      // Save to localStorage
+      localStorage.setItem('axiom_tool_access', 'true');
+      localStorage.setItem('user_phone', phone);
+    }
     
     setIsOpen(false);
     if (onAccept) onAccept();

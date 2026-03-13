@@ -8,14 +8,17 @@ import ProFinancialDashboard from '../../components/tools/ProFinancialDashboard'
 import BreakEvenCalculator from '../../components/tools/BreakEvenCalculator';
 import LeadCaptureModal from '../../components/tools/LeadCaptureModal';
 import { Calculator, FileText, BarChart2, Zap } from 'lucide-react';
+import { useEffect } from 'react';
 
 export default function BreakEvenPage() {
   const [activeTab, setActiveTab] = useState('pro');
   const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
-    const authorized = localStorage.getItem('axiom_tool_access') === 'true';
-    setIsAuthorized(authorized);
+    if (typeof window !== 'undefined') {
+      const authorized = localStorage.getItem('axiom_tool_access') === 'true';
+      setIsAuthorized(authorized);
+    }
   }, []);
 
   return (
