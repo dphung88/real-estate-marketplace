@@ -131,10 +131,10 @@ const BreakEvenCalculator = () => {
                     </h4>
                   </div>
                   <div className="flex justify-between items-end">
-                    <span style={{ fontSize: '2.2rem', fontWeight: '950', color: '#FFF', letterSpacing: '-1px' }}>{contributionMarginRatio.toFixed(1)}%</span>
+                    <span style={{ fontSize: 'min(2.2rem, 8vw)', fontWeight: '950', color: '#FFF', letterSpacing: '-1px' }}>{contributionMarginRatio.toFixed(1)}%</span>
                   </div>
-                  <p style={{ fontSize: '0.8rem', marginTop: '12px', opacity: 0.8, lineHeight: '1.6', margin: 0 }}>
-                    You retain <strong>{formatUSD(contributionMargin/sellingPricePerUnit*1)}</strong> from every dollar in sales to cover fixed costs and net profit.
+                  <p style={{ fontSize: '0.8rem', marginTop: '12px', opacity: 0.9, lineHeight: '1.6', color: '#E8E4D8', margin: 0 }}>
+                    You retain <strong>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(contributionMarginRatio/100)}</strong> from every dollar in sales to cover fixed costs and net profit.
                   </p>
                 </div>
               </div>
