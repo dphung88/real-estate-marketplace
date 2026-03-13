@@ -6,10 +6,17 @@ import Footer from '../../components/Footer';
 import AxiomBreakEven from '../../components/tools/AxiomBreakEven';
 import ProFinancialDashboard from '../../components/tools/ProFinancialDashboard';
 import BreakEvenCalculator from '../../components/tools/BreakEvenCalculator';
+import LeadCaptureModal from '../../components/tools/LeadCaptureModal';
 import { Calculator, FileText, BarChart2, Zap } from 'lucide-react';
 
 export default function BreakEvenPage() {
   const [activeTab, setActiveTab] = useState('pro');
+  const [isAuthorized, setIsAuthorized] = useState(false);
+
+  useEffect(() => {
+    const authorized = localStorage.getItem('axiom_tool_access') === 'true';
+    setIsAuthorized(authorized);
+  }, []);
 
   return (
     <main className="min-h-screen" style={{ background: 'var(--color-light)' }}>
@@ -119,13 +126,33 @@ export default function BreakEvenPage() {
               )}
             </div>
 
-            {activeTab === 'breakeven' ? <AxiomBreakEven /> : activeTab === 'quick' ? <BreakEvenCalculator /> : <ProFinancialDashboard />}
+            {isAuthorized ? (
+              activeTab === 'breakeven' ? <AxiomBreakEven /> : activeTab === 'quick' ? <BreakEvenCalculator /> : <ProFinancialDashboard />
+            ) : (
+              <div style={{ 
+                padding: '100px 20px', textAlign: 'center', background: '#FFFFFF', 
+                borderRadius: '24px', border: '1px dashed #B5945B', marginBottom: '40px'
+              }}>
+                <h3 style={{ color: '#1B1C36', fontWeight: '800', fontSize: '1.5rem' }}>Access Restricted</h3>
+                <p style={{ color: '#666' }}>Please complete the verification to view the analysis.</p>
+                <button 
+                  onClick={() => window.location.reload()}
+                  style={{ 
+                    marginTop: '20px', padding: '12px 24px', background: '#1B1C36', 
+                    color: '#B5945B', borderRadius: '12px', border: 'none', fontWeight: '700', cursor: 'pointer' 
+                  }}
+                >
+                  Verify Now
+                </button>
+              </div>
+            )}
 
           </div>
         </div>
       </section>
 
       <Footer />
+      <LeadCaptureModal onAccept={() => setIsAuthorized(true)} />
     </main>
   );
 }
