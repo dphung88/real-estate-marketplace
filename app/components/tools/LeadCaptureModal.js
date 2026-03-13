@@ -3,12 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import { Phone, CheckCircle, X } from 'lucide-react';
 
-const LeadCaptureModal = ({ onAccept }) => {
+const LeadCaptureModal = ({ onAccept, forceShow, onClose }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (forceShow) {
+      setIsOpen(true);
+      return;
+    }
+    
     if (typeof window !== 'undefined') {
       // Check if user has already submitted phone
       const isAccepted = localStorage.getItem('axiom_tool_access');
@@ -16,7 +21,7 @@ const LeadCaptureModal = ({ onAccept }) => {
         setIsOpen(true);
       }
     }
-  }, []);
+  }, [forceShow]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,6 +58,17 @@ const LeadCaptureModal = ({ onAccept }) => {
         textAlign: 'center', position: 'relative',
         border: '2px solid #B5945B'
       }}>
+        {onClose && (
+          <button 
+            onClick={onClose}
+            style={{
+              position: 'absolute', top: '20px', right: '20px',
+              background: 'none', border: 'none', cursor: 'pointer', color: '#999'
+            }}
+          >
+            <X size={24} />
+          </button>
+        )}
         <div style={{ 
           width: '70px', height: '70px', background: 'rgba(181, 148, 91, 0.1)', 
           borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',

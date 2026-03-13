@@ -2,12 +2,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { LOGO } from '../../lib/theme';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
+import LeadCaptureModal from './tools/LeadCaptureModal';
 
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   // Close menu when route changes
   useEffect(() => {
@@ -52,8 +55,33 @@ export default function Navbar() {
           <li>
             <Link href="/contact" className={navClass('/contact')}>Contact</Link>
           </li>
+          <li>
+            <button 
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  const isAccepted = localStorage.getItem('axiom_tool_access') === 'true';
+                  if (isAccepted) {
+                    router.push('/tools/break-even');
+                  } else {
+                    setShowModal(true);
+                  }
+                }
+              }}
+              className={navClass('/tools/break-even')}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', outline: 'none' }}
+            >
+              Financial Tools
+            </button>
+          </li>
         </ul>
       </div>
+      
+      {showModal && (
+        <LeadCaptureModal onAccept={() => {
+          setShowModal(false);
+          router.push('/tools/break-even');
+        }} forceShow={true} onClose={() => setShowModal(false)} />
+      )}
       {/* Overlay for closing menu */}
       {isMenuOpen && (
         <div 
