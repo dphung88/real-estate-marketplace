@@ -26,24 +26,52 @@ export default function BreakEvenPage() {
     <main className="min-h-screen" style={{ background: 'var(--color-light)' }}>
       <Navbar />
       
-      {/* Page Hero */}
-      <section className="page-hero" style={{position: 'relative', overflow: 'hidden'}}>
-        <div className="page-hero-bg" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
+      {/* Page Hero - Fixed with Inline Styles */}
+      <section style={{ 
+        position: 'relative', 
+        height: '400px', 
+        width: '100%', 
+        overflow: 'hidden', 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        background: '#1B1C36',
+        marginBottom: '60px'
+      }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 1 }}>
           <Image 
             src="https://images.unsplash.com/photo-1454165833767-027ffea9e7a7?q=80&w=2070&auto=format&fit=crop" 
             alt="Financial Analysis" 
             fill
-            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            style={{ objectFit: 'cover', objectPosition: 'center', opacity: '0.4' }}
             priority
           />
-          <div className="page-hero-overlay"></div>
+          <div style={{ 
+            position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', 
+            background: 'linear-gradient(to bottom, rgba(27, 28, 54, 0.8), rgba(27, 28, 54, 0.4))' 
+          }}></div>
         </div>
-        <div className="page-hero-content container" style={{position: 'relative', zIndex: 2}}>
-          <h1>
-            <Calculator size={42} style={{ color: 'var(--color-accent)', marginRight: '15px', verticalAlign: 'middle', display: 'inline-block' }} />
+        <div className="container" style={{ position: 'relative', zIndex: 2, textAlign: 'center', color: '#FFFFFF' }}>
+          <h1 style={{ 
+            fontSize: 'min(3.5rem, 12vw)', 
+            fontWeight: '900', 
+            marginBottom: '15px', 
+            color: '#FFFFFF',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '15px'
+          }}>
+            <Calculator size={48} color="#B5945B" />
             Financial Tools
           </h1>
-          <p>
+          <p style={{ 
+            fontSize: '1.2rem', 
+            maxWidth: '800px', 
+            margin: '0 auto', 
+            opacity: '0.9',
+            lineHeight: '1.6'
+          }}>
             Professional-grade break-even analysis and performance tracking tools 
             designed for strategic business optimization.
           </p>
