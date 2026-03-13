@@ -111,6 +111,15 @@ const INITIAL_DATA = {
 
 const ProFinancialDashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  React.useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 768;
   const [data, setData] = useState(INITIAL_DATA);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -399,7 +408,8 @@ const ProFinancialDashboard = () => {
       <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
       <div className="overflow-x-auto custom-scrollbar">
         {/* Desktop Table: Vẫn dùng table chuẩn để đảm bảo desktop không bao giờ lỗi */}
-        <table className="hidden md:table w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
+        <div className="desktop-table-container">
+        <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
           <thead>
             <tr>
               <th style={{ width: '25%', paddingBottom: '12px' }}>
@@ -435,9 +445,10 @@ const ProFinancialDashboard = () => {
             ))}
           </tbody>
         </table>
+        </div>
 
         {/* Mobile View: Xếp dọc hoàn toàn từng mục */}
-        <div className="md:hidden space-y-8">
+        <div className="mobile-view-container space-y-8">
           <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', display: 'block', marginBottom: '15px' }}>{title}</span>
           {Object.entries(data[category]).map(([name, vals]) => (
             <div key={name} style={{ borderLeft: '3px solid #B5945B', paddingLeft: '12px', marginBottom: '25px' }}>
@@ -501,11 +512,17 @@ const ProFinancialDashboard = () => {
           .axiom-tabs-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-bottom: 40px; }
           .axiom-tab-btn { display: flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 14px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease; background: #FFFFFF; color: #666666; border: 1.5px solid rgba(0,0,0,0.05); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
           .axiom-tab-btn.active { background: #B5945B; color: #1B1C36; border-color: #B5945B; box-shadow: 0 4px 14px rgba(181, 148, 91, 0.25); }
+          
+          .desktop-table-container { display: block; }
+          .mobile-view-container { display: none; }
 
           @media (max-width: 768px) {
             .axiom-tabs-container { gap: 8px; padding: 0 10px; }
             .axiom-tab-btn { flex: 1; min-width: calc(50% - 10px); padding: 12px 10px; justify-content: center; border-radius: 12px; font-size: 0.85rem; }
             .tab-label-text { white-space: nowrap; }
+            
+            .desktop-table-container { display: none; }
+            .mobile-view-container { display: block; }
           }
         `}</style>
 
