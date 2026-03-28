@@ -98,7 +98,7 @@ const FinanceDashboard = () => {
         {/* RIGHT COLUMN: DASHBOARD & ANALYSIS */}
         <div className="w-full xl:w-2/3 space-y-8">
           
-          {/* SECTION: PHÂN TÍCH TỐI ƯU */}
+          {/* SECTION: OPTIMIZATION ANALYSIS */}
           <div className="bg-slate-900 text-white p-10 rounded-[3rem] shadow-2xl shadow-slate-900/20 relative overflow-hidden">
             <div className="absolute top-0 right-0 p-8 opacity-5">
               <BarChart3 size={180}/>
@@ -212,7 +212,7 @@ const EfficiencyBar = ({ label, percent, target, color }) => (
   <div className="space-y-3">
     <div className="flex justify-between items-end">
       <p className="text-sm font-bold text-slate-200">{label}</p>
-      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Mục tiêu: {target}</p>
+      <p className="text-[10px] font-black text-slate-500 uppercase tracking-widest">Target: {target}</p>
     </div>
     <div className="h-4 bg-slate-800 rounded-full overflow-hidden p-1 shadow-inner">
       <div 
