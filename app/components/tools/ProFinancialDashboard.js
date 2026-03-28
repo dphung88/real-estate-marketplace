@@ -187,8 +187,8 @@ const ProFinancialDashboard = () => {
     if (typeof window === 'undefined') return;
     if (!window.html2pdf) {
       const script = document.querySelector('script[src*="html2pdf"]');
-      if (script) alert("Thư viện PDF đang được tải, vui lòng thử lại sau vài giây.");
-      else alert("Không tìm thấy thư viện PDF. Vui lòng kiểm tra kết nối mạng.");
+      if (script) alert("PDF library is loading, please try again in a few seconds.");
+      else alert("PDF library not found. Please check your network connection.");
       return;
     }
     setIsExporting(true);
@@ -202,7 +202,7 @@ const ProFinancialDashboard = () => {
       pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
     window.html2pdf().set(opt).from(element).save().then(() => setIsExporting(false)).catch(err => {
-      console.error(err); setIsExporting(false); alert("Lỗi khi xuất PDF.");
+      console.error(err); setIsExporting(false); alert("Error exporting PDF.");
     });
   };
 
@@ -407,7 +407,7 @@ const ProFinancialDashboard = () => {
     <div className="mb-10">
       <div style={{ width: '100%', height: '1px', backgroundColor: 'rgba(181, 148, 91, 0.2)', marginBottom: '15px' }}></div>
       <div className="overflow-x-auto custom-scrollbar">
-        {/* Desktop Table: Vẫn dùng table chuẩn để đảm bảo desktop không bao giờ lỗi */}
+        {/* Desktop Table: Use standard table to ensure desktop never breaks */}
         <div className="desktop-table-container" style={{ display: isMobile ? 'none' : 'block' }}>
         <table className="w-full text-left" style={{ tableLayout: 'fixed', minWidth: '900px' }}>
           <thead>
@@ -447,7 +447,7 @@ const ProFinancialDashboard = () => {
         </table>
         </div>
 
-        {/* Mobile View: Xếp dọc hoàn toàn từng mục */}
+        {/* Mobile View: Stack each item vertically */}
         <div className="mobile-view-container space-y-8" style={{ display: isMobile ? 'block' : 'none' }}>
           <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B5945B', textTransform: 'uppercase', letterSpacing: '1.5px', display: 'block', marginBottom: '15px' }}>{title}</span>
           {Object.entries(data[category]).map(([name, vals]) => (
